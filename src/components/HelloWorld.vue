@@ -34,8 +34,10 @@
 <script>
 export default {
   name: 'HelloWorld',
+  // props用于父组件向子组件传参
   props: {
-    msg: String
+    msg: String,
+    title: String
   }
 }
 </script>
