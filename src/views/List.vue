@@ -4,6 +4,7 @@
         <h3>这里是List页面组件，query方法查询id : {{this.$route.query.id}}</h3>
         <h3>这里是List页面组件，query方法查询name : {{this.$route.query.name}}</h3>
         <h3>这里是List页面组件2 ，params方法查询id: {{this.$route.params.id}}</h3>
+        <h3>这里是List页面组件2 ，params方法查询name: {{this.$route.params.name}}</h3>
     </div>
 </template>
 

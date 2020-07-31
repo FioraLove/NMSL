@@ -12,11 +12,20 @@
                     </el-col>
                 </el-row>
             </el-header>
-
+            <el-aside width="200px" id="nav">
+                <router-link to="/">Home</router-link><br>
+                <router-link to="/about">About</router-link><br>
+                <router-link :to="{name : 'User', params : {id : 5}}">user/5</router-link> <br>
+                <router-link to="/page">Page</router-link> <br>
+                <router-link :to="{path : '/list', query : {id : 8, name:'chd'}}">user/List/query</router-link><br>
+                <router-link :to="{name : 'List', params : {id : 10,name:'lmm'}}">user/List/params</router-link> <br>
+                <router-link :to="{name : 'User', params : {id : 5}}">params的子路由</router-link> <br>
+                <router-link to="/loveword">嘴臭生成器</router-link> <br>
+            </el-aside>
             <el-main>
                 <!---gutter表示栅栏间隔-->
                 <el-row :gutter="30">
-                    <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6" v-for="(o) in 4" :key="o" style="margin-top:12px;">
+                    <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6" v-for="(o) in 3" :key="o" style="margin-top:12px;">
                         <el-card :body-style="{ padding: '0px' }">
                         <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image" data-action="zoom">
                         <div style="padding: 14px;">
@@ -74,7 +83,8 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
+
     body{
         margin: 0;
         padding: 0;
@@ -125,5 +135,20 @@ export default {
     
     .clearfix:after {
         clear: both
+    }
+    #nav {
+    padding: 30px;
+    text-align: center;
+    color: aquamarine;
+
+
+    a {
+        font-weight: bold;
+        color: #2c3e50;
+
+    &.router-link-exact-active {
+        color: #42b983;
+        }
+    }
     }
 </style>
