@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import axios from '../plugins/axios'
 
-Vue.use(VueRouter)
+Vue.use(VueRouter,axios)
 
   const routes = [
     {
@@ -57,6 +58,10 @@ Vue.use(VueRouter)
         path: '/loveword',
         name: 'Loveword',
         component: () => import(/* webpackChunkName: "about" */ '../views/Loveword.vue')
+    },{
+        path: '/ndsl',
+        name: 'Ndsl',
+        component: () => import(/* webpackChunkName: "about" */ '../views/Ndsl.vue')
     }
 ]
 

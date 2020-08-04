@@ -12,35 +12,37 @@
                     </el-col>
                 </el-row>
             </el-header>
-            <el-aside width="200px" id="nav">
-                <router-link to="/">Home</router-link><br>
-                <router-link to="/about">About</router-link><br>
-                <router-link :to="{name : 'User', params : {id : 5}}">user/5</router-link> <br>
-                <router-link to="/page">Page</router-link> <br>
-                <router-link :to="{path : '/list', query : {id : 8, name:'chd'}}">user/List/query</router-link><br>
-                <router-link :to="{name : 'List', params : {id : 10,name:'lmm'}}">user/List/params</router-link> <br>
-                <router-link :to="{name : 'User', params : {id : 5}}">params的子路由</router-link> <br>
-                <router-link to="/loveword">嘴臭生成器</router-link> <br>
-            </el-aside>
-            <el-main>
-                <!---gutter表示栅栏间隔-->
-                <el-row :gutter="30">
-                    <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6" v-for="(o) in 3" :key="o" style="margin-top:12px;">
-                        <el-card :body-style="{ padding: '0px' }">
-                        <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image" data-action="zoom">
-                        <div style="padding: 14px;">
-                            <span>好吃的汉堡</span>
-                            <div class="bottom clearfix">
-                            <time class="time">{{ currentDate }}</time>
-                            <el-button type="text" class="button" @click="goUser2(o,'chd')">操作按钮</el-button>
-                            </div>
-                        </div>
-                        </el-card>
-                    </el-col>
-                </el-row>
-            </el-main>
+            <el-container>
+                <!-- <el-aside width="200px" id="nav">
+                    <router-link to="/">Home</router-link><br>
+                    <router-link to="/about">About</router-link><br>
+                    <router-link :to="{name : 'User', params : {id : 5}}">user/5</router-link> <br>
+                    <router-link to="/page">Page</router-link> <br>
+                    <router-link :to="{path : '/list', query : {id : 8, name:'chd'}}">query</router-link><br>
+                    <router-link :to="{name : 'List', params : {id : 10,name:'lmm'}}">params</router-link> <br>
+                    <router-link :to="{name : 'User', params : {id : 5}}">params的子路由</router-link> <br>
+                    <router-link to="/loveword">嘴臭生成器</router-link> <br>
+                </el-aside> -->
+                <el-main>
+                    <!---gutter表示栅栏间隔-->
+                    <el-row :gutter="30">
+                        <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6" v-for='(row,index) in rows' :key="index" style="margin-top:20px;">
+                            <el-card :body-style="{ padding: '0px' }" shadow="hover">
+                                <img :src="row.pic" class="image" data-action="zoom">
+                                <div style="padding: 14px;">
+                                    <span><b>{{row.title}}</b></span>
+                                    <div class="bottom clearfix">
+                                        <span class="subtitle">{{row.contents}}</span>
+                                        <!-- <router-link to="/loveword"><el-button type="success" round>查看<i class="el-icon-view el-icon--right"></i></el-button></router-link> -->
+                                        <el-button type="text" class="button" ><router-link :to="row.url">查看<i class="el-icon-view el-icon--right"></i></router-link></el-button>
+                                    </div>
+                                </div>
+                            </el-card>
+                        </el-col>
+                    </el-row>
+                </el-main>
+            </el-container>
         </el-container>    
-
     </div>
 </template>
 
@@ -56,9 +58,27 @@ export default {
     },
     data(){
         return {
-            msg:"牛蛙点点",
-            age:18,
-            currentDate:new Date()
+            rows:[{
+                title:"嘴臭生成器",
+                pic:"https://cdn.jsdelivr.net/gh/FioraLove/Images/1a97ae8b1294b307dced650f396fc22e.jpg",
+                contents:"#最简单的嘴臭，最极致的享受#",
+                url:"/loveword"
+            },{
+                title:"浮生日记",
+                pic: require("../assets/images/nmsl.jpeg"),
+                contents:"谎言不会伤人，真相才是快刀🔪",
+                url:"/about"
+            },{
+                title:"雪之下雪乃",
+                pic: require("../assets/images/nmsl.jpeg"),
+                contents:"西蒂蒙，冲🚴🚴",
+                url:"/user"
+            },{
+                title:"NMSL",
+                pic: require("../assets/images/nmsl.jpeg"),
+                contents:"命数如织，当为磐石",
+                url:"/ndsl"
+            }]
         }
     },
     methods: {
@@ -88,6 +108,9 @@ export default {
     body{
         margin: 0;
         padding: 0;
+    }
+    .subtitle{
+        font-size: 15px;
     }
     .bg{
         width: 100%;
@@ -128,27 +151,37 @@ export default {
         display: block;
     }
 
-    .clearfix:before, .clearfix:after {
-        display: table;
-        content: "";
-    }
+    // .clearfix:before, .clearfix:after {
+    //     display: table;
+    //     content: "";
+    // }
     
-    .clearfix:after {
-        clear: both
+    // .clearfix:after {
+    //     clear: both
+    // }
+    // #nav {
+    //     font-size: 1em;
+    //     text-align: left;
+    //     padding: 30px 0px 0px 30px;
+    //     color: aquamarine;
+    //     width: 2em;
+
+    // a {
+    //     font-weight: bold;
+    //     color: #2c3e50;
+
+    // &.router-link-exact-active {
+    //     color: #42b983;
+    //     }
+    // };
+    // .clearfix {
+    //     text-decoration: none;
+    //     cursor: pointer;
+    // }
+    button{
+        cursor: pointer;
+        text-decoration: none;
     }
-    #nav {
-    padding: 30px;
-    text-align: center;
-    color: aquamarine;
 
 
-    a {
-        font-weight: bold;
-        color: #2c3e50;
-
-    &.router-link-exact-active {
-        color: #42b983;
-        }
-    }
-    }
 </style>
