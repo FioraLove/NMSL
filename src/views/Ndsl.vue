@@ -16,7 +16,9 @@
 
 
 
-<script>
+<script scope>
+
+import  ClipboardJS  from '../assets/js/clipboard.min.js'
 export default {
     name:"axios",
     data() {

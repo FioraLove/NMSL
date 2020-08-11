@@ -67,12 +67,12 @@ export default {
                 title:"浮生日记",
                 pic: require("../assets/images/nmsl.jpeg"),
                 contents:"谎言不会伤人，真相才是快刀🔪",
-                url:"/about"
+                url:"/media"
             },{
                 title:"雪之下雪乃",
                 pic: require("../assets/images/nmsl.jpeg"),
                 contents:"西蒂蒙，冲🚴🚴",
-                url:"/user"
+                url:"/video"
             },{
                 title:"NMSL",
                 pic: require("../assets/images/nmsl.jpeg"),

@@ -18,10 +18,10 @@ Vue.use(VueRouter,axios)
         component: () => import(/* webpackChunkName: "about" */ '../views/Error.vue')
     },
     {
-        path: '/about',
-        name: 'About',
+        path: '/media',
+        name: 'Media',
         // 路由懒加载模式
-        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+        component: () => import(/* webpackChunkName: "about" */ '../views/Media.vue')
     },
     {
         path: '/page',
@@ -29,10 +29,10 @@ Vue.use(VueRouter,axios)
         component: () => import(/* webpackChunkName: "about" */ '../views/Page.vue')
     },
     {
-        path: '/user/:id',
-        name: 'User',
+        path: '/video',
+        name: 'Video',
         // 创建子路由/user/:id/profile 与 /user/:id/post
-        component: () => import(/* webpackChunkName: "about" */ '../views/User.vue'),
+        component: () => import(/* webpackChunkName: "about" */ '../views/Video.vue'),
         children : [{ 
             path : 'profile', 
             component:()=> import('../views/subUser/profile.vue') 
@@ -53,7 +53,7 @@ Vue.use(VueRouter,axios)
     },{
         //将 path 的前缀或后缀带*号，将会捕获特定的路由，类似于正则表达式； 
         path:'/user-*',
-        component: ()=> import('../views/About.vue')
+        component: ()=> import('../views/Media.vue')
     },{
         path: '/loveword',
         name: 'Loveword',

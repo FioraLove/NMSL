@@ -104,12 +104,12 @@ export default {
                     title:"浮生日记",
                     pic: require("../assets/images/nmsl.jpeg"),
                     contents:"谎言不会伤人，真相才是快刀🔪",
-                    url:"/about"
+                    url:"/media"
                 },{
                     title:"雪之下雪乃",
                     pic: require("../assets/images/nmsl.jpeg"),
                     contents:"西蒂蒙，冲🚴🚴",
-                    url:"/user"
+                    url:"/video"
                 },{
                     title:"NMSL",
                     pic: require("../assets/images/nmsl.jpeg"),
@@ -119,12 +119,12 @@ export default {
                     title:"浮生日记",
                     pic: require("../assets/images/nmsl.jpeg"),
                     contents:"谎言不会伤人，真相才是快刀🔪",
-                    url:"/about"
+                    url:"/media"
                 },{
                     title:"雪之下雪乃",
                     pic: require("../assets/images/nmsl.jpeg"),
                     contents:"西蒂蒙，冲🚴🚴",
-                    url:"/user"
+                    url:"/video"
                 },{
                     title:"嘴臭生成器",
                     pic:"https://cdn.jsdelivr.net/gh/FioraLove/Images/1a97ae8b1294b307dced650f396fc22e.jpg",
@@ -134,12 +134,12 @@ export default {
                     title:"浮生日记",
                     pic: require("../assets/images/nmsl.jpeg"),
                     contents:"谎言不会伤人，真相才是快刀🔪",
-                    url:"/about"
+                    url:"/media"
                 },{
                     title:"雪之下雪乃",
                     pic: require("../assets/images/nmsl.jpeg"),
                     contents:"西蒂蒙，冲🚴🚴",
-                    url:"/user"
+                    url:"/video"
                 },{
                     title:"NMSL",
                     pic: require("../assets/images/nmsl.jpeg"),
@@ -149,12 +149,12 @@ export default {
                     title:"浮生日记",
                     pic: require("../assets/images/nmsl.jpeg"),
                     contents:"谎言不会伤人，真相才是快刀🔪",
-                    url:"/about"
+                    url:"/media"
                 },{
                     title:"雪之下雪乃",
                     pic: require("../assets/images/nmsl.jpeg"),
                     contents:"西蒂蒙，冲🚴🚴",
-                    url:"/user"
+                    url:"/video"
                 },{
                     title:"嘴臭生成器",
                     pic:"https://cdn.jsdelivr.net/gh/FioraLove/Images/1a97ae8b1294b307dced650f396fc22e.jpg",
@@ -164,12 +164,12 @@ export default {
                     title:"浮生日记",
                     pic: require("../assets/images/nmsl.jpeg"),
                     contents:"谎言不会伤人，真相才是快刀🔪",
-                    url:"/about"
+                    url:"/media"
                 },{
                     title:"雪之下雪乃",
                     pic: require("../assets/images/nmsl.jpeg"),
                     contents:"西蒂蒙，冲🚴🚴",
-                    url:"/user"
+                    url:"/video"
                 },{
                     title:"NMSL",
                     pic: require("../assets/images/nmsl.jpeg"),
@@ -179,12 +179,12 @@ export default {
                     title:"浮生日记",
                     pic: require("../assets/images/nmsl.jpeg"),
                     contents:"谎言不会伤人，真相才是快刀🔪",
-                    url:"/about"
+                    url:"/media"
                 },{
                     title:"雪之下雪乃",
                     pic: require("../assets/images/nmsl.jpeg"),
                     contents:"西蒂蒙，冲🚴🚴",
-                    url:"/user"
+                    url:"/video"
                 }],
             lists:[]
         };
