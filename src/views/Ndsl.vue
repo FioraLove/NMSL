@@ -7,10 +7,10 @@
             <p class="res">{{rows.content}}</p>
             <hr>    
         </div>
-            <div class="btns">
-                <el-button type="primary" @click="getContent()">切换</el-button>
-                <el-button id="btn" type="success" :data-clipboard-text="rows.content">复制</el-button>
-            </div>
+        <div class="btns">
+            <el-button type="primary" @click="getContent()">切换</el-button>
+            <el-button id="btn" type="success" :data-clipboard-text="rows.content">复制</el-button>
+        </div>
     </div>
 </template>
 
@@ -75,6 +75,9 @@ export default {
 </script>
 
 <style scoped>
+    .btns{
+        margin-bottom: 5em;;
+    }
     .bg{
         width: 100%;
         height: 4em;

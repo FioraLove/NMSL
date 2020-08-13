@@ -1,7 +1,10 @@
 <template>
     <div>
         <!-- 在 User.vue 这个父路由，需要使用视图渲染加载子路由 -->
-        <div id="dplayer"></div>
+        <div id="dplayer" v-loading="loading"
+                                        element-loading-text="拼命加载中"
+                                        element-loading-spinner="el-icon-loading"
+                                        element-loading-background="rgba(0, 0, 0, 0.8)"></div>
         <router-view></router-view>
     </div>
 </template>
@@ -16,6 +19,7 @@
         height: 80vh;
         margin: 0 auto;
         margin-top: 3em;
+        margin-bottom: 5em;
     }
 </style>
 
@@ -27,7 +31,7 @@
         name: "User",
         data() {
             return {
-                
+                loading:true,
             }
         },
         mounted() {
@@ -99,6 +103,7 @@
                             text: '这是 2 分钟',
                         },
                     ]});
+                this.loading=false;
                 // 快进秒数
                 // dp.seek(100);
                 

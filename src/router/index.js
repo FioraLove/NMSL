@@ -45,11 +45,11 @@ Vue.use(VueRouter,axios)
             component: () => import('../views/Page.vue')
         }] 
     },
-    {
-        path: '/list',     // query模式
+    {   // 音频MP3模块
+        path: '/audio',     // query模式
         // path: '/list/:id/post/:name', // params模式
-        name: 'List',
-        component: () => import(/* webpackChunkName: "about" */ '../views/List.vue')
+        name: 'Audio',
+        component: () => import(/* webpackChunkName: "about" */ '../views/Audio.vue')
     },{
         //将 path 的前缀或后缀带*号，将会捕获特定的路由，类似于正则表达式； 
         path:'/user-*',

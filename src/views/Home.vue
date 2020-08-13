@@ -13,16 +13,6 @@
                 </el-row>
             </el-header>
             <el-container>
-                <!-- <el-aside width="200px" id="nav">
-                    <router-link to="/">Home</router-link><br>
-                    <router-link to="/about">About</router-link><br>
-                    <router-link :to="{name : 'User', params : {id : 5}}">user/5</router-link> <br>
-                    <router-link to="/page">Page</router-link> <br>
-                    <router-link :to="{path : '/list', query : {id : 8, name:'chd'}}">query</router-link><br>
-                    <router-link :to="{name : 'List', params : {id : 10,name:'lmm'}}">params</router-link> <br>
-                    <router-link :to="{name : 'User', params : {id : 5}}">params的子路由</router-link> <br>
-                    <router-link to="/loveword">嘴臭生成器</router-link> <br>
-                </el-aside> -->
                 <el-main>
                     <!---gutter表示栅栏间隔-->
                     <el-row :gutter="30">
@@ -33,8 +23,7 @@
                                     <span><b>{{row.title}}</b></span>
                                     <div class="bottom clearfix">
                                         <span class="subtitle">{{row.contents}}</span>
-                                        <!-- <router-link to="/loveword"><el-button type="success" round>查看<i class="el-icon-view el-icon--right"></i></el-button></router-link> -->
-                                        <el-button type="text" class="button" ><router-link :to="row.url">查看<i class="el-icon-view el-icon--right"></i></router-link></el-button>
+                                        <a :href="row.url" target="_self" rel="noopener noreferrer"><el-button type="text" class="button" >查看<i class="el-icon-view el-icon--right"></i></el-button></a>
                                     </div>
                                 </div>
                             </el-card>
@@ -42,6 +31,9 @@
                     </el-row>
                 </el-main>
             </el-container>
+            <el-footer>
+                
+            </el-footer>
         </el-container>    
     </div>
 </template>
@@ -59,24 +51,24 @@ export default {
     data(){
         return {
             rows:[{
-                title:"嘴臭生成器",
+                title:"时崎狂三",
                 pic:"https://cdn.jsdelivr.net/gh/FioraLove/Images/1a97ae8b1294b307dced650f396fc22e.jpg",
                 contents:"#最简单的嘴臭，最极致的享受#",
                 url:"/loveword"
             },{
-                title:"浮生日记",
+                title:"霞之丘诗羽",
                 pic: require("../assets/images/nmsl.jpeg"),
-                contents:"谎言不会伤人，真相才是快刀🔪",
+                contents:"#谎言不会伤人，真相才是快刀🔪#",
                 url:"/media"
             },{
                 title:"雪之下雪乃",
                 pic: require("../assets/images/nmsl.jpeg"),
-                contents:"西蒂蒙，冲🚴🚴",
+                contents:"#断剑重铸之日，其势归来之时#",
                 url:"/video"
             },{
-                title:"NMSL",
+                title:"樱岛麻衣",
                 pic: require("../assets/images/nmsl.jpeg"),
-                contents:"命数如织，当为磐石",
+                contents:"#命数如织，当为磐石#",
                 url:"/ndsl"
             }]
         }
