@@ -52,24 +52,29 @@ export default {
         return {
             rows:[{
                 title:"时崎狂三",
-                pic:"https://cdn.jsdelivr.net/gh/FioraLove/Images/1a97ae8b1294b307dced650f396fc22e.jpg",
-                contents:"#最简单的嘴臭，最极致的享受#",
+                pic:require("../assets/images/nmsl.jpeg"),
+                contents:"# 何以与君识，无言泪千行 #",
                 url:"/loveword"
             },{
                 title:"霞之丘诗羽",
                 pic: require("../assets/images/nmsl.jpeg"),
-                contents:"#谎言不会伤人，真相才是快刀🔪#",
+                contents:"# 谎言不会伤人，真相才是快刀🔪 #",
                 url:"/media"
             },{
                 title:"雪之下雪乃",
                 pic: require("../assets/images/nmsl.jpeg"),
-                contents:"#断剑重铸之日，其势归来之时#",
+                contents:"# 断剑重铸之日，其势归来之时 #",
                 url:"/video"
             },{
                 title:"樱岛麻衣",
                 pic: require("../assets/images/nmsl.jpeg"),
-                contents:"#命数如织，当为磐石#",
+                contents:"# 命数如织，当为磐石 #",
                 url:"/ndsl"
+            },{
+                title:"柏崎星奈",
+                pic: require("../assets/images/nmsl.jpeg"),
+                contents:"# 执子之魂，与子共生 #",
+                url:"/audio"
             }]
         }
     },

@@ -7,14 +7,14 @@
                         <el-col :xs="8" :sm="6" :md="6" :lg="4" :xl="4" v-for='(row,index) in rows' :key="index" style="margin-top:10px;">
                             <div class="card">
                                 <div class="header">
-                                    <a :href="row.videos" :title="row.audioName" target="_blank"><img :src="row.coverS" alt="Loading"></a>
+                                    <a :href="row.mp3" :title="row.title" target="_blank"><img :src="row.cover" alt="Loading"></a>
                                 </div>
                                 <div class="card_footer">
                                     <div class="title">
-                                        <span><a :href="row.videos" target="_blank" :title="row.audioName">{{row.audioName}}</a></span>
+                                        <span><a :href="row.mp3" target="_blank" :title="row.title">{{row.title}}</a></span>
                                     </div>
                                     <div class="author">
-                                        <span>{{row.author}}</span>
+                                        <span>{{row.singerName}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><span style="font-size:15px;">#{{row.albumName}}#</span></b>
                                     </div>
                                 </div>
                             </div>
@@ -23,7 +23,7 @@
                 </el-main>
             </el-container>
             <div class="block">
-                <el-pagination @current-change="handleCurrentChange" :current-page.sync="currentPage" :page-size="20" layout="prev, pager, next, jumper" :total="count">
+                <el-pagination @current-change="handleCurrentChange" :current-page.sync="currentPage" :page-size="page_size" layout="prev, pager, next, jumper" :total="count">
                 </el-pagination>
             </div>
         </div>
@@ -38,9 +38,10 @@ export default {
             bodyWidth:1920,
             keyword:"周杰伦",                 // 搜索关键词
             rows:[],                    // 查询返回数据集
-            count:100,                    // 查询返回的数据总数
+            count:0,                    // 查询返回的数据总数
             currentPage:1,             // 当前页数
             loading:true,               // 页面加载中特效
+            page_size:36,               // 每页展示卡片数
         };
     },
 
@@ -60,20 +61,25 @@ export default {
             this.loading = true;
             let app = this;
             axios({
-                url:"http://127.0.0.1:8001/nmsl/music",
-                method:"post",
+                // api1:自定义的api接口
+                url:"migu/migu/remoting/scr_search_tag",
+                method:"get",
                 headers:{
-                    "Content-Type": "application/json"
+                    "Host":"m.music.migu.cn",
+                    "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36"
                 },
-                data:{
+                params:{
+                    rows:this.page_size,
+                    type:2,
                     keyword: this.keyword,
-                    page: this.currentPage
+                    pgc: this.currentPage
                 }
             })
             .then(function(response){
                 if(response.status == 200){
-                    app.rows = response.data.rows;
-                    app.count = response.data.count;
+                    app.rows = response.data.musics;
+                    app.count = response.data.pgt;
+                    console.log(response.data.pgt)
                 }else{
                     app.rows = {"content":"暂无数据。。。"};
                 }
