@@ -11,6 +11,11 @@ module.exports = {
                 changeOrigin: true,  // needed for virtual hosted sites
                 pathRewrite: {
                     '^/migu': ''  // rewrite path
+                },
+                //重点在这里，添加配置项 headers 就可以了
+                headers:{
+                    "Host":"m.music.migu.cn",
+                    "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36"
                 }
             },
             'QQmusic':{
