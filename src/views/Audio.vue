@@ -49,8 +49,16 @@
                 </el-pagination>
             </div>
         </div>
-
-  </div>
+    <div class="footer">
+            <div class="bk"><hr></div>
+            <p>本站的资源由网络第三方视频类网站收集，本站不提供任何视听上传服务，所有内容均来自各分享站点所提供的公开引用资源。</p>
+            <p>若本站收录的节目无意侵犯了贵司版权，请给网页底部邮箱地址来信，我们会及时处理和回复，谢谢</p>
+            <p>Copyright © 2019-2020. All Rights Reserved. 站长统计</p>
+            <div>
+                <a href="https://AhriLove.top" target="_self" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/FioraLove/Images/D:/data/imagesaaa.png" alt="AhriLove"></a>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -170,6 +178,27 @@ export default {
 </script>
 
 <style scope lang="less">
+    .video{
+        max-width: 100vw;
+    }
+    .footer p{
+        font-size: 14px;
+        color: black;
+        font-family: "Microsoft YaHei", "微软雅黑", "STHeiti", "WenQuanYi Micro Hei", SimSun, sans-serif;
+        text-align: center;
+    }
+    .footer div{
+        text-align: center;
+        margin-top: -10px;
+    }
+    .footer div img{
+        height: 3em;
+    }
+    .bk{
+        padding-left: 2em;
+        padding-right: 2em;
+        color: bisque;
+    }
     i{
         color: rgb(9, 135, 173);
         cursor: pointer;
