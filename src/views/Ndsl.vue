@@ -25,7 +25,7 @@ export default {
         return {
             loading: false,
             rows:{},    // 嘴臭数据集
-            currentPage: 1,     // 当前页数
+            currentPage: 8,     // 当前页数
             limit:1,    // limit偏差限制
             count:0,    // 返回数据量总数
         }

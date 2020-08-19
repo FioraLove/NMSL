@@ -26,16 +26,12 @@ module.exports = {
                     '^/migu': ''
                 }
             },
-            '/bilibili':{
-                target: 'https://api.bilibili.com/',
+            '/bili':{
+                target: 'https://api.bilibili.com/x/',
                 ws: true,
                 changeOrigin: true, 
                 pathRewrite: {
-                    '^/bilibili': ''
-                },
-                headers:{
-                    'origin': 'https://space.bilibili.com',
-                    "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36"
+                    '^/bili': ''  // rewrite path
                 }
             },
         }
