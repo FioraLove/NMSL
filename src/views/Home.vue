@@ -6,7 +6,7 @@
             <el-main>
                 <el-row :gutter="10">
                     <!-- 头像模块 -->
-                    <el-col :xs="24" :sm="10" :md="10" :lg="10" :xl="10">
+                    <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="8">
                         <div class="card">
                             <div class="header">
                                 <a href="javascript:;" title="AhriLove"><img src="https://cdn.jsdelivr.net/gh/FioraLove/CDN@1.0/Avatar.png" alt=""></a>
@@ -20,9 +20,9 @@
                         </div>
                         <div class="author">
                             <span><b>我一路向北，离开有你的季节</b></span><br><br>
-                            <span>一个野生自学者 有时间就上传一些学习分享</span>
+                            <span>一个野生自学者 经常分享学习心得</span>
                         </div>
-                        <hr style="width:22em;margin-left:0px;">
+                        <hr style="width:18em;margin-left:0px;">
                         <div class="skill">
                             <div class="process">
                                 <div style="float:left;width:20%;margin-top:12px;"><img src="../assets/images/html.png"></div>
@@ -66,27 +66,33 @@
                         </div>
                     </el-col>
 
-                    <el-col :xs="24" :sm="14" :md="14" :lg="14" :xl="14">
+                    <el-col :xs="24" :sm="16" :md="16" :lg="16" :xl="16">
                             <p><b style="color:#f05b72;font-size:1.25em;">动态更新</b></p>
                             <hr>
-                            <div class="per-video" :style="{ height:bodyHeight + 'px'}" v-loading="loading">
-                                <template v-for="(row,index) in results">
-                                    <div class="bilibili" :key="index">
-                                        <div style="float:left;width:5em;height:1em;"><img img  v-lazy="row.pic" ></div>
-                                        <div style="float:left;width:84%;margin-left:16px;">
-                                            <p style="width:100%;margin-top:0px;margin-bottom:8px;overflow:hidden;color:#d3c6a6;">{{row.title}}</p> 
-                                            <div><a :href="'https://www.bilibili.com/video/'+row.bvid" target="_blank"><el-button type="primary" size="mini">BILIBILI观看</el-button></a></div>
+                            <div class="tabBa">
+                                <div class="per-video" :style="{ height:bodyHeight + 'px'}" v-loading="loading">
+                                    <template v-for="(row,index) in results">
+                                        <div class="bilibili" :key="index">
+                                            <div style="float:left;width:5em;height:1em;"><img v-lazy="row.pic" style="box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);border-radius: 4px"></div>
+                                            <div style="float:left;width:84%;margin-left:16px;">
+                                                <p style="width:100%;margin-top:0px;margin-bottom:8px;overflow:hidden;color:#d3c6a6;">{{row.title}}</p> 
+                                                <div><a :href="'https://www.bilibili.com/video/'+row.bvid" target="_blank"><el-button type="primary" size="mini">BILIBILI观看</el-button></a></div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </template>
+                                    </template>
+                                </div>
                             </div>
                             <div class="follow">
-                                <p><a href="http://" target="_blank"><i>bilibili</i><span>关注我</span></a></p>
+                                <div><p class="star"><a href="https://space.bilibili.com/215893581/" target="_blank"><span><i class="el-icon-s-promotion"></i>关注我</span></a></p></div>
+                                <div style="margin-left:3em;"><p class="donations" @click="open()"><a href="javascript:;"><span><i class="el-icon-coffee-cup"></i>赞赏我</span></a></p></div>
                             </div>
                     </el-col>
                 </el-row>
                 
             </el-main>
+            <el-footer style="height:1.25em;">
+                <div style="text-align:center;color:hsla(0,0%,100%,.85);font-family: Roboto,sans-serif;">Copyright © 2020 AhriLove·鳄鱼邦邦</div>
+            </el-footer>
         </el-container>
         
         <!-- 导航栏模块 -->
@@ -109,14 +115,11 @@ export default {
     components: {
         HelloWorld
     },
-    mounted() {
-        this.bodyHeight = document.documentElement.clientHeight-220;
-        // this.getContent();
-    },
+
     data(){
         return {
             bodyHeight:100,
-            loading: false,
+            loading: true,
             rows:[{
                 content:"主页",
                 url:"/"
@@ -139,189 +142,44 @@ export default {
                     url:"https://AhriLove.top",
                     content:"联系我"
             }],
-
-            results:[
-                {
-                    "comment":0,
-                    "typeid":171,
-                    "play":6,
-                    "pic":"//i1.hdslb.com/bfs/archive/4ba0ff48829e60f30bba5c0433f5ecbc7b7a25bd.jpg",
-                    "subtitle":"",
-                    "description":"艾欧尼亚！昂扬不灭！",
-                    "copyright":"",
-                    "title":"【老许，你要老婆不要】刀妹：我奶奶没说你可以走了🐶🐶🐶",
-                    "review":0,
-                    "author":"支付宝AliPlan",
-                    "mid":215893581,
-                    "created":1597764143,
-                    "length":"02:01",
-                    "video_review":0,
-                    "aid":584295346,
-                    "bvid":"BV1964y1c7r7",
-                    "hide_click":false,
-                    "is_pay":0,
-                    "is_union_video":0
-                },
-                {
-                    "comment":7,
-                    "typeid":27,
-                    "play":24,
-                    "pic":"//i0.hdslb.com/bfs/archive/f614c79378d89051eb4b514ddbd4d58bc7152d25.jpg",
-                    "subtitle":"",
-                    "description":"老许，你要老婆不要？哎，你要老婆，只要你开金口，我等会给你送来！\n 老许：我全都要???",
-                    "copyright":"",
-                    "title":"【老许，你要老婆不要】你要老婆不要，是玄机美女啊（Ⅰ）",
-                    "review":0,
-                    "author":"支付宝AliPlan",
-                    "mid":215893581,
-                    "created":1597669602,
-                    "length":"01:30",
-                    "video_review":0,
-                    "aid":286774335,
-                    "bvid":"BV1mf4y197cv",
-                    "hide_click":false,
-                    "is_pay":0,
-                    "is_union_video":0
-                },
-                {
-                    "comment":0,
-                    "typeid":172,
-                    "play":12,
-                    "pic":"//i1.hdslb.com/bfs/archive/8e9fcf1ad51840c7184af056880845462b89f57b.jpg",
-                    "subtitle":"",
-                    "description":"唉！保安在哪里呀，保安在哪里呀，哎你有____吗？你在______搞这些动作，有必要吗？不要再给我们_____抹黑了。",
-                    "copyright":"",
-                    "title":"最近长大的小橘子这么火？我好怕保安，保安在哪里，保安在哪里",
-                    "review":0,
-                    "author":"支付宝AliPlan",
-                    "mid":215893581,
-                    "created":1597581042,
-                    "length":"00:18",
-                    "video_review":0,
-                    "aid":414271661,
-                    "bvid":"BV1WV411U74m",
-                    "hide_click":false,
-                    "is_pay":0,
-                    "is_union_video":0
-                },
-                {
-                    "comment":0,
-                    "typeid":17,
-                    "play":44,
-                    "pic":"//i0.hdslb.com/bfs/archive/658f0972f8b914ff19f655cfabc213e248e0d4b7.jpg",
-                    "subtitle":"",
-                    "description":"#靓女又怎样，我是读书人#",
-                    "copyright":"",
-                    "title":"蒂法，靓女又怎样？我是______",
-                    "review":0,
-                    "author":"支付宝AliPlan",
-                    "mid":215893581,
-                    "created":1597577455,
-                    "length":"00:43",
-                    "video_review":0,
-                    "aid":371817277,
-                    "bvid":"BV1aZ4y1K7nQ",
-                    "hide_click":false,
-                    "is_pay":0,
-                    "is_union_video":0
-                },
-                {
-                    "comment":0,
-                    "typeid":65,
-                    "play":22,
-                    "pic":"//i2.hdslb.com/bfs/archive/c4e08c8d10d6ff53d33d0957f7f90b219845d4b7.jpg",
-                    "subtitle":"",
-                    "description":"https://www.douyin.com \n猪老板，苟策划，羊秘书，牛保安",
-                    "copyright":"",
-                    "title":"山 海 经 ，就是这样一个弱肉强食的世界",
-                    "review":0,
-                    "author":"支付宝AliPlan",
-                    "mid":215893581,
-                    "created":1597573551,
-                    "length":"00:42",
-                    "video_review":0,
-                    "aid":329282915,
-                    "bvid":"BV1DA411J7nq",
-                    "hide_click":false,
-                    "is_pay":0,
-                    "is_union_video":0
-                },
-                {
-                    "comment":6,
-                    "typeid":27,
-                    "play":119,
-                    "pic":"//i1.hdslb.com/bfs/archive/08dc93ad572fd7ace0d6281ab7a57844f41c8699.jpg",
-                    "subtitle":"",
-                    "description":"比比东：对不起，你是个好人，可我已经有孩子了 /(ㄒoㄒ)/~~",
-                    "copyright":"",
-                    "title":"比比东：对不起，我已经有孩子了 /(ㄒoㄒ)/~~",
-                    "review":0,
-                    "author":"支付宝AliPlan",
-                    "mid":215893581,
-                    "created":1597556243,
-                    "length":"00:23",
-                    "video_review":1,
-                    "aid":456867588,
-                    "bvid":"BV1h5411h7rT",
-                    "hide_click":false,
-                    "is_pay":0,
-                    "is_union_video":0
-                },
-                {
-                    "comment":3,
-                    "typeid":21,
-                    "play":31,
-                    "pic":"//i1.hdslb.com/bfs/archive/a19ca1eb765f1b64da7b1ae98a938a558b963d4d.jpg",
-                    "subtitle":"",
-                    "description":"宁那叫喜欢吗？宁那是馋人家的身子，宁下贱，弟弟萌?",
-                    "copyright":"",
-                    "title":"美丽动人的红装爱丽丝~~你爱的样子都有",
-                    "review":0,
-                    "author":"支付宝AliPlan",
-                    "mid":215893581,
-                    "created":1597548785,
-                    "length":"00:30",
-                    "video_review":0,
-                    "aid":371841114,
-                    "bvid":"BV1zZ4y1K7Wi",
-                    "hide_click":false,
-                    "is_pay":0,
-                    "is_union_video":0
-                }
-            ],
+            api:"http://127.0.0.1:8001/nmsl/bilibili/",
+            results:[]
+            // results:[{"comment":0,"typeid":171,"play":8,"pic":"//i2.hdslb.com/bfs/archive/1af693a2545239bf5e7748d208481284d44cff69.jpg","subtitle":"","description":"亚索，你的英明如雷贯耳！但此番相见，我真是大失所望","copyright":"","title":"【英雄联盟】 最极致的海天盛筵，人生导师可不止青钢影","review":0,"author":"支付宝AliPlan","mid":215893581,"created":1597841029,"length":"03:03","video_review":0,"aid":754254604,"bvid":"BV19k4y117U7","hide_click":false,"is_pay":0,"is_union_video":0},{"comment":0,"typeid":171,"play":8,"pic":"//i1.hdslb.com/bfs/archive/4ba0ff48829e60f30bba5c0433f5ecbc7b7a25bd.jpg","subtitle":"","description":"艾欧尼亚！昂扬不灭！","copyright":"","title":"【老许，你要老婆不要】刀妹：我奶奶没说你可以走了🐶🐶🐶","review":0,"author":"支付宝AliPlan","mid":215893581,"created":1597764143,"length":"02:01","video_review":0,"aid":584295346,"bvid":"BV1964y1c7r7","hide_click":false,"is_pay":0,"is_union_video":0},{"comment":7,"typeid":27,"play":34,"pic":"//i0.hdslb.com/bfs/archive/f614c79378d89051eb4b514ddbd4d58bc7152d25.jpg","subtitle":"","description":"老许，你要老婆不要？哎，你要老婆，只要你开金口，我等会给你送来！\n\n老许：我全都要???","copyright":"","title":"【老许，你要老婆不要】你要老婆不要，是玄机美女啊（Ⅰ）","review":0,"author":"支付宝AliPlan","mid":215893581,"created":1597669602,"length":"01:30","video_review":0,"aid":286774335,"bvid":"BV1mf4y197cv","hide_click":false,"is_pay":0,"is_union_video":0},{"comment":0,"typeid":172,"play":13,"pic":"//i1.hdslb.com/bfs/archive/8e9fcf1ad51840c7184af056880845462b89f57b.jpg","subtitle":"","description":"唉！保安在哪里呀，保安在哪里呀，哎你有____吗？你在______搞这些动作，有必要吗？不要再给我们_____抹黑了。","copyright":"","title":"最近长大的小橘子这么火？我好怕保安，保安在哪里，保安在哪里","review":0,"author":"支付宝AliPlan","mid":215893581,"created":1597581042,"length":"00:18","video_review":0,"aid":414271661,"bvid":"BV1WV411U74m","hide_click":false,"is_pay":0,"is_union_video":0},{"comment":0,"typeid":17,"play":50,"pic":"//i0.hdslb.com/bfs/archive/658f0972f8b914ff19f655cfabc213e248e0d4b7.jpg","subtitle":"","description":"#靓女又怎样，我是读书人#","copyright":"","title":"蒂法，靓女又怎样？我是______","review":0,"author":"支付宝AliPlan","mid":215893581,"created":1597577455,"length":"00:43","video_review":1,"aid":371817277,"bvid":"BV1aZ4y1K7nQ","hide_click":false,"is_pay":0,"is_union_video":0},{"comment":0,"typeid":65,"play":22,"pic":"//i2.hdslb.com/bfs/archive/c4e08c8d10d6ff53d33d0957f7f90b219845d4b7.jpg","subtitle":"","description":"https://www.douyin.com\n猪老板，苟策划，羊秘书，牛保安","copyright":"","title":"山 海 经 ，就是这样一个弱肉强食的世界","review":0,"author":"支付宝AliPlan","mid":215893581,"created":1597573551,"length":"00:42","video_review":0,"aid":329282915,"bvid":"BV1DA411J7nq","hide_click":false,"is_pay":0,"is_union_video":0},{"comment":6,"typeid":27,"play":124,"pic":"//i1.hdslb.com/bfs/archive/08dc93ad572fd7ace0d6281ab7a57844f41c8699.jpg","subtitle":"","description":"比比东：对不起，你是个好人，可我已经有孩子了 /(ㄒoㄒ)/~~","copyright":"","title":"比比东：对不起，我已经有孩子了 /(ㄒoㄒ)/~~","review":0,"author":"支付宝AliPlan","mid":215893581,"created":1597556243,"length":"00:23","video_review":1,"aid":456867588,"bvid":"BV1h5411h7rT","hide_click":false,"is_pay":0,"is_union_video":0},{"comment":3,"typeid":21,"play":33,"pic":"//i1.hdslb.com/bfs/archive/a19ca1eb765f1b64da7b1ae98a938a558b963d4d.jpg","subtitle":"","description":"宁那叫喜欢吗？宁那是馋人家的身子，宁下贱，弟弟萌?","copyright":"","title":"美丽动人的红装爱丽丝~~你爱的样子都有","review":0,"author":"支付宝AliPlan","mid":215893581,"created":1597548785,"length":"00:30","video_review":0,"aid":371841114,"bvid":"BV1zZ4y1K7Wi","hide_click":false,"is_pay":0,"is_union_video":0}],
         }
     },
-    methods: {
+
+    mounted() {
+        this.bodyHeight = document.documentElement.clientHeight-220;
+        this.getContent;
+    },
+    computed:{
         // 发送Ajax请求
         getContent:function () {
             let app = this;
             axios({
                 // api1:自定义的api接口
                 //https://api.bilibili.com/x/space/arc/search?mid=215893581&ps=30&tid=0&pn=1&keyword=&order=pubdate&jsonp=jsonp
-                url:"/bili/space/arc/search",
-                method:"get",
-                params:{
-                    mid:'215893581',
-                    ps:'30',
-                    tid:'0',
-                    pn:'1',
-                    keyword:"",
-                    order:'pubdate',
-                    jsonp:'jsonp'
-                }
+                //url:"/bili/space/arc/search",
+                url:this.api,
+                method:"get"
             })
             .then(function(response){
-                console.log(response);
-                if(response.status == 200){
-                    app.results = JSON.parse(response.data).data.list.vlist;
-
-                    console.log(response.data);
+                if(response.status == 200 && response.data.status==1){
+                    app.loading = false;
+                    app.results = (response.data).vlist;
                 }else{
                     app.results = [];
                 }
             })
             .catch(function (error) {
                 console.log(error);
+            });
+        }
+    },
+    methods: {
+        open() {
+            this.$alert('你的 <strong>点赞➕关注➕转发➕投币</strong><hr> 就是对我最大的鼓励', 'BILIBILI🍻[]~(￣▽￣)~*', {
+               dangerouslyUseHTMLString: true
             });
         }
 
@@ -331,22 +189,71 @@ export default {
 
 <style lang="less" scoped>
     .home{
-        background-image: url("https://www.dweb.club/img/2.850eeb83.png");
+        background-image: url("../assets/images/background.png");
         background-attachment: fixed;
         background-size: cover;
         background-repeat: no-repeat;
     }
     .follow{
         width: 100%;
-        height:2em;
-        margin-top: 10px;
-        padding:0 3px 0 3px;
+        height:5em;
+        margin-top: 1em;
+        padding:0 6px 0 6px
     }
-    .follow p{
-        background-color:#14abef;
-        font-size: 2em;
-        text-align: center;
+    .follow div{
+        float:left;
+        width: 40%;
         border-radius: 6px;
+        padding: 12px;
+        background-color:rgba(177, 172, 172, 0.2);
+        text-align: center;
+        overflow: hidden;
+    }
+    .star{
+        float:left;
+        width:100%;
+        height:1.86em;
+        font-size: 1.5em;
+        border-radius: 6px;
+        cursor: pointer;
+        background-color:#14abef;
+        font-family: 'Courier New', Courier, monospace;
+        margin: 0px;
+    }
+    .star:hover{
+        float:left;
+        width:100%;
+        height:1.86em;
+        font-size: 1.5em;
+        border-radius: 6px;
+        background-color:rgba(177, 172, 172, 0.3);
+        font-family: 'Courier New', Courier, monospace;
+        margin: 0px;
+    }
+    .donations{
+        float:left;
+        width:100%;
+        height:1.86em;
+        cursor: pointer;
+        font-size: 1.5em;
+        border-radius: 6px;
+        background-color: #fba540;
+        font-family: 'Courier New', Courier, monospace;
+        margin: 0px;
+    }
+    .donations:hover{
+        float:left;
+        width:100%;
+        height:1.86em;
+        font-size: 1.5em;
+        background-color:rgba(177, 172, 172, 0.3);
+        font-family: 'Courier New', Courier, monospace;
+        margin: 0px;
+    }
+    .follow div p a{
+        text-align: center;
+        position: relative;
+        top:8px;
     }
     .bilibili{
         width: 100%;
@@ -359,8 +266,14 @@ export default {
         object-position: left;
         
     }
+    .tabBa{
+        width:100%;
+        overflow: hidden;
+        background-color:transparent;
+    }
     .per-video{
         padding: 8px;
+        width: 117%;
         overflow-y:scroll
     }
     .per-video::-webkit-scrollbar {/*滚动条整体样式*/

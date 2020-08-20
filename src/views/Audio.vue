@@ -55,7 +55,7 @@
             <p>若本站收录的节目无意侵犯了贵司版权，请给网页底部邮箱地址来信，我们会及时处理和回复，谢谢</p>
             <p>Copyright © 2019-2020. All Rights Reserved. 站长统计</p>
             <div>
-                <a href="https://AhriLove.top" target="_self" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/FioraLove/Images/D:/data/imagesaaa.png" alt="AhriLove"></a>
+                <a href="https://AhriLove.top" target="_self"><img src="https://cdn.jsdelivr.net/gh/FioraLove/Images/D:/data/imagesaaa.png" alt="AhriLove"></a>
             </div>
         </div>
     </div>
@@ -180,6 +180,7 @@ export default {
 <style scope lang="less">
     .video{
         max-width: 100vw;
+        min-height: 100vh;
     }
     .footer p{
         font-size: 14px;
