@@ -1,32 +1,14 @@
 <template>
   <div class="video">
     <el-row :gutter="10">
-
-
         <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-            <el-menu
-            :default-active="activeIndex2"
-            class="el-menu-demo"
-            mode="horizontal"
-            @select="handleSelect"
-            background-color="#545c64"
-            text-color="#fff"
-            active-text-color="#ffd04b">
-                <el-menu-item index="1">处理中心</el-menu-item>
-                <el-submenu index="2">
-                    <template slot="title">我的工作台</template>
-                    <el-menu-item index="2-1">选项1</el-menu-item>
-                    <el-menu-item index="2-2">选项2</el-menu-item>
-                    <el-menu-item index="2-3">选项3</el-menu-item>
-                    <el-submenu index="2-4">
-                    <template slot="title">选项4</template>
-                    <el-menu-item index="2-4-1">选项1</el-menu-item>
-                    <el-menu-item index="2-4-2">选项2</el-menu-item>
-                    <el-menu-item index="2-4-3">选项3</el-menu-item>
-                    </el-submenu>
-                </el-submenu>
-                <el-menu-item index="3" disabled>消息中心</el-menu-item>
-                <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
+            <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
+                background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
+                <el-menu-item index="china">国产</el-menu-item>
+                <el-menu-item index="japan">日本</el-menu-item>
+                <el-menu-item index="american">美国</el-menu-item>
+                <el-menu-item index="korea">韩国</el-menu-item>
+                <el-menu-item index="other">其它</el-menu-item>
             </el-menu>       
         </el-col>
     </el-row>
@@ -69,10 +51,10 @@
 export default {
     data() {
         return {
-            activeIndex: "1",
-            activeIndex2: "1",
-            bodyWidth:1920,
-            loading:true,
+            activeIndex: "china",           // 分类标签    
+            bodyWidth:722,                 // 可视化浏览器窗口
+            loading:true,                   // 初始化默认加载
+            location:"china",               //  所属地区标签
             rows:[{
                     title:"嘴臭生成器",
                     pic:"https://rpg.pic-imges.com/pic/upload/vod/2020-04/1586271875.jpg",
@@ -142,7 +124,7 @@ export default {
         };
     },
     mounted:function(){
-        this.deal_array();
+        // this.deal_array();
         this.resizeChart();         //添加窗口变化监听事件   
         this.deal_aside;
     },
@@ -154,11 +136,9 @@ export default {
     computed:{
         // 窗口变化监听事件
         deal_aside:function() {
-             
             window.onresize = () => {
                 return (() => {
-                this.bodyWidth = document.documentElement.clientWidth;
-                if(this.bodyWidth <= 992){
+                if(document.documentElement.clientWidth <= 992){
                     this.$refs.side.$el.style.display="none";
                     this.$refs.side1.$el.style.display="none";
                 }else{
@@ -172,7 +152,26 @@ export default {
     },
     methods: {
         handleSelect(key, keyPath) {
-            console.log(key, keyPath);
+            switch (key) {
+                case "china":
+                    console.log("china");
+                    break;
+                case "japan":
+                    console.log("japan");
+                    break;
+                case "korea":
+                    console.log("korea");
+                    break;
+                case "american":
+                    console.log("american");
+                    break;
+                case "other":
+                    console.log("other");
+                    break;
+                default:
+                    console.log("china");
+                    break;
+            }
         },
         //重设图表高宽
         resizeChart(){
@@ -199,7 +198,7 @@ export default {
                 if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; }  
             }  
             return flag;
-        },
+        }
 
     },
     watch: {

@@ -73,7 +73,7 @@
                                 <div class="per-video" :style="{ height:bodyHeight + 'px'}" v-loading="loading">
                                     <template v-for="(row,index) in results">
                                         <div class="bilibili" :key="index">
-                                            <div style="float:left;width:5em;height:1em;"><img v-lazy="row.pic" style="box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);border-radius: 4px"></div>
+                                            <div style="float:left;width:5em;height:1em;"><img v-lazy="'http:'+row.pic" style="box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);border-radius: 4px"></div>
                                             <div style="float:left;width:84%;margin-left:16px;">
                                                 <p style="width:100%;margin-top:0px;margin-bottom:8px;overflow:hidden;color:#d3c6a6;">{{row.title}}</p> 
                                                 <div><a :href="'https://www.bilibili.com/video/'+row.bvid" target="_blank"><el-button type="primary" size="mini">BILIBILI观看</el-button></a></div>

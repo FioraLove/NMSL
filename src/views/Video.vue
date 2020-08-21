@@ -128,7 +128,6 @@
             return {
                 loading:true,                       // 加载动画
                 api:"",
-                jishu:"blob:https://www.bilibili.com/58baed53-247f-415d-9119-554d7a08a39f",
                 url:"https://api.dogecloud.com/player/get.mp4?vcode=5ac682e6f8231991&userId=17&ext=.mp4",
                 thum_pic: require("../assets/images/tifa.jpg"),                   // 视频封面
                 subtitle:"https://s-sh-17-dplayercdn.oss.dogecdn.com/hikarunara.vtt",           // 字幕url

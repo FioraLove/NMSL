@@ -8,6 +8,7 @@
             <hr>    
         </div>
         <div class="btns">
+            <el-button type="danger" plain @click="open">源代码</el-button>
             <el-button type="primary" @click="getContent()">切换</el-button>
             <el-button id="btn" type="success" :data-clipboard-text="rows.content">复制</el-button>
         </div>
@@ -25,7 +26,7 @@ export default {
         return {
             loading: false,
             rows:{},    // 嘴臭数据集
-            currentPage: 8,     // 当前页数
+            currentPage: parseInt(Math.random()*10),     // 当前页数
             limit:1,    // limit偏差限制
             count:0,    // 返回数据量总数
         }
@@ -68,8 +69,13 @@ export default {
             .catch(function (error) {
                 console.log(error);
             });
-        }
-
+        },
+        open() {
+            const h = this.$createElement;
+            this.$notify({
+            title: '源代码',
+            message: h('i', { style: 'color: teal'}, 'https://github.com/FioraLove/Python/blob/master/Python爬虫案例/嘴臭生成器.py ')
+        });}
     }
 }
 </script>
