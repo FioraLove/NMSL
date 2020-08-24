@@ -136,6 +136,7 @@
         },
         mounted() {
             this.initDPlayer;
+            console.log(this.$route.query.id);
         },
         computed: {
             initDPlayer:function(){

@@ -43,11 +43,14 @@
                         </el-col>
                     </el-row>
                 </el-main>
+                <el-footer>
+                    <div class="block">
+                        <el-pagination @current-change="handleCurrentChange" :current-page.sync="currentPage" :page-size="page_size" layout="prev, pager, next, jumper" :total="count">
+                        </el-pagination>
+                    </div>
+                </el-footer>
             </el-container>
-            <div class="block">
-                <el-pagination @current-change="handleCurrentChange" :current-page.sync="currentPage" :page-size="page_size" layout="prev, pager, next, jumper" :total="count">
-                </el-pagination>
-            </div>
+
         </div>
     <div class="footer">
             <div class="bk"><hr></div>
@@ -112,7 +115,6 @@ export default {
                 if(response.status == 200){
                     app.rows = response.data.musics;
                     app.count = response.data.pgt;
-                    console.log(response.data.pgt)
                 }else{
                     app.rows = {"content":"暂无数据。。。"};
                 }

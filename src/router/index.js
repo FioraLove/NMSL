@@ -21,7 +21,11 @@ Vue.use(VueRouter,axios)
         path: '/media',
         name: 'Media',
         // 路由懒加载模式
-        component: () => import(/* webpackChunkName: "about" */ '../views/Media.vue')
+        component: () => import(/* webpackChunkName: "about" */ '../views/Media.vue'),
+        children:[{
+            path:"catalog",
+            component:()=> import('../views/subUser/catalog.vue')
+        }]
     },
     {
         path: '/page',
@@ -43,7 +47,7 @@ Vue.use(VueRouter,axios)
             // 如果父路由，遇到没有可渲染的子路由，可以设置一个空路由；
             path : '*', 
             component: () => import('../views/Page.vue')
-        }] 
+        }]
     },
     {   // 音频MP3模块
         path: '/audio',     // query模式
@@ -62,7 +66,20 @@ Vue.use(VueRouter,axios)
         path: '/ndsl',
         name: 'Ndsl',
         component: () => import(/* webpackChunkName: "about" */ '../views/Ndsl.vue')
+    },{
+        // 漫画模块
+        path: '/comic',
+        name: 'Comic',
+        // 路由懒加载模式
+        component: () => import(/* webpackChunkName: "about" */ '../views/Comic.vue'),
+    },{
+        // 漫画章节模块
+        path: '/comic/category',
+        name: 'Category',
+        // 路由懒加载模式
+        component: () => import(/* webpackChunkName: "about" */ '../views/subUser/catalog.vue')     
     }
+
 ]
 
 const router = new VueRouter({
