@@ -133,7 +133,7 @@ export default {
                     content:"音乐",
                     url:"/audio"
                 },{
-                    content:"视频",
+                    content:"视频解析",
                     url:"/video"
                 },{
                     content:"抽象圣经",

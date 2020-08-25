@@ -70,7 +70,7 @@ export default {
                 console.log(error);
             });
         },
-        open() {
+        open:function(){
             const h = this.$createElement;
             this.$notify({
             title: '源代码',

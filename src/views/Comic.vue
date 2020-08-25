@@ -11,6 +11,7 @@
                             <el-menu-item index="3">科幻魔幻</el-menu-item>
                             <el-menu-item index="4">侦探推理</el-menu-item>
                             <el-menu-item index="5">耽美爱情</el-menu-item>
+                            <el-menu-item index="6">生活漫画</el-menu-item>
                     </el-menu>  
                 </template>
                 <template v-else>
@@ -21,6 +22,7 @@
                             <el-menu-item index="3">科幻魔幻</el-menu-item>
                             <el-menu-item index="4">侦探推理</el-menu-item>
                             <el-menu-item index="5">耽美爱情</el-menu-item>
+                            <el-menu-item index="6">生活漫画</el-menu-item>
                     </el-menu>  
                 </template>
             </div>
@@ -37,7 +39,7 @@
                     <el-col :xs="8" :sm="6" :md="6" :lg="4" :xl="4" v-for='(row,index) in rows' :key="index" style="margin-top:10px;">
                         <div class="card">
                             <div class="header">
-                                <router-link :to="{path : '/comic/category', query : {sid : row.sid}}" :title="row.title"><img v-lazy="row.cover"></router-link>
+                                <router-link :to="{path : '/comic/category', query : {sid : row.sid, cover: row.cover, update:row.update_content,time:row.update}}" :title="row.title"><img v-lazy="row.cover"></router-link>
                             </div>
                             <template v-if ="flag ==false">                            
                                 <div class="card_date">
@@ -49,11 +51,12 @@
                             </div>
                             <div class="card_footer">
                                 <div class="title">
-                                    <span><router-link :to="{path : '/comic/category', query : {sid : row.sid}}" :title="row.title">{{row.title}}</router-link></span>
+                                    <span><router-link :to="{path : '/comic/category', query : {sid : row.sid,cover: row.cover, update:row.update_content,time:row.update}}" :title="row.title">{{row.title}}</router-link></span>
                                 </div>
                                 <template v-if="flag">
                                     <div class="author">
-                                        <span><el-rate :value="parseFloat(row.judge)" disabled show-score text-color="#ff9900" score-template="{value}"></el-rate></span>
+                                        <!-- <span><el-rate :value="parseFloat(row.judge)" disabled show-score text-color="#ff9900" score-template="{value}"></el-rate></span> -->
+                                        <span>更新至：{{row.update_content}}</span>
                                     </div>
                                 </template>
 
@@ -158,17 +161,14 @@ export default {
                 case "3":
                     this.category = "3";
                     break;
-                case "3":
-                    this.category = "1";
-                    break;
                 case "4":
                     this.category = "4";
                     break;
                 case "5":
                     this.category = "5";
                     break;
-                case "5":
-                    this.category = "5";
+                case "6":
+                    this.category = "6";
                     break;
                 default:
                     this.category = "1";
@@ -325,7 +325,7 @@ export default {
     }
     .author{
         margin-top: 1em;
-        font-size: 8px;
+        font-size: 11px;
 
     }
     .author el-rate{
