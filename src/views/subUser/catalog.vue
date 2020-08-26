@@ -10,18 +10,18 @@
                                 <div class="comic-head-pc">
                                     <div class="cover"><img v-lazy="cover"></div>
                                     <div class="bar-right">
-                                        <div class="title"><b>{{title}}</b></div>
+                                        <div class="title"><b>{{author_info.title}}</b></div>
                                         <div class="introduction">
-                                            <p class="author"> 作者：{{author}}</p><br>
-                                            <span class="state" v-if="state == '1'">状态：连载中</span>
-                                            <span class="state" v-if="state == '0'">状态：已完结</span>
-                                            <span class="category">题材：{{category}}</span>
+                                            <p class="author"> 作者：{{author_info.author}}</p><br>
+                                            <span class="state" v-if="author_info.state == '1'">状态：连载中</span>
+                                            <span class="state" v-if="author_info.state == '0'">状态：已完结</span>
+                                            <span class="category">题材：{{author_info.location}}</span>
                                             <span class="update_time">更新时间：{{update_time}}</span><br>
                                             <span class="update">最新：  <b>{{update}}</b></span><br>
                                         </div>
 
                                         <div class="info">
-                                            <span>{{content}}</span>
+                                            <span>{{author_info.content}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -65,8 +65,8 @@
                         <div class="chapter-lists">
                             <div class="inBox">
                                 <ul>
-                                    <li v-for="(lis,index) in 100" :key="index">
-                                        <p>第10话 我可是一头有品位的浪狼（P）</p>
+                                    <li v-for="(lis,index) in chapter_arr" :key="index">
+                                        <p @click="get_image($event)" :item-data="lis.chapter_number">{{lis.chapter_title}}</p>
                                     </li>
                                 </ul>
                             </div>
@@ -98,34 +98,44 @@ export default {
             cover:this.$route.query.cover,
             update:this.$route.query.update,
             update_time:this.$route.query.time,
-            // cover:"https://cdn.jsdelivr.net/gh/FioraLove/CDN@1.0/Avatar.png",
-            title:"重生之都市修仙",
-            author:"大行道动漫",
-            category:"冒险热血",
-            copyright:"1",
-            state:"1",
-            content:"漫画简介：介绍:《重生之都市修仙》漫画版由天津大行道动漫漫画团队绘制，根据阅文集团旗下起点中文网的同名小说改编，作者是十里剑神。北玄仙尊陈凡因为修行太快渡劫失败，因缘际会下，发现自己重回地球的年少时代，法力、神通、元神、道心甚至法宝道器神兵全都消失。陈凡回忆自己上一世的种种恩怨情仇，决心要弥补遗憾，铸成无上道基……",
-            lists:["1|http://dingyue.ws.126.net/2020/0331/03be492bj00q80rz70038c000m800vhm.jpg", "2|http://dingyue.ws.126.net/2020/0331/d379a0d6j00q80rz7003gc000m800vhm.jpg", "3|http://dingyue.ws.126.net/2020/0331/d4ba7b55j00q80rz6003nc000m800vhm.jpg", "4|http://dingyue.ws.126.net/2020/0331/5eef43aej00q80rz7003yc000m800vhm.jpg", "5|http://dingyue.ws.126.net/2020/0331/995bc52dj00q80rz7003rc000m800vhm.jpg", "6|http://dingyue.ws.126.net/2020/0331/e0c6bc4cj00q80rz6004cc000m800vhm.jpg", "7|http://dingyue.ws.126.net/2020/0331/bda664adj00q80rz7004ic000m800vhm.jpg", "8|http://dingyue.ws.126.net/2020/0331/6d9492bbj00q80rz6005mc000m800vhm.jpg", "9|http://dingyue.ws.126.net/2020/0331/940e0e97j00q80rz6004mc000m800vhm.jpg"],
+            author_info:{},                         // 作者简介信息组
+            lists:[],
             rows:[],
             flag:true,
+            chapter_arr:[],                 // 章节id
         }
     },
     
     mounted() {
-        this.deal_array;
         this.isPC();
+        this.getContent();
+        this.getInfo;
     },
 
     computed: {
-        deal_array:function () {
-            let xe9527 = this.lists;
-            let arr = [];
-            for (let index = 0; index < xe9527.length; index++) {
-                arr.push(xe9527[0].split("|")[1])
-            }
-            this.rows = arr;
+        // 发送简介Ajax请求
+        getInfo:function(){
+            let app = this;
+            axios({
+                url:"http://127.0.0.1:8001/nmsl/api/comic/author",
+                method:"get",
+                params:{
+                    uid: this.sid
+                }
+            })
+            .then(function(response){
+                if(response.status == 200){
+                    app.author_info = response.data.results;
+                }else{
+                    app.author_info = {};
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
         }
     },
+
     methods: {
         isPC:function(){  
             let userAgentInfo = navigator.userAgent;
@@ -135,7 +145,65 @@ export default {
                 if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; }  
             }  
             this.flag = flag;
+        },
+        // 发送Ajax请求
+        getContent:function(){
+            let app = this;
+            axios({
+                url:"http://127.0.0.1:8001/nmsl/api/comic/chapter",
+                method:"get",
+                params:{
+                    uid: this.sid,
+                    offset:'0',
+                    limit:'400'
+                }
+            })
+            .then(function(response){
+                if(response.status == 200 && response.data.count != 0){
+                    app.loading = false;
+                    let xe9527 = (response.data.results[0]["images_url"]).split("'");
+                    let arr = [];
+                    for (let index = 1; index < xe9527.length; index+=2) {
+                        // 由于数据库数据结构设置错误，导致无法使用json
+                        arr.push(xe9527[index]);
+                    }
+                    if (arr.length<1) arr = JSON.parse(response.data.results[0]["images_url"]);
+                    app.rows = arr;
+                    app.chapter_arr = response.data.results;
+                }else{
+                    app.chapter_arr = [];
+                    app.rows = ["https://p.pstatp.com/origin/ffbf0000e0493d37284c"];
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        },
+        get_image:function(el){
+            // 获取当前点击元素的属性值
+            let a = parseInt(el.target.getAttribute("item-data"));
+            let b = (this.chapter_arr[a]["images_url"]).split("'");
+
+            if(b.length<=1){
+                this.rows = JSON.parse(this.chapter_arr[a]["images_url"])
+            }else{
+                let arr = [];
+                for (let index = 1; index < b.length; index+=2){
+                    // 由于数据库数据结构设置错误，导致无法使用json
+                    arr.push(b[index]);
+                }
+                this.rows = arr;
+            }
+            
         }
+    },
+    watch: {
+        sid: {
+            deep: true,
+            handler: function (newVal, oldVal) {
+                this.getInfo;
+            }
+        },
     },
     
 }
@@ -250,7 +318,7 @@ export default {
 
     .outer{
         width:100%;
-        background-color: rgb(15, 248, 170);
+        background-color: transparent;
         overflow: hidden;
         height: 95vh;
         cursor: pointer;
