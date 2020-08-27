@@ -50,7 +50,7 @@
                     <!-- 中间的图片展示模块 -->
                     <el-col :xs="24" :sm="14" :md="14" :lg="14" :xl="14">
                         
-                        <div class="outer">
+                        <div class="outer" v-loading="loading">
                             <div class="inner">
                                 <div class="pic-box" v-for="(row,index) in rows" :key="index"><img v-lazy="row"></div>
                             </div>
@@ -102,6 +102,7 @@ export default {
             lists:[],
             rows:[],
             flag:true,
+            loading:true,
             chapter_arr:[],                 // 章节id
         }
     },
@@ -155,12 +156,13 @@ export default {
                 params:{
                     uid: this.sid,
                     offset:'0',
-                    limit:'400'
+                    limit:'800'
                 }
             })
             .then(function(response){
+                app.loading = true;
                 if(response.status == 200 && response.data.count != 0){
-                    app.loading = false;
+                    
                     let xe9527 = (response.data.results[0]["images_url"]).split("'");
                     let arr = [];
                     for (let index = 1; index < xe9527.length; index+=2) {
@@ -174,18 +176,20 @@ export default {
                     app.chapter_arr = [];
                     app.rows = ["https://p.pstatp.com/origin/ffbf0000e0493d37284c"];
                 }
+                app.loading = false;
             })
             .catch(function (error) {
                 console.log(error);
             });
         },
         get_image:function(el){
+            this.loading = true;
             // 获取当前点击元素的属性值
-            let a = parseInt(el.target.getAttribute("item-data"));
-            let b = (this.chapter_arr[a]["images_url"]).split("'");
+            let a = parseInt(el.target.getAttribute("item-data"))-1;
 
+            let b = (this.chapter_arr[a]["images_url"]).split("'");
             if(b.length<=1){
-                this.rows = JSON.parse(this.chapter_arr[a]["images_url"])
+                this.rows = JSON.parse(this.chapter_arr[a]["images_url"]);
             }else{
                 let arr = [];
                 for (let index = 1; index < b.length; index+=2){
@@ -194,6 +198,7 @@ export default {
                 }
                 this.rows = arr;
             }
+            this.loading = false;
             
         }
     },
@@ -256,6 +261,7 @@ export default {
     .bar-right .title{
         font-size:1.5em;
         margin-top:8px;
+        margin-bottom: 6px;
         font-family: 'Courier New', Courier, monospace;
 
     }
@@ -305,7 +311,6 @@ export default {
     }
     .comic-head-pc .cover img{
         width: 160px;
-        
         border-radius: 6px;
         box-shadow: 10px 8px 5px rgba(177, 172, 172, 0.6)
     }
@@ -322,6 +327,8 @@ export default {
         overflow: hidden;
         height: 95vh;
         cursor: pointer;
+        box-shadow: 10px 10px 5px rgba(177, 172, 172, 0.6);
+        border-radius: 8px;
     }
     .outer .inner{
         width:105%;

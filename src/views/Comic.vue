@@ -28,6 +28,17 @@
             </div>
         </el-col>
     </el-row>
+    <!-- 告示窗口 -->
+    <div>
+        <el-alert
+            title="关于漫画资源的说明"
+            type="warning"
+            center
+            description="由于目前的漫画数据数据是存储在sqlite3，考虑到其性能问题，只存储了【冒险热血】类的数据。后续有了远程数据库后，将存储所有的题材的漫画，十分抱歉😭😭😭"
+            show-icon>
+        </el-alert>
+    </div>
+
     <div class="line"></div>
     <el-container>
         <template v-if="flag">
@@ -83,6 +94,7 @@
             <el-aside width="180px;" ref="side">advertisement</el-aside>
         </template>
     </el-container>
+
     <div class="footer">
         <div class="bk"><hr></div>
         <p>本站的资源由网络第三方视频类网站收集，不提供任何视听上传服务，内容均来自各分享站点所提供的公开引用资源。</p>
@@ -92,8 +104,9 @@
             <a href="https://AhriLove.top" target="_self"><img src="https://cdn.jsdelivr.net/gh/FioraLove/Images/D:/data/imagesaaa.png" alt="AhriLove"></a>
         </div>
     </div>
-    
+
   </div>
+  
 </template>
 
 <script>

@@ -6,19 +6,43 @@
                 <el-row :gutter="30">
 
                     <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-                        <div style="margin-top: 15px;margin:0 auto;width:60%;">
-                           <el-input placeholder="请输入测试播放的视频地址" v-model="input_url" class="input-with-select">
-                                <el-select v-model="select" slot="prepend" placeholder="请选择">
-                                <el-option label="抖音" value="1"></el-option>
-                                <el-option label="YouTube" value="2"></el-option>
-                                <el-option label="其它" value="3"></el-option>
-                                </el-select>
+
+                        <div style="margin-top: 15px;margin:0 auto;width:80%;">
+                            <el-alert
+                                title="视频测试播放"
+                                type="success"
+                                center
+                                description="将视频地址添加到输入框中，某些视频若存在字幕，可将其字幕url地址添加到字幕框中">
+                            </el-alert>                            
+                            <el-input placeholder="请输入测试播放的视频地址" v-model="input_url" class="input-with-select" clearable>
                             </el-input>
                             <br><br>
-                            <el-input placeholder="非必填项： e.g.,https://s-sh-17-dplayercdn.oss.dogecdn.com/hikarunara.vtt" v-model="input_subtitle">
-                                <template slot="prepend">字幕:</template><el-button slot="append" icon="el-icon-search" @click="parse()"></el-button>
+                            <el-input placeholder="非必填项： e.g.,https://s-sh-17-dplayercdn.oss.dogecdn.com/hikarunara.vtt" v-model="input_subtitle" clearable>
+                                <template slot="prepend">字幕:</template><el-button slot="append" icon="el-icon-search" @click="play()"></el-button>
                             </el-input>
+                        </div>
+                        <br><br>
+                        <div style="margin-top: 15px;margin:0 auto;width:80%;">
+                            <el-alert
+                                title="视频解析接口"
+                                type="warning"
+                                center
+                                description="打开短视频APP，点开某个视频，点击右下角分享按钮，在分享弹框中点击复制链接或通过分享到微信QQ等获取分享链接">
+                            </el-alert>
 
+                           <el-input placeholder="请输入分享链接的视频地址(bilibili直接输入视频bv号)" v-model="input_api" class="input-with-select" clearable>
+                                <el-select v-model="select" slot="prepend" placeholder="请选择   ">
+                                <el-option label="抖音" value="1"></el-option>
+                                <el-option label="YouTube" value="2"></el-option>
+                                <el-option label="bilibili" value="3"></el-option>
+                                <el-option label="其它" value="4"></el-option>
+                                </el-select>
+                                <el-button slot="append" icon="el-icon-search" @click="parse()"></el-button>
+                            </el-input>
+                            
+                            <br><br>
+                            <el-input type="textarea" :rows="2"  placeholder="解析结果"  v-model="textarea"> 
+                            </el-input>
                         </div>
                     </el-col>
                 </el-row>
@@ -39,9 +63,11 @@
                                 <div class="tabBar">
                                     <div class="box">
                                         <el-row :gutter="10">
-                                            <el-col>   <!-- Episode-data用来存每集的播放链接  -->
-                                                <el-button plain  @click="open_douyin">抖音</el-button>
+                                            <el-col>   
+                                                <!-- Episode-data用来存每集的播放链接  -->
                                                 <!-- <el-button v-for="(row,index) in 100" :key="index" style="margin:2px;width:5em;" episode-data="blob:https://www.bilibili.com/58baed53-247f-415d-9119-554d7a08a39f"  :ref="index">{{row}}</el-button> -->
+                                                <el-button plain  @click="open_douyin">抖音</el-button>
+                                                <el-button plain  @click="open_bili">哔哩哔哩</el-button>
                                             </el-col>
                                         </el-row>
                                     </div>
@@ -185,6 +211,12 @@
         padding-right: 2em;
         color: bisque;
     }
+    .el-select .el-input {
+    width: 130px;
+    }
+    .input-with-select .el-input-group__prepend {
+        background-color: #fff;
+    }
 </style>
 
 
@@ -196,14 +228,15 @@
         data() {
             return {
                 loading:true,                       // 加载动画
-                api:"https://api.dogecloud.com/player/get.mp4?vcode=5ac682e6f8231991&userId=17&ext=.mp4",
                 input_url: '',                      // 输入的视频播放地址
                 input_subtitle: '',                 // 输入的字幕加载地址
-                select: '',
                 url:"https://api.dogecloud.com/player/get.mp4?vcode=5ac682e6f8231991&userId=17&ext=.mp4",
                 thum_pic: require("../assets/images/tifa.jpg"),                   // 视频封面
                 subtitle:"https://s-sh-17-dplayercdn.oss.dogecdn.com/hikarunara.vtt",           // 字幕url
-                
+                textarea:"",
+                input_api:"",
+                api:"",
+                select:"3",
             }
         }, 
         mounted() {
@@ -260,13 +293,36 @@
             } 
         },
         methods: {
-            jumpEpisode:function (el) {
-                // 获取当前点击元素的自定义的属性内容
-                let data = el.target.getAttribute("episode-data");
-                this.api = data;
-                console.log(data);
+            parse:function(){
+                // 先清空文本域
+                this.textarea = "";
+                let app = this;
+                if(this.select == "" || this.input_url == ""){
+                    alert("请选择解析的视频类型和地址");
+                }else{
+                    axios({
+                        url:"http://127.0.0.1:8001/nmsl/api/video/parse/",
+                        method:"post",
+                        data:{
+                            category:this.select,
+                            url:this.input_api
+                        }
+                    })
+                    .then(function(response){
+                        if(response.status == 200){
+                            app.textarea = response.data;
+                            
+                        }else{
+                            app.textarea = "";
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    })
+                }
+
             },
-            parse:function () {
+            play:function () {
                 if (this.input_url.length <= 20) {
                     // 使用默认的视频地址
                     this.url = "https://api.dogecloud.com/player/get.mp4?vcode=5ac682e6f8231991&userId=17&ext=.mp4";
@@ -279,8 +335,15 @@
             open_douyin:function(){
                 const h = this.$createElement;
                 this.$notify({
-                    title: '源代码',
+                    title: '抖音源代码',
                     message: h('b', { style: 'color: teal'}, 'https://github.com/FioraLove/Net-Spider/tree/develop/抖音/抖音最新版')
+                })
+            },
+            open_bili:function(){
+                const h = this.$createElement;
+                this.$notify({
+                    title: '哔哩哔哩源代码',
+                    message: h('b', { style: 'color: teal'}, 'https://github.com/FioraLove/Net-Spider/blob/develop/selenium登录哔哩哔哩/哔哩哔哩视频下载/download_method_3.py')
                 })
             },
 
