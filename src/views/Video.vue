@@ -33,9 +33,10 @@
                            <el-input placeholder="请输入分享链接的视频地址(bilibili直接输入视频bv号)" v-model="input_api" class="input-with-select" clearable>
                                 <el-select v-model="select" slot="prepend" placeholder="请选择   ">
                                 <el-option label="抖音" value="1"></el-option>
-                                <el-option label="YouTube" value="2"></el-option>
-                                <el-option label="bilibili" value="3"></el-option>
-                                <el-option label="其它" value="4"></el-option>
+                                <el-option label="YouTube" value="2" disabled></el-option>
+                                <el-option label="哔哩哔哩" value="3"></el-option>
+                                <el-option label="好看视频" value="4"></el-option>
+                                <el-option label="其它" value="99"></el-option>
                                 </el-select>
                                 <el-button slot="append" icon="el-icon-search" @click="parse()"></el-button>
                             </el-input>
@@ -68,6 +69,7 @@
                                                 <!-- <el-button v-for="(row,index) in 100" :key="index" style="margin:2px;width:5em;" episode-data="blob:https://www.bilibili.com/58baed53-247f-415d-9119-554d7a08a39f"  :ref="index">{{row}}</el-button> -->
                                                 <el-button plain  @click="open_douyin">抖音</el-button>
                                                 <el-button plain  @click="open_bili">哔哩哔哩</el-button>
+                                                <el-button plain  @click="open_haokan">好看视频</el-button>
                                             </el-col>
                                         </el-row>
                                     </div>
@@ -92,6 +94,155 @@
         </div>
     </div>
 </template>
+
+
+
+<script scoped>
+    import DPlayer from "../assets/js/DPlayer.min.js";
+    export default {
+        name: "User",
+        data() {
+            return {
+                loading:true,                       // 加载动画
+                input_url: '',                      // 输入的视频播放地址
+                input_subtitle: '',                 // 输入的字幕加载地址
+                url:"https://api.dogecloud.com/player/get.mp4?vcode=5ac682e6f8231991&userId=17&ext=.mp4",
+                thum_pic: require("../assets/images/tifa.jpg"),                   // 视频封面
+                subtitle:"https://s-sh-17-dplayercdn.oss.dogecdn.com/hikarunara.vtt",           // 字幕url
+                textarea:"",
+                input_api:"",
+                api:"",
+                select:"",
+            }
+        }, 
+        mounted() {
+            this.initDPlayer;                       // 初始化计算属性
+        },
+        computed: {
+            // 视频播放器初始化函数
+            initDPlayer:function(){
+                const dp = new DPlayer({
+                    container: document.getElementById('dplayer'),
+                    autoplay: false,
+                    theme: '#FADFA3',
+                    loop: true,
+                    lang: 'zh-cn',
+                    screenshot: true,
+                    hotkey: true,
+                    preload: 'metadata',
+                    // 左上角展示的logo
+                    logo:  require("../assets/images/video_logo.png"),
+                    volume: 0.5,
+                    mutex: true,
+                    video: {
+                        url:this.url,
+                        defaultQuality: 0,
+
+                        pic: this.thum_pic,
+                        thumbnails: "",
+                        type: 'auto',
+                    },
+                    // 字幕
+                    subtitle: {
+                        url: this.subtitle,
+                        type: 'webvtt',
+                        fontSize: '20px',
+                        bottom: '8%',
+                        color: '#b7daff',
+                    },
+                    contextmenu: [
+                        {
+                            text: '二次作者',
+                            link: 'AhriLove·牛蛙点点'
+                        }
+                    ],
+                    highlight: [{
+                            time: 20,
+                            text: '这是第 20 秒',
+                        },{
+                            time: 120,
+                            text: '这是 2 分钟',
+                        }
+                    ]
+                });
+                this.loading=false;
+            } 
+        },
+        methods: {
+            parse:function(){
+                // 先清空文本域
+                this.textarea = "";
+                let app = this;
+                if(this.select == "" || this.input_api == ""){
+                    alert("请选择解析的视频类型和地址");
+                }else{
+                    axios({
+                        url:"http://127.0.0.1:8001/nmsl/api/video/parse/",
+                        method:"post",
+                        data:{
+                            category:this.select,
+                            url:this.input_api
+                        }
+                    })
+                    .then(function(response){
+                        if(response.status == 200){
+                            app.textarea = response.data;
+                            
+                        }else{
+                            app.textarea = "";
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    })
+                }
+
+            },
+            play:function () {
+                if (this.input_url.length <= 20) {
+                    // 使用默认的视频地址
+                    this.url = "https://api.dogecloud.com/player/get.mp4?vcode=5ac682e6f8231991&userId=17&ext=.mp4";
+                } else {
+                    this.url = this.input_url;
+                }
+                console.log(this.url);
+                this.subtitle = this.input_subtitle;
+            },
+            open_douyin:function(){
+                const h = this.$createElement;
+                this.$notify({
+                    title: '抖音源代码',
+                    message: h('b', { style: 'color: teal'}, 'https://github.com/FioraLove/Net-Spider/tree/develop/抖音/抖音最新版')
+                })
+            },
+            open_bili:function(){
+                const h = this.$createElement;
+                this.$notify({
+                    title: '哔哩哔哩源代码',
+                    message: h('b', { style: 'color: teal'}, 'https://github.com/FioraLove/Net-Spider/blob/develop/selenium登录哔哩哔哩/哔哩哔哩视频下载/download_method_3.py')
+                })
+            },
+            open_haokan:function(){
+                const h = this.$createElement;
+                this.$notify({
+                    title: '好看视频源代码',
+                    message: h('b', { style: 'color: teal'}, 'https://github.com/FioraLove/Python/blob/master/Python爬虫案例/haokan.py')
+                })
+            },
+
+        },
+
+        // 事件监听 
+        watch: {
+            url:{
+                handler(newVal,oldVal){
+                    this.initDPlayer;
+                },
+                deep:true
+            }
+        }
+    }
+</script>
 
 
 
@@ -219,145 +370,4 @@
     }
 </style>
 
-
-
-<script scoped>
-    import DPlayer from "../assets/js/DPlayer.min.js";
-    export default {
-        name: "User",
-        data() {
-            return {
-                loading:true,                       // 加载动画
-                input_url: '',                      // 输入的视频播放地址
-                input_subtitle: '',                 // 输入的字幕加载地址
-                url:"https://api.dogecloud.com/player/get.mp4?vcode=5ac682e6f8231991&userId=17&ext=.mp4",
-                thum_pic: require("../assets/images/tifa.jpg"),                   // 视频封面
-                subtitle:"https://s-sh-17-dplayercdn.oss.dogecdn.com/hikarunara.vtt",           // 字幕url
-                textarea:"",
-                input_api:"",
-                api:"",
-                select:"3",
-            }
-        }, 
-        mounted() {
-            this.initDPlayer;                       // 初始化计算属性
-        },
-        computed: {
-            // 视频播放器初始化函数
-            initDPlayer:function(){
-                const dp = new DPlayer({
-                    container: document.getElementById('dplayer'),
-                    autoplay: false,
-                    theme: '#FADFA3',
-                    loop: true,
-                    lang: 'zh-cn',
-                    screenshot: true,
-                    hotkey: true,
-                    preload: 'metadata',
-                    // 左上角展示的logo
-                    logo:  require("../assets/images/video_logo.png"),
-                    volume: 0.5,
-                    mutex: true,
-                    video: {
-                        url:this.url,
-                        defaultQuality: 0,
-
-                        pic: this.thum_pic,
-                        thumbnails: "",
-                        type: 'auto',
-                    },
-                    // 字幕
-                    subtitle: {
-                        url: this.subtitle,
-                        type: 'webvtt',
-                        fontSize: '20px',
-                        bottom: '8%',
-                        color: '#b7daff',
-                    },
-                    contextmenu: [
-                        {
-                            text: '二次作者',
-                            link: 'AhriLove·牛蛙点点'
-                        }
-                    ],
-                    highlight: [{
-                            time: 20,
-                            text: '这是第 20 秒',
-                        },{
-                            time: 120,
-                            text: '这是 2 分钟',
-                        }
-                    ]
-                });
-                this.loading=false;
-            } 
-        },
-        methods: {
-            parse:function(){
-                // 先清空文本域
-                this.textarea = "";
-                let app = this;
-                if(this.select == "" || this.input_url == ""){
-                    alert("请选择解析的视频类型和地址");
-                }else{
-                    axios({
-                        url:"http://127.0.0.1:8001/nmsl/api/video/parse/",
-                        method:"post",
-                        data:{
-                            category:this.select,
-                            url:this.input_api
-                        }
-                    })
-                    .then(function(response){
-                        if(response.status == 200){
-                            app.textarea = response.data;
-                            
-                        }else{
-                            app.textarea = "";
-                        }
-                    })
-                    .catch(function (error) {
-                        console.log(error);
-                    })
-                }
-
-            },
-            play:function () {
-                if (this.input_url.length <= 20) {
-                    // 使用默认的视频地址
-                    this.url = "https://api.dogecloud.com/player/get.mp4?vcode=5ac682e6f8231991&userId=17&ext=.mp4";
-                } else {
-                    this.url = this.input_url;
-                }
-                console.log(this.url);
-                this.subtitle = this.input_subtitle;
-            },
-            open_douyin:function(){
-                const h = this.$createElement;
-                this.$notify({
-                    title: '抖音源代码',
-                    message: h('b', { style: 'color: teal'}, 'https://github.com/FioraLove/Net-Spider/tree/develop/抖音/抖音最新版')
-                })
-            },
-            open_bili:function(){
-                const h = this.$createElement;
-                this.$notify({
-                    title: '哔哩哔哩源代码',
-                    message: h('b', { style: 'color: teal'}, 'https://github.com/FioraLove/Net-Spider/blob/develop/selenium登录哔哩哔哩/哔哩哔哩视频下载/download_method_3.py')
-                })
-            },
-
-        },
-
-        // 事件监听 
-        watch: {
-            url:{
-                handler(newVal,oldVal){
-                    this.initDPlayer;
-                },
-                deep:true
-            }
-        }
-    }
-</script>
 
