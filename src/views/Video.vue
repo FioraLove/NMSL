@@ -36,6 +36,11 @@
                                 <el-option label="YouTube" value="2" disabled></el-option>
                                 <el-option label="哔哩哔哩" value="3"></el-option>
                                 <el-option label="好看视频" value="4"></el-option>
+                                <el-option label="六间房" value="5"></el-option>
+                                <el-option label="全民小视频" value="6"></el-option>
+                                <el-option label="陌陌视频" value="7"></el-option>
+                                <el-option label="梨视频" value="8"></el-option>
+                                <el-option label="美拍" value="9"></el-option>
                                 <el-option label="其它" value="99"></el-option>
                                 </el-select>
                                 <el-button slot="append" icon="el-icon-search" @click="parse()"></el-button>
@@ -67,9 +72,14 @@
                                             <el-col>   
                                                 <!-- Episode-data用来存每集的播放链接  -->
                                                 <!-- <el-button v-for="(row,index) in 100" :key="index" style="margin:2px;width:5em;" episode-data="blob:https://www.bilibili.com/58baed53-247f-415d-9119-554d7a08a39f"  :ref="index">{{row}}</el-button> -->
-                                                <el-button plain  @click="open_douyin">抖音</el-button>
-                                                <el-button plain  @click="open_bili">哔哩哔哩</el-button>
-                                                <el-button plain  @click="open_haokan">好看视频</el-button>
+                                                <el-button plain style="margin:2px;"  @click="open_douyin">抖音</el-button>
+                                                <el-button plain style="margin:2px;"  @click="open_bili">哔哩哔哩</el-button>
+                                                <el-button plain style="margin:2px;"  @click="open_haokan">好看视频</el-button>
+                                                <el-button plain style="margin:2px;"  @click="open_sixroom">六间房</el-button>
+                                                <el-button plain style="margin:2px;"  @click="open_quanmin">全民小视频</el-button>
+                                                <el-button plain style="margin:2px;"  @click="open_momo">陌陌视频</el-button>
+                                                <el-button plain style="margin:2px;"  @click="open_pear">梨视频</el-button>
+                                                <el-button plain style="margin:2px;"  @click="open_meipai">美拍</el-button>
                                             </el-col>
                                         </el-row>
                                     </div>
@@ -107,7 +117,7 @@
                 input_url: '',                      // 输入的视频播放地址
                 input_subtitle: '',                 // 输入的字幕加载地址
                 url:"https://api.dogecloud.com/player/get.mp4?vcode=5ac682e6f8231991&userId=17&ext=.mp4",
-                thum_pic: require("../assets/images/tifa.jpg"),                   // 视频封面
+                thum_pic: require("../assets/images/beautiful.jpg"),                   // 视频封面
                 subtitle:"https://s-sh-17-dplayercdn.oss.dogecdn.com/hikarunara.vtt",           // 字幕url
                 textarea:"",
                 input_api:"",
@@ -227,6 +237,41 @@
                 this.$notify({
                     title: '好看视频源代码',
                     message: h('b', { style: 'color: teal'}, 'https://github.com/FioraLove/Python/blob/master/Python爬虫案例/haokan.py')
+                })
+            },
+            open_sixroom:function(){
+                const h = this.$createElement;
+                this.$notify({
+                    title: '六间房视频源代码',
+                    message: h('b', { style: 'color: teal'}, 'https://github.com/FioraLove/Python/blob/master/Python爬虫案例/六间房.py')
+                })
+            },
+            open_quanmin:function(){
+                const h = this.$createElement;
+                this.$notify({
+                    title: '全民小视频源代码',
+                    message: h('b', { style: 'color: teal'}, 'https://github.com/FioraLove/Python/blob/master/Python爬虫案例/全民小视频.py')
+                })
+            },
+            open_momo:function(){
+                const h = this.$createElement;
+                this.$notify({
+                    title: '陌陌视频源代码',
+                    message: h('b', { style: 'color: teal'}, 'https://github.com/FioraLove/Python/blob/master/Python爬虫案例/陌陌视频.py')
+                })
+            },
+            open_pear:function(){
+                const h = this.$createElement;
+                this.$notify({
+                    title: '梨视频源代码',
+                    message: h('b', { style: 'color: teal'}, 'https://github.com/FioraLove/Python/blob/master/Python爬虫案例/梨视频.py')
+                })
+            },
+            open_meipai:function(){
+                const h = this.$createElement;
+                this.$notify({
+                    title: '美拍视频源代码',
+                    message: h('b', { style: 'color: teal'}, 'https://github.com/FioraLove/Python/tree/master/Python爬虫案例/美拍')
                 })
             },
 

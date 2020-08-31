@@ -63,6 +63,14 @@
                                     <div style="width:35%;background-color:yellow;height:4px;"></div>
                                 </div>
                             </div>
+                            <div class="process">
+                                <div style="float:left;width:20%;margin-top:12px;"><img src="../assets/images/docker.png"></div>
+                                <div style="float:left;width:70%;margin-left:1em;">
+                                    <p style="width:12em;color:hsla(0,0%,100%,.85);">Docker</p> 
+                                    <!-- 下面的width的属性决定进度条多宽 -->
+                                    <div style="width:40%;background-color:yellow;height:4px;"></div>
+                                </div>
+                            </div>
                         </div>
                     </el-col>
 
