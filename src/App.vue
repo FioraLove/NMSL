@@ -6,7 +6,6 @@
                     <router-link to="/">Home</router-link>|
                     <router-link to="/about">About</router-link>|
                     <router-link :to="{name : 'User', params : {id : 5}}">user/5</router-link> |
-                    <router-link to="/page">Page</router-link> |
                     <router-link :to="{path : '/list', query : {id : 8, name:'chd'}}">user/List/query</router-link>|
                     <router-link :to="{name : 'List', params : {id : 10,name:'lmm'}}">user/List/params</router-link> |
                     <router-link :to="{name : 'User', params : {id : 5}}">params的子路由</router-link> |

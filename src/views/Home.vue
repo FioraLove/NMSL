@@ -99,7 +99,7 @@
                 
             </el-main>
             <el-footer style="height:1.25em;">
-                <div style="text-align:center;color:hsla(0,0%,100%,.85);font-family: Roboto,sans-serif;">Copyright © 2020 AhriLove·鳄鱼邦邦</div>
+                <div style="text-align:center;color:hsla(0,0%,100%,.85);font-family: Roboto,sans-serif;">Copyright © {{nowYear}} AhriLove·鳄鱼邦邦</div>
             </el-footer>
         </el-container>
         
@@ -126,6 +126,7 @@ export default {
 
     data(){
         return {
+            nowYear:new Date().getFullYear(),
             bodyHeight:100,
             loading: true,
             rows:[{

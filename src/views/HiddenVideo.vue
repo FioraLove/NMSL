@@ -41,16 +41,16 @@
 
     <div class="line"></div>
     <el-container>
-        <template v-if="flag">
-            <el-aside width="180px;" ref="side">advertisement</el-aside>
-        </template>
+
         <el-container>
             <el-main>
                 <el-row :gutter="15">
                     <el-col :xs="8" :sm="6" :md="6" :lg="4" :xl="4" v-for='(row,index) in rows' :key="index" style="margin-top:10px;">
                         <div class="card">
                             <div class="header">
-                                <router-link :to="{path : '/comic/category', query : {sid : row.sid, cover: row.cover, update:row.update_content,time:row.update}}" :title="row.title"><img v-lazy="row.cover"></router-link>
+                                <router-link :to="{path : '/comic/category', query : {sid : row.sid, cover: row.cover, update:row.update_content,time:row.update}}" :title="row.title">
+                                    <img v-lazy="row.cover">
+                                </router-link>
                             </div>
                             <template v-if ="flag ==false">                            
                                 <div class="card_date">
@@ -90,11 +90,9 @@
                 </div>
             </el-footer>
         </el-container>
-        <template v-if="flag">
-            <el-aside width="180px;" ref="side">advertisement</el-aside>
-        </template>
-    </el-container>
 
+    </el-container>
+    {{token}}
     <div class="footer">
         <div class="bk"><hr></div>
         <p>本站的资源由网络第三方视频类网站收集，不提供任何视听上传服务，内容均来自各分享站点所提供的公开引用资源。</p>
@@ -110,10 +108,11 @@
 </template>
 
 <script>
-
 export default {
+    name:"HiddenVideo",
     data() {
         return {
+            token: "",
             nowYear:new Date().getFullYear(),
             activeIndex: "1",           // 分类标签    
             bodyWidth:722,                 // 可视化浏览器窗口
@@ -131,9 +130,11 @@ export default {
     },
     mounted:function(){
         this.resizeChart();         //添加窗口变化监听事件   
-        // this.deal_aside;
         this.getContent();
         this.isPC();
+        // 解密token
+        console.log(window.location.search.split("=")[1]);
+        this.token = window.btoa(decodeURIComponent(window.location.search.split("=")[1])); 
     },
     destoryed: function(){
         // 解除监听事件
@@ -223,10 +224,9 @@ export default {
                 // api1:自定义的api接口
                 url:"http://127.0.0.1:8001/nmsl/api/comic/",
                 method:"get",
-                // headers:{
-                //     "Host":"m.music.migu.cn",
-                //     "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36"
-                // },
+                headers:{
+                    "Authorization":"Token "+this.token,
+                },
                 params:{
                     offset:this.page_size*(this.currentPage-1),
                     limit: this.page_size,
@@ -284,6 +284,7 @@ export default {
         text-decoration: none;
         color: black;
     }
+    // moblie端
     @media screen and (max-width:480px){
         .card{
             max-width: 11.8em;
@@ -300,7 +301,12 @@ export default {
         .card .header{
             width: 100%;
             height: 9.8em;
-        }    
+        }
+        .card .card_update{
+            position:absolute;
+            left: 3px;
+            bottom: 3.2em;
+        }        
     }
     @media screen and (min-width:481px){
         .card{
@@ -318,8 +324,16 @@ export default {
         .card .header{
             width: 100%;
             height: 13.7em;
+        }
+        .card .card_update{
+            position:absolute;
+            left: 3px;
+            bottom: 5.2em;
         }        
     }
+
+
+
 
     .card .card_date{
         position:absolute;
@@ -329,11 +343,7 @@ export default {
         background-color: coral;
         border-radius: 20%;
     }
-    .card .card_update{
-        position:absolute;
-        left: 3px;
-        bottom: 5.2em;
-    }
+
     .card_date span{
         text-transform: uppercase;
         font-size: 18px;

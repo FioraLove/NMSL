@@ -66,7 +66,7 @@
                             <div class="inBox">
                                 <ul>
                                     <li v-for="(lis,index) in chapter_arr" :key="index">
-                                        <p @click="get_image($event)" :item-data="lis.chapter_number">{{lis.chapter_title}}</p>
+                                        <p @click="get_image($event)" :item-data="index">{{lis.chapter_title}}</p>
                                     </li>
                                 </ul>
                             </div>
@@ -185,7 +185,7 @@ export default {
         get_image:function(el){
             this.loading = true;
             // 获取当前点击元素的属性值
-            let a = parseInt(el.target.getAttribute("item-data"))-1;
+            let a = parseInt(el.target.getAttribute("item-data"));
 
             let b = (this.chapter_arr[a]["images_url"]).split("'");
             if(b.length<=1){

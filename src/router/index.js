@@ -28,11 +28,6 @@ Vue.use(VueRouter,axios)
         }]
     },
     {
-        path: '/page',
-        name: 'Page',
-        component: () => import(/* webpackChunkName: "about" */ '../views/Page.vue')
-    },
-    {
         path: '/video',
         name: 'Video',
         // 创建子路由/user/:id/profile 与 /user/:id/post
@@ -43,10 +38,6 @@ Vue.use(VueRouter,axios)
         },{ 
             path : 'posts', 
             component:()=> import('../views/subUser/posts.vue') 
-        },{
-            // 如果父路由，遇到没有可渲染的子路由，可以设置一个空路由；
-            path : '*', 
-            component: () => import('../views/Page.vue')
         }]
     },
     {   // 音频MP3模块
@@ -78,6 +69,16 @@ Vue.use(VueRouter,axios)
         name: 'Category',
         // 路由懒加载模式
         component: () => import(/* webpackChunkName: "about" */ '../views/subUser/catalog.vue')     
+    },{
+        // 管理员主页，仅自己可见
+        path: '/nmsl/admin/secret',
+        name: 'Secret',
+        component: () => import(/* webpackChunkName: "about" */ '../views/Admin.vue')
+    },{
+        // 登陆后的视频网址
+        path: '/nmsl/hidden/video/secret',
+        name: "HiddenVideo",
+        component: () => import('../views/HiddenVideo.vue')
     }
 
 ]
