@@ -26,7 +26,7 @@ export default {
         return {
             loading: false,
             rows:{},    // 嘴臭数据集
-            currentPage: parseInt(Math.random()*10),     // 当前页数
+            currentPage: parseInt(Math.random()*100),     // 当前页数
             limit:1,    // limit偏差限制
             count:0,    // 返回数据量总数
         }

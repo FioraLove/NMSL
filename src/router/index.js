@@ -84,6 +84,11 @@ Vue.use(VueRouter,axios)
         path: '/nmsl/hidden/video/play',
         name: "HiddenPlay",
         component: () => import('../views/HiddenPlay.vue')
+    },{
+        // 登陆后的图片浏览网址
+        path: '/nmsl/hidden/picture',
+        name: "HiddenPic",
+        component: () => import('../views/HiddenPic.vue')
     }
 
 ]

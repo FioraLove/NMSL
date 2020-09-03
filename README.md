@@ -19,3 +19,7 @@ npm run build
 
 #### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### 开发日志:
+    - ...
+    - 2020-09-03 隐私加密视频页面初步构建以及前后交互
