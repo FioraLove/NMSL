@@ -1,108 +1,411 @@
 <template>
     <!--组件有且只有一个根标签-->
     <div class="home">
-        <div class="bg">
-            <p>家人们~~~🤕🤕🤕，抽象圣经，最简单的嘴臭，最极致的享受</p>
-        </div>
+        <div class="bg"></div>
         <el-container style="padding: 1em;">
-            <el-header style="height:20px;width:100%;">
-                <el-row>
-                    <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-                        <div class="top-box"></div>
-                    </el-col>
-                </el-row>
-            </el-header>
-            <el-aside width="200px" id="nav">
-                <router-link to="/">Home</router-link><br>
-                <router-link to="/about">About</router-link><br>
-                <router-link :to="{name : 'User', params : {id : 5}}">user/5</router-link> <br>
-                <router-link to="/page">Page</router-link> <br>
-                <router-link :to="{path : '/list', query : {id : 8, name:'chd'}}">user/List/query</router-link><br>
-                <router-link :to="{name : 'List', params : {id : 10,name:'lmm'}}">user/List/params</router-link> <br>
-                <router-link :to="{name : 'User', params : {id : 5}}">params的子路由</router-link> <br>
-                <router-link to="/loveword">嘴臭生成器</router-link> <br>
-            </el-aside>
             <el-main>
-                <!---gutter表示栅栏间隔-->
-                <el-row :gutter="30">
-                    <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="6" v-for="(o) in 3" :key="o" style="margin-top:12px;">
-                        <el-card :body-style="{ padding: '0px' }">
-                        <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image" data-action="zoom">
-                        <div style="padding: 14px;">
-                            <span>好吃的汉堡</span>
-                            <div class="bottom clearfix">
-                            <time class="time">{{ currentDate }}</time>
-                            <el-button type="text" class="button" @click="goUser2(o,'chd')">操作按钮</el-button>
+                <el-row :gutter="10">
+                    <!-- 头像模块 -->
+                    <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="8">
+                        <div class="card">
+                            <div class="header">
+                                <a href="javascript:;" title="AhriLove"><img src="https://cdn.jsdelivr.net/gh/FioraLove/CDN@1.0/Avatar.png" alt=""></a>
+                            </div>
+
+                            <div class="card_footer">
+                                <div class="title">
+                                    <span>AhriLove</span>
+                                </div>
                             </div>
                         </div>
-                        </el-card>
+                        <div class="author">
+                            <span><b>我一路向北，离开有你的季节</b></span><br><br>
+                            <span>一个野生自学者 经常分享学习心得</span>
+                        </div>
+                        <hr style="width:18em;margin-left:0px;">
+                        <div class="skill">
+                            <div class="process">
+                                <div style="float:left;width:20%;margin-top:12px;"><img src="../assets/images/html.png"></div>
+                                <div style="float:left;width:70%;margin-left:1em;">
+                                    <p style="width:12em;color:hsla(0,0%,100%,.85);">HTML5</p> 
+                                    <div style="width:60%;background-color:yellow;height:4px;"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="process">
+                                <div style="float:left;width:20%;margin-top:12px;"><img src="../assets/images/python.png"></div>
+                                <div style="float:left;width:70%;margin-left:1em;">
+                                    <p style="width:12em;color:hsla(0,0%,100%,.85);">Python</p> 
+                                    <div style="width:90%;background-color:yellow;height:4px;"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="process">
+                                <div style="float:left;width:20%;margin-top:12px;"><img src="../assets/images/spider.png"></div>
+                                <div style="float:left;width:70%;margin-left:1em;">
+                                    <p style="width:12em;color:hsla(0,0%,100%,.85);">Python爬虫</p> 
+                                    <div style="width:75%;background-color:yellow;height:4px;"></div>
+                                </div>
+                            </div>
+                            <div class="process">
+                                <div style="float:left;width:20%;margin-top:12px;"><img src="../assets/images/vuejs.png"></div>
+                                <div style="float:left;width:70%;margin-left:1em;">
+                                    <p style="width:12em;color:hsla(0,0%,100%,.85);">Vue.js</p> 
+                                    <!-- 下面的width的属性决定进度条多宽 -->
+                                    <div style="width:40%;background-color:yellow;height:4px;"></div>
+                                </div>
+                            </div>
+                            <div class="process">
+                                <div style="float:left;width:20%;margin-top:12px;"><img src="../assets/images/java.png"></div>
+                                <div style="float:left;width:70%;margin-left:1em;">
+                                    <p style="width:12em;color:hsla(0,0%,100%,.85);">Java</p> 
+                                    <!-- 下面的width的属性决定进度条多宽 -->
+                                    <div style="width:35%;background-color:yellow;height:4px;"></div>
+                                </div>
+                            </div>
+                            <div class="process">
+                                <div style="float:left;width:20%;margin-top:12px;"><img src="../assets/images/docker.png"></div>
+                                <div style="float:left;width:70%;margin-left:1em;">
+                                    <p style="width:12em;color:hsla(0,0%,100%,.85);">Docker</p> 
+                                    <!-- 下面的width的属性决定进度条多宽 -->
+                                    <div style="width:40%;background-color:yellow;height:4px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </el-col>
+
+                    <el-col :xs="24" :sm="16" :md="16" :lg="16" :xl="16">
+                            <p><b style="color:#f05b72;font-size:1.25em;">动态更新</b></p>
+                            <hr>
+                            <div class="tabBa">
+                                <div class="per-video" :style="{ height:bodyHeight + 'px'}" v-loading="loading">
+                                    <template v-for="(row,index) in results">
+                                        <div class="bilibili" :key="index">
+                                            <div style="float:left;width:5em;height:1em;"><img v-lazy="'http:'+row.pic" style="box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);border-radius: 4px"></div>
+                                            <div style="float:left;width:84%;margin-left:16px;">
+                                                <p style="width:100%;margin-top:0px;margin-bottom:8px;overflow:hidden;color:#d3c6a6;">{{row.title}}</p> 
+                                                <div><a :href="'https://www.bilibili.com/video/'+row.bvid" target="_blank"><el-button type="primary" size="mini">BILIBILI观看</el-button></a></div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                            <div class="follow">
+                                <div><p class="star"><a href="https://space.bilibili.com/215893581/" target="_blank"><span><i class="el-icon-s-promotion"></i>关注我</span></a></p></div>
+                                <div style="margin-left:3em;"><p class="donations" @click="open()"><a href="javascript:;"><span><i class="el-icon-coffee-cup"></i>赞赏我</span></a></p></div>
+                            </div>
                     </el-col>
                 </el-row>
+                
             </el-main>
-        </el-container>    
-
+            <el-footer style="height:1.25em;">
+                <div style="text-align:center;color:hsla(0,0%,100%,.85);font-family: Roboto,sans-serif;">Copyright © {{nowYear}} AhriLove·鳄鱼邦邦</div>
+            </el-footer>
+        </el-container>
+        
+        <!-- 导航栏模块 -->
+        <div class="main">
+            <div class="tabBar">
+                <div class="box" v-for='(row,index) in rows' :key="index"><a :href="row.url" target="_self"><p>{{row.content}}</p></a></div>
+            </div>
+        </div>
     </div>
 </template>
 
-<script>
+
+<script scoped>
 // 组件 .vue 文件：模板(template) + 脚本(scpirt) + 样式(style)
 // 导入自定义的组件
-import HelloWorld from '@/components/HelloWorld.vue'
-
+import HelloWorld from '@/components/HelloWorld.vue';
+// import "../assets/js/sakura.js";
 export default {
     name: 'Home',
     components: {
-    HelloWorld
+        HelloWorld
     },
+
     data(){
         return {
-            msg:"牛蛙点点",
-            age:18,
-            currentDate:new Date()
+            nowYear:new Date().getFullYear(),
+            bodyHeight:100,
+            loading: true,
+            rows:[{
+                content:"主页",
+                url:"/"
+                },{
+                    content:"动漫",
+                    url:"/media"
+                },{
+                    content:"漫画",
+                    url:"/comic"
+                },{
+                    content:"音乐",
+                    url:"/audio"
+                },{
+                    content:"视频解析",
+                    url:"/video"
+                },{
+                    content:"抽象圣经",
+                    url:"/ndsl"
+                },{
+                    url:"https://github.com/FioraLove",
+                    content:"Github"
+                },{
+                    url:"https://AhriLove.top",
+                    content:"联系我"
+            }],
+            api:"http://127.0.0.1:8001/nmsl/bilibili/",
+            results:[]
+           
+        }
+    },
+
+    mounted() {
+        this.bodyHeight = document.documentElement.clientHeight-220;
+        this.getContent;
+    },
+    computed:{
+        // 发送Ajax请求
+        getContent:function () {
+            let app = this;
+            axios({
+                // api1:自定义的api接口
+                //https://api.bilibili.com/x/space/arc/search?mid=215893581&ps=30&tid=0&pn=1&keyword=&order=pubdate&jsonp=jsonp
+                //url:"/bili/space/arc/search",
+                url:this.api,
+                method:"get"
+            })
+            .then(function(response){
+                if(response.status == 200 && response.data.status==1){
+                    app.loading = false;
+                    app.results = (response.data).vlist;
+                }else{
+                    app.results = [];
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
         }
     },
     methods: {
-        goUser:function(id){
-            this.$router.push({
-                name : 'User',
-                params : {
-                    id
-                }
-            })
-        },
-        goUser2:function(id,name){
-            this.$router.push({
-                path:"/list",
-                query:{
-                    id,
-                    name
-                }
-            })
-         },
+        open() {
+            this.$alert('你的 <strong>点赞➕关注➕转发➕投币</strong><hr> 就是对我最大的鼓励', 'BILIBILI🍻[]~(￣▽￣)~*', {
+               dangerouslyUseHTMLString: true
+            });
+        }
+
     }
 }
 </script>
 
 <style lang="less" scoped>
+    .home{
+        background-image: url("../assets/images/background.png");
+        background-attachment: fixed;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+    .follow{
+        width: 100%;
+        height:5em;
+        margin-top: 1em;
+        padding:0 6px 0 6px
+    }
+    .follow div{
+        float:left;
+        width: 40%;
+        border-radius: 6px;
+        padding: 12px;
+        background-color:rgba(177, 172, 172, 0.2);
+        text-align: center;
+        overflow: hidden;
+    }
+    .star{
+        float:left;
+        width:100%;
+        height:1.86em;
+        font-size: 1.5em;
+        border-radius: 6px;
+        cursor: pointer;
+        background-color:#14abef;
+        font-family: 'Courier New', Courier, monospace;
+        margin: 0px;
+    }
+    .star:hover{
+        float:left;
+        width:100%;
+        height:1.86em;
+        font-size: 1.5em;
+        border-radius: 6px;
+        background-color:rgba(177, 172, 172, 0.3);
+        font-family: 'Courier New', Courier, monospace;
+        margin: 0px;
+    }
+    .donations{
+        float:left;
+        width:100%;
+        height:1.86em;
+        cursor: pointer;
+        font-size: 1.5em;
+        border-radius: 6px;
+        background-color: #fba540;
+        font-family: 'Courier New', Courier, monospace;
+        margin: 0px;
+    }
+    .donations:hover{
+        float:left;
+        width:100%;
+        height:1.86em;
+        font-size: 1.5em;
+        background-color:rgba(177, 172, 172, 0.3);
+        font-family: 'Courier New', Courier, monospace;
+        margin: 0px;
+    }
+    .follow div p a{
+        text-align: center;
+        position: relative;
+        top:8px;
+    }
+    .bilibili{
+        width: 100%;
+        height: 5em;
+        margin-top: 8px;
+    }
+    .bilibili img{
+        width: 100%;
+        object-fit: cover; 
+        object-position: left;
+        
+    }
+    .tabBa{
+        width:100%;
+        overflow: hidden;
+        background-color:transparent;
+    }
+    .per-video{
+        padding: 8px;
+        width: 117%;
+        overflow-y:scroll
+    }
+    .per-video::-webkit-scrollbar {/*滚动条整体样式*/
+        width: 4px;     /*高宽分别对应横竖滚动条的尺寸*/
+        height: 4px;
+        scrollbar-arrow-color:red;
+    }
+    
+    .skill{
+        padding: 10px;
+        width:100%;
+    }
+    .skill .process{
+        height: 3.8em;
+        width:20em;
+    }
+    .process img{
+        width: 70%;
+    }
+    .card{
+        width: 11.8em;
+        height: 15em;
+        position: relative;
+    }
+
+    .card .header{
+        width: 100%;
+
+
+    }
+    .card .header img{
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        border-radius: 6px;
+    }
+    .card .card_date{
+        position:absolute;
+        right: 3px;
+        top: 3px;
+
+        background-color: coral;
+        border-radius: 20%;
+    }
+    .card .card_update{
+        position:absolute;
+        left: 3px;
+        bottom: 5.2em;
+    }
+    .card_date span{
+        text-transform: uppercase;
+        font-size: 18px;
+
+    }
+    .card_update span{
+        text-transform: uppercase;
+        font-size: 13px;
+        color: #fff;
+    }
+    .title{
+        margin-top: 8px;
+        width:100%;
+        height:1.5em;
+        overflow-y: hidden;
+        overflow-x: hidden;
+        color: whitesmoke;
+        font-size: 2em;
+    }
+    span{
+        font-family: 'Courier New', Courier, monospace;
+    }
+    .author{
+        margin-top: 8px;
+        font-size: 1em;
+        color: whitesmoke;
+    }
+    a{
+        text-decoration: none;
+        color: aliceblue;
+    }
+    .main{
+        overflow: hidden;
+        height: 5em;
+        position: fixed;
+        width: 100%;
+        top: 0em;
+        left: 0em;
+    }
+    .tabBar{
+        background-image: linear-gradient(60deg, #29323c 0%, #485563 100%);
+        padding: 10px 0;
+        white-space: nowrap;/*文本不会换行，文本会在在同一行上继续*/
+        overflow-y: auto;/*可滑动*/
+    }
+    .box{
+        width: 5em;
+        margin-left: 8px;
+        height: 2.5em;
+        display: inline-block; /*行内块级元素*/
+    }
+    .box p{
+        text-align: center;
+        font-size: 18px;
+        font-family: 'Courier New', Courier, monospace;
+    }
 
     body{
         margin: 0;
         padding: 0;
     }
+    .subtitle{
+        font-size: 15px;
+    }
     .bg{
         width: 100%;
-        height: 4em;
-        background-color: black;
+        height: 2.5em;
+
         overflow: hidden;   /*父元素添加overflow*/
     }
-    .bg p{
-        text-align: center;
-        color: white;
-        font-size: 0.85em;
-        margin-top: 1.85em;
-        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-        
-    }
+
     .top-box{
         width:100%;
         height :5vh;
@@ -128,27 +431,10 @@ export default {
         display: block;
     }
 
-    .clearfix:before, .clearfix:after {
-        display: table;
-        content: "";
+    button{
+        cursor: pointer;
+        text-decoration: none;
     }
-    
-    .clearfix:after {
-        clear: both
-    }
-    #nav {
-    padding: 30px;
-    text-align: center;
-    color: aquamarine;
 
 
-    a {
-        font-weight: bold;
-        color: #2c3e50;
-
-    &.router-link-exact-active {
-        color: #42b983;
-        }
-    }
-    }
 </style>
