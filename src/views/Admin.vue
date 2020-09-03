@@ -141,13 +141,14 @@
                 }
             })
             .then(function(response){
-                console.log(response);
                 if(response.status == 200){
                     try {
                         let token = response.data.token;
                         app.token = token;
                         // 跳转到隐藏网址
-
+                        console.log(token);
+                        // 如果登录成功，存储token
+                        sessionStorage.setItem("token",window.atob(token.trim()));
                         window.location.href = "/nmsl/hidden/video/secret?token="+window.atob(token.trim());
                     } catch (error) {
                         app.token = "";

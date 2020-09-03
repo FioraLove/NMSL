@@ -348,8 +348,9 @@ export default {
         margin-top: 1em;
         width:100%;
         height:1.5em;
-        overflow-y: hidden;
-        overflow-x: hidden;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
         color: black;
         font-size: 1em;
     }

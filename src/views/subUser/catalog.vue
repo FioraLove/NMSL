@@ -6,11 +6,13 @@
                 <el-row :gutter="10">
                     <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
                         <div class="outBox">
-                            <template v-if="flag">
+                            
                                 <div class="comic-head-pc">
                                     <div class="cover"><img v-lazy="cover"></div>
                                     <div class="bar-right">
+                                        <template>
                                         <div class="title"><b>{{author_info.title}}</b></div>
+                                         </template>
                                         <div class="introduction">
                                             <p class="author"> 作者：{{author_info.author}}</p><br>
                                             <span class="state" v-if="author_info.state == '1'">状态：连载中</span>
@@ -19,19 +21,12 @@
                                             <span class="update_time">更新时间：{{update_time}}</span><br>
                                             <span class="update">最新：  <b>{{update}}</b></span><br>
                                         </div>
-
                                         <div class="info">
                                             <span>{{author_info.content}}</span>
                                         </div>
                                     </div>
                                 </div>
-                            </template>
-                            <template v-else>
-                                <div class="comic-head-m">
-                                    <div class="cover"><img v-lazy="cover"></div>
-                                    <div class="bar-right"></div>
-                                </div>
-                            </template>
+                           
                         </div>
                     </el-col>
                 </el-row>
@@ -66,7 +61,7 @@
                             <div class="inBox">
                                 <ul>
                                     <li v-for="(lis,index) in chapter_arr" :key="index">
-                                        <p @click="get_image($event)" :item-data="index">{{lis.chapter_title}}</p>
+                                        <p @click="get_image($event)" :data-item="index">{{lis.chapter_title}}</p>
                                     </li>
                                 </ul>
                             </div>
@@ -185,7 +180,8 @@ export default {
         get_image:function(el){
             this.loading = true;
             // 获取当前点击元素的属性值
-            let a = parseInt(el.target.getAttribute("item-data"));
+            let a = parseInt(el.target.dataset.item);
+            // let a = parseInt(el.target.getAttribute("data-item"));
 
             let b = (this.chapter_arr[a]["images_url"]).split("'");
             if(b.length<=1){
@@ -258,17 +254,8 @@ export default {
         color: whitesmoke;
         font-family: 'Courier New', Courier, monospace;
     }
-    .bar-right .title{
-        font-size:1.5em;
-        margin-top:8px;
-        margin-bottom: 6px;
-        font-family: 'Courier New', Courier, monospace;
 
-    }
-    .introduction .author{
-        font-size: 1em;
-        margin:0px;
-    }
+
     .introduction .state{
         font-size: 13px;
         color: #999;
@@ -299,27 +286,104 @@ export default {
         color: #666;
         font-family: "PingFang SC",'Microsoft YaHei';
         line-height:20px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
     .comic-head-pc{
         margin: 0 auto;
         width:100%;
     }
-    .comic-head-pc .cover{
-        float: left;
-        height: 100%;
-        margin-left:16vw;
+
+    /* moblie */
+    @media screen and (max-width:506px){
+        .comic-head-pc .cover{
+            float: left;
+            height: 100%;
+            
+        }
+        .comic-head-pc .bar-right{
+            float: left;
+            width: 40vw;
+            height: 100%;
+            margin-left: 1em;
+        }
+        .comic-head-pc .cover img{
+            width: 160px;
+            height:213px;
+            border-radius: 6px;
+            box-shadow: 10px 8px 5px rgba(177, 172, 172, 0.6)
+        } 
+        .introduction .author{
+            font-size: 12px;
+            margin:0px;
+        }
+        .bar-right .title{
+            font-size:1em;
+            margin-top:8px;
+            margin-bottom: 6px;
+            font-family: 'Courier New', Courier, monospace;
+        }              
     }
-    .comic-head-pc .cover img{
-        width: 160px;
-        border-radius: 6px;
-        box-shadow: 10px 8px 5px rgba(177, 172, 172, 0.6)
+    /* PC */
+    @media screen and (min-width:809px){
+        .comic-head-pc .cover{
+            float: left;
+            height: 100%;
+            margin-left:16vw;
+        }
+        .comic-head-pc .bar-right{
+            float: left;
+            width: 52vw;
+            height: 100%;
+            margin-left: 2em;
+        }
+        .comic-head-pc .cover img{
+            width: 160px;
+            border-radius: 6px;
+            box-shadow: 10px 8px 5px rgba(177, 172, 172, 0.6)
+        }
+        .introduction .author{
+            font-size: 1em;
+            margin:0px;
+        }      .bar-right .title{
+        font-size:1.5em;
+        margin-top:8px;
+        margin-bottom: 6px;
+        font-family: 'Courier New', Courier, monospace;
+    }       
     }
-    .comic-head-pc .bar-right{
-        float: left;
-        width: 52vw;
-        height: 100%;
-        margin-left: 2em;
+
+    @media screen and (min-width:507px) and (max-width: 808px) {
+        .comic-head-pc .cover{
+            float: left;
+            height: 100%;
+            margin-left:3vw;
+        }
+        .comic-head-pc .bar-right{
+            float: left;
+            width: 48vw;
+            height: 100%;
+            margin-left: 2em;
+        }
+        .comic-head-pc .cover img{
+            width: 160px;
+            border-radius: 6px;
+            box-shadow: 10px 8px 5px rgba(177, 172, 172, 0.6)
+        }  
+        .introduction .author{
+            font-size: 1em;
+            margin:0px;
+        }
+            .bar-right .title{
+        font-size:1.5em;
+        margin-top:8px;
+        margin-bottom: 6px;
+        font-family: 'Courier New', Courier, monospace;
+    }           
     }
+
+
 
     .outer{
         width:100%;
@@ -395,14 +459,20 @@ export default {
         font-size: 13px;
         position: relative;
         color: #252525;
-        top:12px;
+        top:13px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
     li p:hover{
         margin:6px 6px 6px 12px;
         font-size: 14px;
         position: relative;
         color: #252525;
-        top:12px;
+        top:13px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
 </style>

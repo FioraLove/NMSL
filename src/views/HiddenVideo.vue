@@ -9,9 +9,6 @@
                             <el-menu-item index="1">冒险热血</el-menu-item>
                             <el-menu-item index="2">武侠格斗</el-menu-item>
                             <el-menu-item index="3">科幻魔幻</el-menu-item>
-                            <el-menu-item index="4">侦探推理</el-menu-item>
-                            <el-menu-item index="5">耽美爱情</el-menu-item>
-                            <el-menu-item index="6">生活漫画</el-menu-item>
                     </el-menu>  
                 </template>
                 <template v-else>
@@ -20,9 +17,6 @@
                             <el-menu-item index="1">冒险热血</el-menu-item>
                             <el-menu-item index="2">武侠格斗</el-menu-item>
                             <el-menu-item index="3">科幻魔幻</el-menu-item>
-                            <el-menu-item index="4">侦探推理</el-menu-item>
-                            <el-menu-item index="5">耽美爱情</el-menu-item>
-                            <el-menu-item index="6">生活漫画</el-menu-item>
                     </el-menu>  
                 </template>
             </div>
@@ -31,10 +25,10 @@
     <!-- 告示窗口 -->
     <div>
         <el-alert
-            title="关于漫画资源的说明"
+            title="关于视频资源的说明"
             type="warning"
             center
-            description="由于目前的漫画数据数据是存储在sqlite3，考虑到其性能问题，只存储了【冒险热血】类的数据,所以很多漫画出现无版权，无法显示的结果。后续有了远程数据库后，将存储所有的题材的漫画，十分抱歉😭😭😭"
+            description="资源由网络第三方视频类网站收集，不提供任何视听上传服务，内容均来自各分享站点所提供的公开引用资源"
             show-icon>
         </el-alert>
     </div>
@@ -48,26 +42,29 @@
                     <el-col :xs="8" :sm="6" :md="6" :lg="4" :xl="4" v-for='(row,index) in rows' :key="index" style="margin-top:10px;">
                         <div class="card">
                             <div class="header">
-                                <router-link :to="{path : '/comic/category', query : {sid : row.sid, cover: row.cover, update:row.update_content,time:row.update}}" :title="row.title">
-                                    <img v-lazy="row.cover">
+                                <router-link :to="{path : '/nmsl/hidden/video/play', query : {vid : row.vid, token: bs_token}}" :title="row.title">
+                                    <img v-lazy="row.pic">
                                 </router-link>
                             </div>
-                            <template v-if ="flag ==false">                            
+                            <template>                            
                                 <div class="card_date">
                                     <span>{{ parseFloat(row.judge)}}</span>
                                 </div>
                             </template>
-                            <div class="card_update">
-                                <span>{{row.update}}</span>
-                            </div>
+                            <template v-if="flag">                            
+                                <div class="card_update">
+                                    <span>{{row.update}}</span>
+                                </div>
+                            </template>
+
                             <div class="card_footer">
                                 <div class="title">
-                                    <span><router-link :to="{path : '/comic/category', query : {sid : row.sid,cover: row.cover, update:row.update_content,time:row.update}}" :title="row.title">{{row.title}}</router-link></span>
+                                    <span><router-link :to="{path : '/nmsl/hidden/video/play', query : {vid : row.vid, token: bs_token}}" :title="row.title">{{(row.title).substr(4,)}}</router-link></span>
                                 </div>
-                                <template v-if="flag">
+                                <template>
                                     <div class="author">
                                         <!-- <span><el-rate :value="parseFloat(row.judge)" disabled show-score text-color="#ff9900" score-template="{value}"></el-rate></span> -->
-                                        <span>更新至：{{row.update_content}}</span>
+                                        <span>清晰度：{{row.quality == ''?'暂无':row.quality}}</span>
                                     </div>
                                 </template>
 
@@ -92,7 +89,6 @@
         </el-container>
 
     </el-container>
-    {{token}}
     <div class="footer">
         <div class="bk"><hr></div>
         <p>本站的资源由网络第三方视频类网站收集，不提供任何视听上传服务，内容均来自各分享站点所提供的公开引用资源。</p>
@@ -112,7 +108,8 @@ export default {
     name:"HiddenVideo",
     data() {
         return {
-            token: "",
+            token: window.btoa(decodeURIComponent(window.location.search.split("=")[1])),
+            bs_token:"",
             nowYear:new Date().getFullYear(),
             activeIndex: "1",           // 分类标签    
             bodyWidth:722,                 // 可视化浏览器窗口
@@ -133,8 +130,9 @@ export default {
         this.getContent();
         this.isPC();
         // 解密token
-        console.log(window.location.search.split("=")[1]);
-        this.token = window.btoa(decodeURIComponent(window.location.search.split("=")[1])); 
+        // 原生bs64加密的token
+        this.bs_token = decodeURIComponent(window.location.search.split("=")[1]);
+        // this.token = window.btoa(decodeURIComponent(window.location.search.split("=")[1])); 
     },
     destoryed: function(){
         // 解除监听事件
@@ -220,12 +218,17 @@ export default {
         // 发送Ajax请求
         getContent:function () {
             let app = this;
+            let session_token = sessionStorage.getItem("token");
+            if(session_token == null || session_token == undefined || session_token==""){
+                alert("登录失效，请重新登录");
+                window.location.href = "/nmsl/admin/secret";
+            }
             axios({
                 // api1:自定义的api接口
-                url:"http://127.0.0.1:8001/nmsl/api/comic/",
+                url:"http://127.0.0.1:8001/nmsl/api/secret/video/",
                 method:"get",
                 headers:{
-                    "Authorization":"Token "+this.token,
+                    Authorization: "Token "+window.btoa(sessionStorage.getItem("token")),
                 },
                 params:{
                     offset:this.page_size*(this.currentPage-1),
@@ -287,7 +290,7 @@ export default {
     // moblie端
     @media screen and (max-width:480px){
         .card{
-            max-width: 11.8em;
+            width: 100%;
             height: 13em;
             position: relative;
         }
@@ -306,11 +309,12 @@ export default {
             position:absolute;
             left: 3px;
             bottom: 3.2em;
+            background-color: #feeeed;
         }        
     }
     @media screen and (min-width:481px){
         .card{
-            max-width: 11.8em;
+            max-width: 100%;
             height: 18.7em;
             position: relative;
         }
@@ -329,10 +333,9 @@ export default {
             position:absolute;
             left: 3px;
             bottom: 5.2em;
+            background-color: #feeeed;
         }        
     }
-
-
 
 
     .card .card_date{
@@ -355,16 +358,20 @@ export default {
         color: #ed1941;
     }
     .title{
-        margin-top: 1em;
+        margin-top: 12px;
         width:100%;
         height:1.5em;
-        overflow-y: hidden;
-        overflow-x: hidden;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
         color: black;
         font-size: 1em;
     }
     .author{
-        margin-top: 1em;
+        margin-top: 3px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
         font-size: 11px;
 
     }
