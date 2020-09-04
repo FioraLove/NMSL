@@ -6,17 +6,25 @@
                 <template v-if="flag">
                     <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
                         background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
-                            <el-menu-item index="1">冒险热血</el-menu-item>
-                            <el-menu-item index="2">武侠格斗</el-menu-item>
-                            <el-menu-item index="3">科幻魔幻</el-menu-item>
+                            <el-menu-item index="1">巨乳</el-menu-item>
+                            <el-menu-item index="2">巨屌</el-menu-item>
+                            <el-menu-item index="3">写真</el-menu-item>
+                            <el-menu-item index="4">口交</el-menu-item>
+                            <el-menu-item index="5">无码</el-menu-item>
+                            <el-menu-item index="6">制服</el-menu-item>
+                            <el-menu-item index="7">主播</el-menu-item>
                     </el-menu>  
                 </template>
                 <template v-else>
                     <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
                         background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
-                            <el-menu-item index="1">冒险热血</el-menu-item>
-                            <el-menu-item index="2">武侠格斗</el-menu-item>
-                            <el-menu-item index="3">科幻魔幻</el-menu-item>
+                            <el-menu-item index="1">巨乳</el-menu-item>
+                            <el-menu-item index="2">巨屌</el-menu-item>
+                            <el-menu-item index="3">写真</el-menu-item>
+                            <el-menu-item index="4">口交</el-menu-item>
+                            <el-menu-item index="5">无码</el-menu-item>
+                            <el-menu-item index="6">制服</el-menu-item>
+                            <el-menu-item index="7">主播</el-menu-item>
                     </el-menu>  
                 </template>
             </div>
@@ -37,40 +45,25 @@
     <el-container>
 
         <el-container>
-            <el-main>
+            <el-main class="images"  v-viewer>
                 <el-row :gutter="15">
-                    <el-col :xs="8" :sm="6" :md="6" :lg="4" :xl="4" v-for='(row,index) in rows' :key="index" style="margin-top:10px;">
-                        <div class="card">
-                            <div class="header">
-                                <router-link :to="{path : '/nmsl/hidden/video/play', query : {vid : row.vid, token: bs_token}}" :title="row.title">
-                                    <img v-lazy="row.pic">
-                                </router-link>
-                            </div>
-                            <template>                            
-                                <div class="card_date">
-                                    <span>{{ parseFloat(row.judge)}}</span>
-                                </div>
-                            </template>
-                            <template v-if="flag">                            
-                                <div class="card_update">
-                                    <span>{{row.update}}</span>
-                                </div>
-                            </template>
+                    
+                    <!-- <img v-for="src in images" :src="src" :key="src"> -->
 
-                            <div class="card_footer">
-                                <div class="title">
-                                    <span><router-link :to="{path : '/nmsl/hidden/video/play', query : {vid : row.vid, token: bs_token}}" :title="row.title">{{(row.title).substr(4,)}}</router-link></span>
+
+                        <el-col :xs="8" :sm="6" :md="6" :lg="4" :xl="4" v-for='(row,index) in rows' :key="index" style="margin-top:10px;">
+                            <div class="card">
+                                <div class="header">
+                                        <img :src="'http://kpd163.me:1024'+row.images_url">
                                 </div>
-                                <template>
-                                    <div class="author">
-                                        <!-- <span><el-rate :value="parseFloat(row.judge)" disabled show-score text-color="#ff9900" score-template="{value}"></el-rate></span> -->
-                                        <span>清晰度：{{row.quality == ''?'暂无':row.quality}}</span>
+                                <div class="card_footer">
+                                    <div class="title">
+                                        <span>{{row.title}}</span>
                                     </div>
-                                </template>
 
+                                </div>
                             </div>
-                        </div>
-                    </el-col>
+                        </el-col>
                 </el-row>
             </el-main>
             <el-footer>
@@ -104,6 +97,10 @@
 </template>
 
 <script>
+import 'viewerjs/dist/viewer.css'
+import Viewer from 'v-viewer'
+import Vue from 'vue'
+Vue.use(Viewer)
 export default {
     name:"HiddenVideo",
     data() {
@@ -184,6 +181,9 @@ export default {
                 case "6":
                     this.category = "6";
                     break;
+                case "7":
+                    this.category = "7";
+                    break;
                 default:
                     this.category = "1";
                     break;
@@ -218,18 +218,17 @@ export default {
         // 发送Ajax请求
         getContent:function () {
             let app = this;
-            // let session_token = sessionStorage.getItem("token");
-            // if(session_token == null || session_token == undefined || session_token==""){
-            //     alert("登录失效，请重新登录");
-            //     window.location.href = "/nmsl/admin/secret";
-            // }
+            let session_token = sessionStorage.getItem("token");
+            if(session_token == null || session_token == undefined || session_token==""){
+                alert("登录失效，请重新登录");
+                window.location.href = "/nmsl/admin/secret";
+            }
             axios({
                 // api1:自定义的api接口
-                url:"http://127.0.0.1:8001/nmsl/api/secret/video/",
+                url:"http://127.0.0.1:8001/nmsl/api/secret/picture/",
                 method:"get",
                 headers:{
-                    // Authorization: "Token "+window.btoa(sessionStorage.getItem("token")),
-                    Authorization: "Token cf676143d2354962dcd51046de82a903866ba406",
+                    Authorization: "Token "+window.btoa(sessionStorage.getItem("token")),
                 },
                 params:{
                     offset:this.page_size*(this.currentPage-1),
@@ -292,7 +291,7 @@ export default {
     @media screen and (max-width:480px){
         .card{
             width: 100%;
-            height: 13em;
+            height: 12em;
             position: relative;
         }
         .card .header img{
@@ -366,7 +365,7 @@ export default {
         text-overflow: ellipsis;
         white-space: nowrap;
         color: black;
-        font-size: 1em;
+        font-size: 12px;
     }
     .author{
         margin-top: 3px;
