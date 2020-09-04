@@ -2,7 +2,7 @@
     <!--组件有且只有一个根标签-->
     <div class="home">
         <div class="bg"></div>
-        <el-container style="padding: 1em;">
+        <el-container>
             <el-main>
                 <el-row :gutter="10">
                     <!-- 头像模块 -->
@@ -81,9 +81,9 @@
                                 <div class="per-video" :style="{ height:bodyHeight + 'px'}" v-loading="loading">
                                     <template v-for="(row,index) in results">
                                         <div class="bilibili" :key="index">
-                                            <div style="float:left;width:5em;height:1em;"><img v-lazy="'http:'+row.pic" style="box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);border-radius: 4px"></div>
-                                            <div style="float:left;width:84%;margin-left:16px;">
-                                                <p style="width:100%;margin-top:0px;margin-bottom:8px;overflow:hidden;color:#d3c6a6;">{{row.title}}</p> 
+                                            <div class="bilipic"><img v-lazy="'http:'+row.pic"></div>
+                                            <div class="bilibox">
+                                                <p class="bilititle">{{row.title}}</p> 
                                                 <div><a :href="'https://www.bilibili.com/video/'+row.bvid" target="_blank"><el-button type="primary" size="mini">BILIBILI观看</el-button></a></div>
                                             </div>
                                         </div>
@@ -92,7 +92,7 @@
                             </div>
                             <div class="follow">
                                 <div><p class="star"><a href="https://space.bilibili.com/215893581/" target="_blank"><span><i class="el-icon-s-promotion"></i>关注我</span></a></p></div>
-                                <div style="margin-left:3em;"><p class="donations" @click="open()"><a href="javascript:;"><span><i class="el-icon-coffee-cup"></i>赞赏我</span></a></p></div>
+                                <div class="dona"><p class="donations" @click="open()"><a href="javascript:;"><span><i class="el-icon-coffee-cup"></i>赞赏我</span></a></p></div>
                             </div>
                     </el-col>
                 </el-row>
@@ -205,7 +205,171 @@ export default {
         background-attachment: fixed;
         background-size: cover;
         background-repeat: no-repeat;
+        max-width:100vw;
     }
+
+    .bilipic img{
+        box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+    }
+
+
+
+    @media screen and (max-width:998px){
+        .card{
+            width: 11.8em;
+            height: 15em;
+            position: relative;
+        }
+
+        .card .header{
+            width: 100%;
+        }
+        .card .header img{
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+        .card .card_date{
+            position:absolute;
+            right: 3px;
+            top: 3px;
+            background-color: coral;
+            border-radius: 20%;
+        }
+        .card .card_update{
+            position:absolute;
+            left: 3px;
+            bottom: 5.2em;
+        }
+        .bilibox{
+            width:84%;
+            margin-left:5.5em;
+        }
+        .bilibili{
+            width: 100%;
+            height: 7em;
+            margin-top: 8px;
+        } 
+        .bilipic{
+            float:left;
+            width:5em;
+            height:3em;
+            margin-top:1em;
+        }
+        .bilititle{
+            width:90%;
+            margin-top:0px;
+            margin-bottom:8px;
+            // overflow:hidden;
+            // text-overflow: ellipsis;
+            // white-space: nowrap;
+            color:#d3c6a6;
+        }
+        .donations{
+            float:left;
+            width:100%;
+            height:1.86em;
+            cursor: pointer;
+            font-size: 1.5em;
+            border-radius: 6px;
+            background-color: #fba540;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0px;
+        }
+        .donations:hover{
+            float:left;
+            width:100%;
+            height:1.86em;
+            font-size: 1.5em;
+            background-color:rgba(177, 172, 172, 0.3);
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0px;
+        }
+        .dona{
+            margin-left:10px;
+        }                  
+    }
+    @media screen and (min-width:999px){
+        .card{
+            width: 11.8em;
+            height: 15em;
+            position: relative;
+        }
+
+        .card .header{
+            width: 100%;
+        }
+        .card .header img{
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+        .card .card_date{
+            position:absolute;
+            right: 3px;
+            top: 3px;
+            background-color: coral;
+            border-radius: 20%;
+        }
+        .card .card_update{
+            position:absolute;
+            left: 3px;
+            bottom: 5.2em;
+        }
+        .bilibox{
+            float:left;
+            width:84%;
+            margin-left:1em;
+        }
+        .bilibili{
+            width: 100%;
+            height: 5.2em;
+            margin-top: 8px;
+        } 
+        .bilipic{
+            float:left;
+            width:5em;
+            height:3em;
+            text-align:center;
+        }
+        .bilititle{
+            width:90%;
+            margin-top:0px;
+            margin-bottom:8px;
+            overflow:hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color:#d3c6a6;
+        }
+        .donations{
+            float:left;
+            width:100%;
+            height:1.86em;
+            cursor: pointer;
+            font-size: 1.5em;
+            border-radius: 6px;
+            background-color: #fba540;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0px;
+        }
+        .donations:hover{
+            float:left;
+            width:100%;
+            height:1.86em;
+            font-size: 1.5em;
+            background-color:rgba(177, 172, 172, 0.3);
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0px;
+        }
+        .dona{
+            margin-left:3em;
+        }                             
+    }
+
+
     .follow{
         width: 100%;
         height:5em;
@@ -242,41 +406,17 @@ export default {
         font-family: 'Courier New', Courier, monospace;
         margin: 0px;
     }
-    .donations{
-        float:left;
-        width:100%;
-        height:1.86em;
-        cursor: pointer;
-        font-size: 1.5em;
-        border-radius: 6px;
-        background-color: #fba540;
-        font-family: 'Courier New', Courier, monospace;
-        margin: 0px;
-    }
-    .donations:hover{
-        float:left;
-        width:100%;
-        height:1.86em;
-        font-size: 1.5em;
-        background-color:rgba(177, 172, 172, 0.3);
-        font-family: 'Courier New', Courier, monospace;
-        margin: 0px;
-    }
+
     .follow div p a{
         text-align: center;
         position: relative;
         top:8px;
     }
-    .bilibili{
-        width: 100%;
-        height: 5em;
-        margin-top: 8px;
-    }
+
     .bilibili img{
         width: 100%;
         object-fit: cover; 
-        object-position: left;
-        
+        object-position: left;  
     }
     .tabBa{
         width:100%;
@@ -285,7 +425,7 @@ export default {
     }
     .per-video{
         padding: 8px;
-        width: 117%;
+        width: 100%;
         overflow-y:scroll
     }
     .per-video::-webkit-scrollbar {/*滚动条整体样式*/
@@ -305,36 +445,8 @@ export default {
     .process img{
         width: 70%;
     }
-    .card{
-        width: 11.8em;
-        height: 15em;
-        position: relative;
-    }
-
-    .card .header{
-        width: 100%;
 
 
-    }
-    .card .header img{
-        height: 100%;
-        width: 100%;
-        object-fit: cover;
-        border-radius: 6px;
-    }
-    .card .card_date{
-        position:absolute;
-        right: 3px;
-        top: 3px;
-
-        background-color: coral;
-        border-radius: 20%;
-    }
-    .card .card_update{
-        position:absolute;
-        left: 3px;
-        bottom: 5.2em;
-    }
     .card_date span{
         text-transform: uppercase;
         font-size: 18px;
