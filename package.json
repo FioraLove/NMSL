@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "echarts": "^4.9.0",
     "element-ui": "^2.13.2",
     "jquery": "^3.5.1",
     "v-viewer": "^1.5.1",
