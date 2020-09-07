@@ -41,9 +41,9 @@
 
     <div class="line"></div>
     <el-container>
-        <template v-if="flag">
+        <!-- <template v-if="flag">
             <el-aside width="180px;" ref="side">advertisement</el-aside>
-        </template>
+        </template> -->
         <el-container>
             <el-main>
                 <el-row :gutter="15">
@@ -90,9 +90,9 @@
                 </div>
             </el-footer>
         </el-container>
-        <template v-if="flag">
+        <!-- <template v-if="flag">
             <el-aside width="180px;" ref="side">advertisement</el-aside>
-        </template>
+        </template> -->
     </el-container>
 
     <div class="footer">
@@ -221,7 +221,7 @@ export default {
             let app = this;
             axios({
                 // api1:自定义的api接口
-                url:"http://127.0.0.1:8001/nmsl/api/comic/",
+                url:"xe9527/nmsl/api/comic/",
                 method:"get",
                 // headers:{
                 //     "Host":"m.music.migu.cn",
@@ -307,6 +307,7 @@ export default {
             max-width: 11.8em;
             height: 18.7em;
             position: relative;
+            cursor: pointer;
         }
         .card .header img{
             height: 100%;
@@ -318,6 +319,7 @@ export default {
         .card .header{
             width: 100%;
             height: 13.7em;
+            cursor: pointer;
         }        
     }
 

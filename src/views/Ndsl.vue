@@ -47,7 +47,7 @@ export default {
         getContent:function () { 
             let app = this;
             axios({
-                url:"http://127.0.0.1:8001/nmsl/ndsl/10/",
+                url:"xe9527/nmsl/ndsl/10/",
                 method:"get",
                 headers:{
                     "Content-Type": "application/json"

@@ -54,7 +54,7 @@
                         <el-col :xs="8" :sm="6" :md="6" :lg="4" :xl="4" v-for='(row,index) in rows' :key="index" style="margin-top:10px;">
                             <div class="card">
                                 <div class="header">
-                                        <img :src="'http://kpd163.me:1024'+row.images_url">
+                                        <img v-lazy="'http://kpd163.me:1024'+row.images_url">
                                 </div>
                                 <div class="card_footer">
                                     <div class="title">
@@ -328,6 +328,7 @@ export default {
         .card .header{
             width: 100%;
             height: 13.7em;
+            cursor: pointer;
         }
         .card .card_update{
             position:absolute;

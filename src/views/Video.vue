@@ -187,7 +187,7 @@
                     alert("请选择解析的视频类型和地址");
                 }else{
                     axios({
-                        url:"http://127.0.0.1:8001/nmsl/api/video/parse/",
+                        url:"xe9527/nmsl/api/video/parse/",
                         method:"post",
                         data:{
                             category:this.select,
