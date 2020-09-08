@@ -86,6 +86,7 @@
 
 
 <script>
+import { Base64 } from 'js-base64';
 export default {
     data() {
         return {
@@ -116,7 +117,7 @@ export default {
                 url:"http://127.0.0.1:8001/nmsl/api/comic/author",
                 method:"get",
                 params:{
-                    uid: this.sid
+                    uid: Base64.encode(this.sid)
                 }
             })
             .then(function(response){
@@ -149,7 +150,7 @@ export default {
                 url:"http://127.0.0.1:8001/nmsl/api/comic/chapter",
                 method:"get",
                 params:{
-                    uid: this.sid,
+                    uid: Base64.encode(this.sid),
                     offset:'0',
                     limit:'800'
                 }

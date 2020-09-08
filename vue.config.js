@@ -1,6 +1,6 @@
 var webpack = require('webpack');
 module.exports = {
-    // publicPath: './'   // 编译时使用
+    //publicPath: './',   // 编译部署时使用
     publicPath: '/',       // 这个是在测试路由为‘history’时，动态参数匹配params模式时才会使用
     devServer: {
         // port: 8000,      // 配置开发环境运行端口号       
@@ -33,6 +33,15 @@ module.exports = {
                 changeOrigin: true, 
                 pathRewrite: {
                     '^/bili': ''  // rewrite path
+                }
+            },
+            // 本地api地址
+            '/xe9527':{
+                target: 'http://127.0.0.1:8001/',
+                ws: true,
+                changeOrigin: true, 
+                pathRewrite: {
+                    '^/xe9527': ''  // rewrite path
                 }
             },
         }

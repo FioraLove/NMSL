@@ -6,23 +6,25 @@
                 <template v-if="flag">
                     <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
                         background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
-                            <el-menu-item index="1">冒险热血</el-menu-item>
-                            <el-menu-item index="2">武侠格斗</el-menu-item>
-                            <el-menu-item index="3">科幻魔幻</el-menu-item>
-                            <el-menu-item index="4">侦探推理</el-menu-item>
-                            <el-menu-item index="5">耽美爱情</el-menu-item>
-                            <el-menu-item index="6">生活漫画</el-menu-item>
+                            <el-menu-item index="1">巨乳</el-menu-item>
+                            <el-menu-item index="2">巨屌</el-menu-item>
+                            <el-menu-item index="3">写真</el-menu-item>
+                            <el-menu-item index="4">口交</el-menu-item>
+                            <el-menu-item index="5">无码</el-menu-item>
+                            <el-menu-item index="6">制服</el-menu-item>
+                            <el-menu-item index="7">主播</el-menu-item>
                     </el-menu>  
                 </template>
                 <template v-else>
                     <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
                         background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
-                            <el-menu-item index="1">冒险热血</el-menu-item>
-                            <el-menu-item index="2">武侠格斗</el-menu-item>
-                            <el-menu-item index="3">科幻魔幻</el-menu-item>
-                            <el-menu-item index="4">侦探推理</el-menu-item>
-                            <el-menu-item index="5">耽美爱情</el-menu-item>
-                            <el-menu-item index="6">生活漫画</el-menu-item>
+                            <el-menu-item index="1">巨乳</el-menu-item>
+                            <el-menu-item index="2">巨屌</el-menu-item>
+                            <el-menu-item index="3">写真</el-menu-item>
+                            <el-menu-item index="4">口交</el-menu-item>
+                            <el-menu-item index="5">无码</el-menu-item>
+                            <el-menu-item index="6">制服</el-menu-item>
+                            <el-menu-item index="7">主播</el-menu-item>
                     </el-menu>  
                 </template>
             </div>
@@ -31,49 +33,37 @@
     <!-- 告示窗口 -->
     <div>
         <el-alert
-            title="关于漫画资源的说明"
+            title="关于视频资源的说明"
             type="warning"
             center
-            description="由于目前的漫画数据数据是存储在sqlite3，考虑到其性能问题，只存储了【冒险热血】类的数据,所以很多漫画出现无版权，无法显示的结果。后续有了远程数据库后，将存储所有的题材的漫画，十分抱歉😭😭😭"
+            description="资源由网络第三方视频类网站收集，不提供任何视听上传服务，内容均来自各分享站点所提供的公开引用资源"
             show-icon>
         </el-alert>
     </div>
 
     <div class="line"></div>
     <el-container>
-        <!-- <template v-if="flag">
-            <el-aside width="180px;" ref="side">advertisement</el-aside>
-        </template> -->
-        <el-container>
-            <el-main>
-                <el-row :gutter="15">
-                    <el-col :xs="8" :sm="6" :md="6" :lg="4" :xl="4" v-for='(row,index) in rows' :key="index" style="margin-top:10px;">
-                        <div class="card">
-                            <div class="header">
-                                <router-link :to="{path : '/comic/category', query : {sid : row.sid, cover: row.cover, update:row.update_content,time:row.update}}" :title="row.title"><img v-lazy="row.cover"></router-link>
-                            </div>
-                            <template v-if ="flag ==false">                            
-                                <div class="card_date">
-                                    <span>{{ parseFloat(row.judge)}}</span>
-                                </div>
-                            </template>
-                            <div class="card_update">
-                                <span>{{row.update}}</span>
-                            </div>
-                            <div class="card_footer">
-                                <div class="title">
-                                    <span><router-link :to="{path : '/comic/category', query : {sid : row.sid,cover: row.cover, update:row.update_content,time:row.update}}" :title="row.title">{{row.title}}</router-link></span>
-                                </div>
-                                <template v-if="flag">
-                                    <div class="author">
-                                        <!-- <span><el-rate :value="parseFloat(row.judge)" disabled show-score text-color="#ff9900" score-template="{value}"></el-rate></span> -->
-                                        <span>更新至：{{row.update_content}}</span>
-                                    </div>
-                                </template>
 
+        <el-container>
+            <el-main class="images"  v-viewer>
+                <el-row :gutter="15">
+                    
+                    <!-- <img v-for="src in images" :src="src" :key="src"> -->
+
+
+                        <el-col :xs="8" :sm="6" :md="6" :lg="4" :xl="4" v-for='(row,index) in rows' :key="index" style="margin-top:10px;">
+                            <div class="card">
+                                <div class="header">
+                                        <img v-lazy="'http://kpd163.me:1024'+row.images_url">
+                                </div>
+                                <div class="card_footer">
+                                    <div class="title">
+                                        <span>{{row.title}}</span>
+                                    </div>
+
+                                </div>
                             </div>
-                        </div>
-                    </el-col>
+                        </el-col>
                 </el-row>
             </el-main>
             <el-footer>
@@ -90,11 +80,8 @@
                 </div>
             </el-footer>
         </el-container>
-        <!-- <template v-if="flag">
-            <el-aside width="180px;" ref="side">advertisement</el-aside>
-        </template> -->
-    </el-container>
 
+    </el-container>
     <div class="footer">
         <div class="bk"><hr></div>
         <p>本站的资源由网络第三方视频类网站收集，不提供任何视听上传服务，内容均来自各分享站点所提供的公开引用资源。</p>
@@ -110,10 +97,16 @@
 </template>
 
 <script>
-let Base64 = require('js-base64').Base64;
+import 'viewerjs/dist/viewer.css'
+import Viewer from 'v-viewer'
+import Vue from 'vue'
+Vue.use(Viewer)
 export default {
+    name:"HiddenVideo",
     data() {
         return {
+            token: window.btoa(decodeURIComponent(window.location.search.split("=")[1])),
+            bs_token:"",
             nowYear:new Date().getFullYear(),
             activeIndex: "1",           // 分类标签    
             bodyWidth:722,                 // 可视化浏览器窗口
@@ -131,9 +124,12 @@ export default {
     },
     mounted:function(){
         this.resizeChart();         //添加窗口变化监听事件   
-        // this.deal_aside;
         this.getContent();
         this.isPC();
+        // 解密token
+        // 原生bs64加密的token
+        this.bs_token = decodeURIComponent(window.location.search.split("=")[1]);
+        // this.token = window.btoa(decodeURIComponent(window.location.search.split("=")[1])); 
     },
     destoryed: function(){
         // 解除监听事件
@@ -185,6 +181,9 @@ export default {
                 case "6":
                     this.category = "6";
                     break;
+                case "7":
+                    this.category = "7";
+                    break;
                 default:
                     this.category = "1";
                     break;
@@ -219,13 +218,22 @@ export default {
         // 发送Ajax请求
         getContent:function () {
             let app = this;
+            let session_token = sessionStorage.getItem("token");
+            if(session_token == null || session_token == undefined || session_token==""){
+                alert("登录失效，请重新登录");
+                window.location.href = "/nmsl/admin/secret";
+            }
             axios({
-                url:"xe9527/nmsl/api/comic/",
+                // api1:自定义的api接口
+                url:"http://127.0.0.1:8001/nmsl/api/secret/picture/",
                 method:"get",
+                headers:{
+                    Authorization: "Token "+window.btoa(sessionStorage.getItem("token")),
+                },
                 params:{
                     offset:this.page_size*(this.currentPage-1),
                     limit: this.page_size,
-                    category: Base64.encode(this.category)
+                    category: this.category
                 }
             })
             .then(function(response){
@@ -279,10 +287,11 @@ export default {
         text-decoration: none;
         color: black;
     }
+    // moblie端
     @media screen and (max-width:480px){
         .card{
-            max-width: 11.8em;
-            height: 13em;
+            width: 100%;
+            height: 12em;
             position: relative;
         }
         .card .header img{
@@ -295,14 +304,19 @@ export default {
         .card .header{
             width: 100%;
             height: 9.8em;
-        }    
+        }
+        .card .card_update{
+            position:absolute;
+            left: 3px;
+            bottom: 3.2em;
+            background-color: #feeeed;
+        }        
     }
     @media screen and (min-width:481px){
         .card{
-            max-width: 11.8em;
+            max-width: 100%;
             height: 18.7em;
             position: relative;
-            cursor: pointer;
         }
         .card .header img{
             height: 100%;
@@ -315,8 +329,15 @@ export default {
             width: 100%;
             height: 13.7em;
             cursor: pointer;
+        }
+        .card .card_update{
+            position:absolute;
+            left: 3px;
+            bottom: 5.2em;
+            background-color: #feeeed;
         }        
     }
+
 
     .card .card_date{
         position:absolute;
@@ -326,11 +347,7 @@ export default {
         background-color: coral;
         border-radius: 20%;
     }
-    .card .card_update{
-        position:absolute;
-        left: 3px;
-        bottom: 5.2em;
-    }
+
     .card_date span{
         text-transform: uppercase;
         font-size: 18px;
@@ -342,17 +359,20 @@ export default {
         color: #ed1941;
     }
     .title{
-        margin-top: 1em;
+        margin-top: 12px;
         width:100%;
         height:1.5em;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
         color: black;
-        font-size: 1em;
+        font-size: 12px;
     }
     .author{
-        margin-top: 1em;
+        margin-top: 3px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
         font-size: 11px;
 
     }

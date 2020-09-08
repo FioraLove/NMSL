@@ -6,17 +6,13 @@
                 <template v-if="flag">
                     <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
                         background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
-                            <el-menu-item index="1">冒险热血</el-menu-item>
-                            <el-menu-item index="2">武侠格斗</el-menu-item>
-                            <el-menu-item index="3">科幻魔幻</el-menu-item>
-                    </el-menu>  
+                            <el-menu-item index="1">激情图片</el-menu-item>
+                    </el-menu>
                 </template>
                 <template v-else>
                     <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
                         background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
-                            <el-menu-item index="1">冒险热血</el-menu-item>
-                            <el-menu-item index="2">武侠格斗</el-menu-item>
-                            <el-menu-item index="3">科幻魔幻</el-menu-item>
+                            <el-menu-item index="1">激情图片</el-menu-item>
                     </el-menu>  
                 </template>
             </div>
@@ -165,24 +161,7 @@ export default {
         handleSelect(key, keyPath) {
             switch (key) {
                 case "1":
-                    this.category = "1";
-                    console.log(typeof(key));
-                    console.log(keyPath);
-                    break;
-                case "2":
-                    this.category = "2";
-                    break;
-                case "3":
-                    this.category = "3";
-                    break;
-                case "4":
-                    this.category = "4";
-                    break;
-                case "5":
-                    this.category = "5";
-                    break;
-                case "6":
-                    this.category = "6";
+                    window.location.href="/nmsl/hidden/picture?token="+this.bs_token
                     break;
                 default:
                     this.category = "1";
@@ -232,8 +211,7 @@ export default {
                 },
                 params:{
                     offset:this.page_size*(this.currentPage-1),
-                    limit: this.page_size,
-                    category: this.category
+                    limit: this.page_size
                 }
             })
             .then(function(response){

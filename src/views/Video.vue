@@ -109,6 +109,7 @@
 
 <script scoped>
     import DPlayer from "../assets/js/DPlayer.min.js";
+import { Base64 } from 'js-base64';
     export default {
         name: "User",
         data() {
@@ -187,10 +188,10 @@
                     alert("请选择解析的视频类型和地址");
                 }else{
                     axios({
-                        url:"http://127.0.0.1:8001/nmsl/api/video/parse/",
+                        url:"xe9527/nmsl/api/video/parse/",
                         method:"post",
                         data:{
-                            category:this.select,
+                            category: Base64.encode(this.select),
                             url:this.input_api
                         }
                     })
