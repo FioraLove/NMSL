@@ -109,6 +109,7 @@
 
 <script scoped>
     import DPlayer from "../assets/js/DPlayer.min.js";
+import { Base64 } from 'js-base64';
     export default {
         name: "User",
         data() {
@@ -190,7 +191,7 @@
                         url:"xe9527/nmsl/api/video/parse/",
                         method:"post",
                         data:{
-                            category:this.select,
+                            category: Base64.encode(this.select),
                             url:this.input_api
                         }
                     })

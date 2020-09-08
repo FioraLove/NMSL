@@ -25,3 +25,4 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
     - 2020-09-03 隐私加密视频页面初步构建以及前后交互
     - 2020-09-04 隐私加密图片页面初步构建以及前后交互
     - 2020-09-07 隐私加密图片页面进行懒加载以及设置Django后台公共路由xe9527（http://127.0.0.1:8001）,学习vue-cli与echarts的搭配使用
+    - 2020-09-08 RSA加密的Django后端解密一直不成功，很生气，故采用Base64编码

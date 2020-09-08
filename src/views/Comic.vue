@@ -110,7 +110,7 @@
 </template>
 
 <script>
-
+let Base64 = require('js-base64').Base64;
 export default {
     data() {
         return {
@@ -220,17 +220,12 @@ export default {
         getContent:function () {
             let app = this;
             axios({
-                // api1:自定义的api接口
                 url:"xe9527/nmsl/api/comic/",
                 method:"get",
-                // headers:{
-                //     "Host":"m.music.migu.cn",
-                //     "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36"
-                // },
                 params:{
                     offset:this.page_size*(this.currentPage-1),
                     limit: this.page_size,
-                    category: this.category
+                    category: Base64.encode(this.category)
                 }
             })
             .then(function(response){
