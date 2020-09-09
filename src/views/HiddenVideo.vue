@@ -7,12 +7,14 @@
                     <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
                         background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
                             <el-menu-item index="1">激情图片</el-menu-item>
+                            <el-menu-item index="2">精品资源</el-menu-item>
                     </el-menu>
                 </template>
                 <template v-else>
                     <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
                         background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
                             <el-menu-item index="1">激情图片</el-menu-item>
+                            <el-menu-item index="2">精品资源</el-menu-item>
                     </el-menu>  
                 </template>
             </div>
@@ -163,6 +165,9 @@ export default {
                 case "1":
                     window.location.href="/nmsl/hidden/picture?token="+this.bs_token
                     break;
+                case "2":
+                    window.location.href="/nmsl/hidden/source?token="+this.bs_token
+                    break;
                 default:
                     this.category = "1";
                     break;
@@ -256,6 +261,10 @@ export default {
     }
     .comic{
         max-width: 100%;
+        background-image: url("../assets/images/bk.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
     }
     .block{
         text-align: center;
@@ -271,6 +280,7 @@ export default {
             width: 100%;
             height: 13em;
             position: relative;
+            background-color: transparent;
         }
         .card .header img{
             height: 100%;
@@ -295,6 +305,7 @@ export default {
             max-width: 100%;
             height: 18.7em;
             position: relative;
+            background-color: transparent;
         }
         .card .header img{
             height: 100%;
@@ -350,8 +361,8 @@ export default {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        font-size: 11px;
-
+        font-size: 13px;
+        color:black;
     }
     .author el-rate{
         font-size: 8px;
