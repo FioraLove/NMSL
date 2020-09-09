@@ -89,6 +89,11 @@ Vue.use(VueRouter,axios)
         path: '/nmsl/hidden/picture',
         name: "HiddenPic",
         component: () => import('../views/HiddenPic.vue')
+    },{
+        // 登陆后的隐私第三方资源分享
+        path: '/nmsl/hidden/source',
+        name: "HiddenSource",
+        component: () => import('../views/HiddenSource.vue')
     }
 
 ]
