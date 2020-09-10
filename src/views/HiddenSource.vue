@@ -48,6 +48,12 @@ export default {
                 "desc": "最新樱花动漫,热门樱花动漫,好看樱花动漫",
                 "bk": "https://mob.99xwm.com/MjEyMA09241/1378.gif",
                 "url": "http://m.ccy9.com/list/index57.html"
+            },{
+                "time": "2020-07-20",
+                "title": "BT天堂",
+                "desc": "BT天堂为您提供最新动漫热播排行榜,手机高清极速在线观看,最新最好看的动漫排行榜",
+                "bk": "https://mob.99xwm.com/MjEyMA09241/1390.gif",
+                "url": "http://m.bttiantang8.com/list/4.html"
             }]
         }
     },
@@ -56,12 +62,6 @@ export default {
 
 
 <style scoped>
-    .source{
-        background: linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%), radial-gradient(at top center, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.40) 120%) #989898;
- background-blend-mode: multiply,multiply;
-        width: 100wvw;
-        height:100vh;
-    }
     h2{
         margin-top: 0px;
         margin-bottom: 1em;
@@ -85,10 +85,20 @@ export default {
 
     /* moblie端 */
     @media screen and (max-width:480px){
-
+        .source{
+            background: linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%), radial-gradient(at top center, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.40) 120%) #989898;
+            background-blend-mode: multiply,multiply;
+            width: 100vw;
+            height:100%;
+        }
     }
     /* PC端 */
     @media screen and (min-width:481px){
-
+        .source{
+            background: linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%), radial-gradient(at top center, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.40) 120%) #989898;
+            background-blend-mode: multiply,multiply;
+            width: 100vw;
+            height:100vh;
+        }
     }
 </style>
