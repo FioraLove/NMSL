@@ -272,7 +272,7 @@ export default {
     }
     a{
         text-decoration: none;
-        color: black;
+        color: #66CCCC;
     }
     // moblie端
     @media screen and (max-width:480px){
