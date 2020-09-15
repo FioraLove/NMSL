@@ -41,6 +41,7 @@
                                 <el-option label="陌陌视频" value="7"></el-option>
                                 <el-option label="梨视频" value="8"></el-option>
                                 <el-option label="美拍" value="9"></el-option>
+                                <el-option label="场库短视频" value="10"></el-option>
                                 <el-option label="其它" value="99"></el-option>
                                 </el-select>
                                 <el-button slot="append" icon="el-icon-search" @click="parse()"></el-button>
@@ -73,6 +74,7 @@
                                                 <!-- Episode-data用来存每集的播放链接  -->
                                                 <!-- <el-button v-for="(row,index) in 100" :key="index" style="margin:2px;width:5em;" episode-data="blob:https://www.bilibili.com/58baed53-247f-415d-9119-554d7a08a39f"  :ref="index">{{row}}</el-button> -->
                                                 <el-button plain style="margin:2px;"  @click="open_douyin">抖音</el-button>
+                                                <el-button plain style="margin:2px;"  @click="open_douyin" disabled>YouTube</el-button>
                                                 <el-button plain style="margin:2px;"  @click="open_bili">哔哩哔哩</el-button>
                                                 <el-button plain style="margin:2px;"  @click="open_haokan">好看视频</el-button>
                                                 <el-button plain style="margin:2px;"  @click="open_sixroom">六间房</el-button>
@@ -80,6 +82,7 @@
                                                 <el-button plain style="margin:2px;"  @click="open_momo">陌陌视频</el-button>
                                                 <el-button plain style="margin:2px;"  @click="open_pear">梨视频</el-button>
                                                 <el-button plain style="margin:2px;"  @click="open_meipai">美拍</el-button>
+                                                <el-button plain style="margin:2px;"  @click="open_parse">场库视频</el-button>
                                             </el-col>
                                         </el-row>
                                     </div>
@@ -96,7 +99,7 @@
             <div class="bk"><hr>
                 <p>本站不提供任何视听上传服务，所有内容均来自各分享站点所提供的公开引用资源。</p>
                 <p>若收录节目无意侵犯了贵司版权，请联系并告知删除，谢谢</p>
-                <p>Copyright © 2020. All Rights Reserved</p>
+                <p>Copyright © 2019-{{nowYear}}. All Rights Reserved</p>
                 <div>
                     <a href="https://AhriLove.top" target="_self" rel="noopener noreferrer"><img src="https://cdn.jsdelivr.net/gh/FioraLove/Images/D:/data/imagesaaa.png" alt="AhriLove"></a>
                 </div>
@@ -114,6 +117,7 @@ import { Base64 } from 'js-base64';
         name: "User",
         data() {
             return {
+                nowYear:new Date().getFullYear(),
                 loading:true,                       // 加载动画
                 input_url: '',                      // 输入的视频播放地址
                 input_subtitle: '',                 // 输入的字幕加载地址
@@ -273,6 +277,13 @@ import { Base64 } from 'js-base64';
                 this.$notify({
                     title: '美拍视频源代码',
                     message: h('b', { style: 'color: teal'}, 'https://github.com/FioraLove/Python/tree/master/Python爬虫案例/美拍')
+                })
+            },
+            open_parse:function(){
+                const h = this.$createElement;
+                this.$notify({
+                    title: '视频解析源代码',
+                    message: h('b', { style: 'color: teal'}, 'https://github.com/FioraLove/Net-Spider/tree/develop/video-parse')
                 })
             },
 
