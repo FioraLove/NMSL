@@ -4,7 +4,10 @@
             <el-main>
                 <el-row :gutter="10">
                     <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
-
+                        <div ref="main" style="height:25em;"></div>
+                    </el-col>
+                    <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
+                        <div ref="barbox" style="height:25em;"></div>
                     </el-col>
                 </el-row>
             </el-main>
@@ -15,7 +18,8 @@
 </template>
 
 <script>
-
+// 导入echarts的所有包库
+var echarts = require('echarts');
 export default {
     name: 'hello',
     data() {
@@ -24,9 +28,9 @@ export default {
         }
     },
     mounted() {
-        // this.renderDrawLine();
-        // this.resizeChart(); // 监听窗口变化事件
-        // this.renderBarChart();
+        this.renderDrawLine();
+        this.resizeChart(); // 监听窗口变化事件
+        this.renderBarChart();
     },
     computed: {
         // 基于准备好的dom，初始化echarts实例
