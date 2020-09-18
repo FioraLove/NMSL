@@ -38,9 +38,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
    ![](./github_images/index.gif)
 
-> 漫画
-
-   ![](./github_images/comic.gif)
 
 > 视频解析
 
