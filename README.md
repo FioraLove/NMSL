@@ -30,7 +30,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
    - 2020/9/9 创建隐私加密资源分享页面
    - 2020/9/10 全局增加禁止F12调试，无限debugger，右键菜单功能，并将其js混淆化
    - 2020/9/11 视频解析新增 [【场库短视频】](https://www.vmovier.com/)
-<<<<<<< HEAD
    - 2020/9/14 隐私页面新增视频资源
 
 <br>
@@ -43,6 +42,4 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 > 视频解析
 
    ![](./github_images/parse.png)
-=======
-   - 2020/9/14 隐私页面新增视频资源
->>>>>>> develop
+
