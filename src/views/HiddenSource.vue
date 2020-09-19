@@ -121,7 +121,7 @@ export default {
     a{
         text-decoration: none;
         cursor: pointer;
-        color:#339933;
+        color: #F90;
     }
     .card{
         background-size: cover;

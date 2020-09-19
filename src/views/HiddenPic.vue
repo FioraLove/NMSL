@@ -315,7 +315,7 @@ export default {
     @media screen and (min-width:481px){
         .card{
             max-width: 100%;
-            height: 18.7em;
+            height: 17em;
             position: relative;
         }
         .card .header img{
@@ -365,8 +365,9 @@ export default {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        color: black;
-        font-size: 12px;
+        color: #F90;
+        background-color: #000;
+        font-size: 14px;
     }
     .author{
         margin-top: 3px;
