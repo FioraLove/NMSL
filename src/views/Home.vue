@@ -99,14 +99,22 @@
                 
             </el-main>
             <el-footer style="height:1.25em;">
-                <div style="text-align:center;color:hsla(0,0%,100%,.85);font-family: Roboto,sans-serif;">Copyright © {{nowYear}} AhriLove·鳄鱼邦邦</div>
+                <div style="text-align:center;color:hsla(0,0%,100%,.85);font-family: Roboto,sans-serif;">Copyright © 2019-{{nowYear}} AhriLove·鳄鱼邦邦</div>
             </el-footer>
         </el-container>
         
         <!-- 导航栏模块 -->
         <div class="main">
             <div class="tabBar">
-                <div class="box" v-for='(row,index) in rows' :key="index"><a :href="row.url" target="_self"><p>{{row.content}}</p></a></div>
+                <div class="box" v-for='(row,index) in rows' :key="index">
+                    <template v-if="row.content == '联系我' ">
+                        <a :href="row.url" target="_blank"><p>{{row.content}}</p></a>
+                    </template>
+                    <template v-else>
+                        <a :href="row.url" target="_self"><p>{{row.content}}</p></a>
+                    </template>
+                    
+                </div>
             </div>
         </div>
     </div>
@@ -151,7 +159,7 @@ export default {
                     url:"https://github.com/FioraLove",
                     content:"Github"
                 },{
-                    url:"https://AhriLove.top",
+                    url:"http://wpa.qq.com/msgrd?v=3&uin=3434279505&site=qq&menu=yes",
                     content:"联系我"
             }],
             api:"http://127.0.0.1:8001/nmsl/bilibili/",

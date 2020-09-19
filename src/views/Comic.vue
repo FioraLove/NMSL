@@ -281,7 +281,7 @@ export default {
     }
     @media screen and (max-width:480px){
         .card{
-            max-width: 11.8em;
+            max-width: 100%;
             height: 13em;
             position: relative;
         }
@@ -299,7 +299,7 @@ export default {
     }
     @media screen and (min-width:481px){
         .card{
-            max-width: 11.8em;
+            max-width: 100%;
             height: 18.7em;
             position: relative;
             cursor: pointer;

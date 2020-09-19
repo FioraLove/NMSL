@@ -272,7 +272,8 @@ export default {
     }
     a{
         text-decoration: none;
-        color: #66CCCC;
+        color: #F90;
+        background-color: #000;
     }
     // moblie端
     @media screen and (max-width:480px){
@@ -331,7 +332,6 @@ export default {
         position:absolute;
         right: 3px;
         top: 3px;
-
         background-color: coral;
         border-radius: 20%;
     }
@@ -362,7 +362,7 @@ export default {
         text-overflow: ellipsis;
         white-space: nowrap;
         font-size: 13px;
-        color:black;
+        color: #FFF;
     }
     .author el-rate{
         font-size: 8px;
