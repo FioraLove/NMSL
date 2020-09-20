@@ -61,7 +61,7 @@ export default {
             }
             axios({
                 // api1:自定义的api接口
-                url:"http://127.0.0.1:8001/nmsl/api/secret/video/chapter/",
+                url: this.FACTURL.baseUrl+"/nmsl/api/secret/video/chapter/",
                 method:"get",
                 headers:{
                     // "Authorization":"Token "+this.token,

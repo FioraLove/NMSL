@@ -35,15 +35,7 @@ module.exports = {
                     '^/bili': ''  // rewrite path
                 }
             },
-            // 本地api地址
-            '/xe9527':{
-                target: 'http://127.0.0.1:8001/',
-                ws: true,
-                changeOrigin: true, 
-                pathRewrite: {
-                    '^/xe9527': ''  // rewrite path
-                }
-            },
+
         }
     },
     chainWebpack: config => {

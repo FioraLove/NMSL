@@ -124,13 +124,13 @@
     },
     methods: {
         login:function(){
-            let app = this;
+            let vm = this;
             if (this.logindata.username == "" || this.logindata.password=="") {
                 alert("账号或密码不能为空，请重新检查 ε=ε=ε=(~￣▽￣)~");
             }
             axios({
                 // api1:自定义的api接口
-                url:"http://127.0.0.1:8001/nmsl/api/secret/token-auth/",
+                url: this.FACTURL.baseUrl+"/nmsl/api/secret/token-auth/",
                 method:"post",
                 data:{
                     username: this.logindata.username.trim().toString(),
@@ -144,24 +144,24 @@
                 if(response.status == 200){
                     try {
                         let token = response.data.token;
-                        app.token = token;
+                        vm.token = token;
                         // 跳转到隐藏网址
                         console.log(token);
                         // 如果登录成功，存储token
                         sessionStorage.setItem("token",window.atob(token.trim()));
                         window.location.href = "/nmsl/hidden/video/secret?token="+window.atob(token.trim());
                     } catch (error) {
-                        app.token = "";
+                        vm.token = "";
                     }
 
                 }else{
-                    app.token = "暂无Token";
+                    vm.token = "暂无Token";
                     alert("账号或密码错误，请重新检查 ε=ε=ε=(~￣▽￣)~");
                 }
             })
             .catch(function (error) {
                 console.log(error);
-                app.token = "暂无Token";
+                vm.token = "暂无Token";
                 alert("账号或密码错误，请重新检查 ε=ε=ε=(~￣▽￣)~");
             })
         }

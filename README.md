@@ -31,7 +31,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
    - 2020/9/10 全局增加禁止F12调试，无限debugger，右键菜单功能，并将其js混淆化
    - 2020/9/11 视频解析新增 [【场库短视频】](https://www.vmovier.com/)
    - 2020/9/14 隐私页面新增视频资源
-   - 2020/9/19 调整页面布局与采用pornhub配色
+   - 2020/9/20 调整页面布局与采用pornhub配色，使用api接口使用全局变量以及新增 [微博短视频解析](https://weibo.com/)
 
 <br>
 

@@ -162,7 +162,7 @@ export default {
                     url:"http://wpa.qq.com/msgrd?v=3&uin=3434279505&site=qq&menu=yes",
                     content:"联系我"
             }],
-            api:"http://127.0.0.1:8001/nmsl/bilibili/",
+            api: this.FACTURL.baseUrl+"/nmsl/bilibili/",
             results:[]
            
         }
@@ -177,9 +177,6 @@ export default {
         getContent:function () {
             let app = this;
             axios({
-                // api1:自定义的api接口
-                //https://api.bilibili.com/x/space/arc/search?mid=215893581&ps=30&tid=0&pn=1&keyword=&order=pubdate&jsonp=jsonp
-                //url:"/bili/space/arc/search",
                 url:this.api,
                 method:"get"
             })
