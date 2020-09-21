@@ -218,9 +218,9 @@ export default {
         },
         // 发送Ajax请求
         getContent:function () {
-            let app = this;
+            let vm = this;
             axios({
-                url:"xe9527/nmsl/api/comic/",
+                url: this.FACTURL.baseUrl+"/nmsl/api/comic/",
                 method:"get",
                 params:{
                     offset:this.page_size*(this.currentPage-1),
@@ -230,13 +230,13 @@ export default {
             })
             .then(function(response){
                 if(response.status == 200){
-                    app.rows = response.data.results;
-                    app.count = response.data.count;
+                    vm.rows = response.data.results;
+                    vm.count = response.data.count;
                 }else{
-                    app.rows = {"content":"暂无数据。。。"};
+                    vm.rows = {"content":"暂无数据。。。"};
                 }
                 // 关闭加载动画
-                app.loading=false;
+                vm.loading=false;
             })
             .catch(function (error) {
                 console.log(error);

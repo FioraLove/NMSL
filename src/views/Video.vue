@@ -42,6 +42,8 @@
                                 <el-option label="梨视频" value="8"></el-option>
                                 <el-option label="美拍" value="9"></el-option>
                                 <el-option label="场库短视频" value="10"></el-option>
+                                <el-option label="微博视频" value="11"></el-option>
+                                <el-option label="最右" value="12"></el-option>
                                 <el-option label="其它" value="99"></el-option>
                                 </el-select>
                                 <el-button slot="append" icon="el-icon-search" @click="parse()"></el-button>
@@ -78,11 +80,13 @@
                                                 <el-button plain style="margin:2px;"  @click="open_bili">哔哩哔哩</el-button>
                                                 <el-button plain style="margin:2px;"  @click="open_haokan">好看视频</el-button>
                                                 <el-button plain style="margin:2px;"  @click="open_sixroom">六间房</el-button>
-                                                <el-button plain style="margin:2px;"  @click="open_quanmin">全民小视频</el-button>
+                                                <el-button plain style="margin:2px;"  @click="open_quanmin">全民视频</el-button>
                                                 <el-button plain style="margin:2px;"  @click="open_momo">陌陌视频</el-button>
+                                                <el-button plain style="margin:2px;"  @click="open_parse">最右</el-button>
                                                 <el-button plain style="margin:2px;"  @click="open_pear">梨视频</el-button>
                                                 <el-button plain style="margin:2px;"  @click="open_meipai">美拍</el-button>
                                                 <el-button plain style="margin:2px;"  @click="open_parse">场库视频</el-button>
+                                                <el-button plain style="margin:2px;"  @click="open_parse">微博视频</el-button>
                                             </el-col>
                                         </el-row>
                                     </div>
@@ -192,7 +196,7 @@ import { Base64 } from 'js-base64';
                     alert("请选择解析的视频类型和地址");
                 }else{
                     axios({
-                        url:"xe9527/nmsl/api/video/parse/",
+                        url: this.FACTURL.baseUrl+"/nmsl/api/video/parse/",
                         method:"post",
                         data:{
                             category: Base64.encode(this.select),

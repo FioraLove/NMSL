@@ -114,7 +114,7 @@ export default {
         getInfo:function(){
             let app = this;
             axios({
-                url:"http://127.0.0.1:8001/nmsl/api/comic/author",
+                url: this.FACTURL.baseUrl+"/nmsl/api/comic/author",
                 method:"get",
                 params:{
                     uid: Base64.encode(this.sid)
@@ -147,7 +147,7 @@ export default {
         getContent:function(){
             let app = this;
             axios({
-                url:"http://127.0.0.1:8001/nmsl/api/comic/chapter",
+                url: this.FACTURL.baseUrl+"/nmsl/api/comic/chapter",
                 method:"get",
                 params:{
                     uid: Base64.encode(this.sid),
