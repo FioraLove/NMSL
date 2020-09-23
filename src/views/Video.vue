@@ -62,10 +62,10 @@
                 <!-- url视频播放测试页面 -->
                 <el-row :gutter="30">
                     <!-- 视频播放 -->
-                    <el-col :xs="24" :sm="18" :md="18" :lg="18" :xl="18">
+                    <el-col :xs="24" :sm="17" :md="17" :lg="17" :xl="17">
                         <div id="dplayer" v-loading="loading" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading"  element-loading-background="rgba(0, 0, 0, 0.8)"></div>
                     </el-col>
-                    <el-col :xs="24" :sm="6" :md="6" :lg="6" :xl="6">
+                    <el-col :xs="24" :sm="7" :md="7" :lg="7" :xl="7">
                         <!-- 右侧滚动的集数 -->
                         <div class="follow">
                             <div><p class="star"><a href="javascript:;"><span><i class="el-icon-video-camera-solid"></i> 短视频解析</span></a></p></div>
@@ -129,7 +129,7 @@
                 loading:true,                       // 加载动画
                 input_url: '',                      // 输入的视频播放地址
                 input_subtitle: '',                 // 输入的字幕加载地址
-                url:"https://api.dogecloud.com/player/get.mp4?vcode=5ac682e6f8231991&userId=17&ext=.mp4",
+                url: "https://api.dogecloud.com/player/get.mp4?vcode=5ac682e6f8231991&userId=17&ext=.mp4",
                 thum_pic: require("../assets/images/beautiful.jpg"),                   // 视频封面
                 subtitle:"https://s-sh-17-dplayercdn.oss.dogecdn.com/hikarunara.vtt",           // 字幕url
                 textarea:"",
