@@ -44,6 +44,8 @@
                                 <el-option label="场库短视频" value="10"></el-option>
                                 <el-option label="微博视频" value="11"></el-option>
                                 <el-option label="最右" value="12"></el-option>
+                                <el-option label="皮皮虾" value="13"></el-option>
+                                <el-option label="AcFun" value="14"></el-option>
                                 <el-option label="其它" value="99"></el-option>
                                 </el-select>
                                 <el-button slot="append" icon="el-icon-search" @click="parse()"></el-button>
@@ -60,10 +62,10 @@
                 <!-- url视频播放测试页面 -->
                 <el-row :gutter="30">
                     <!-- 视频播放 -->
-                    <el-col :xs="24" :sm="18" :md="18" :lg="18" :xl="18">
+                    <el-col :xs="24" :sm="17" :md="17" :lg="17" :xl="17">
                         <div id="dplayer" v-loading="loading" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading"  element-loading-background="rgba(0, 0, 0, 0.8)"></div>
                     </el-col>
-                    <el-col :xs="24" :sm="6" :md="6" :lg="6" :xl="6">
+                    <el-col :xs="24" :sm="7" :md="7" :lg="7" :xl="7">
                         <!-- 右侧滚动的集数 -->
                         <div class="follow">
                             <div><p class="star"><a href="javascript:;"><span><i class="el-icon-video-camera-solid"></i> 短视频解析</span></a></p></div>
@@ -87,6 +89,8 @@
                                                 <el-button plain style="margin:2px;"  @click="open_meipai">美拍</el-button>
                                                 <el-button plain style="margin:2px;"  @click="open_parse">场库视频</el-button>
                                                 <el-button plain style="margin:2px;"  @click="open_parse">微博视频</el-button>
+                                                <el-button plain style="margin:2px;"  @click="open_parse">皮皮虾</el-button>
+                                                <el-button plain style="margin:2px;"  @click="open_parse">AcFun</el-button>
                                             </el-col>
                                         </el-row>
                                     </div>
@@ -114,9 +118,9 @@
 
 
 
-<script scoped>
+<script scoped>  
     import DPlayer from "../assets/js/DPlayer.min.js";
-import { Base64 } from 'js-base64';
+    import { Base64 } from 'js-base64';
     export default {
         name: "User",
         data() {
@@ -125,7 +129,7 @@ import { Base64 } from 'js-base64';
                 loading:true,                       // 加载动画
                 input_url: '',                      // 输入的视频播放地址
                 input_subtitle: '',                 // 输入的字幕加载地址
-                url:"https://api.dogecloud.com/player/get.mp4?vcode=5ac682e6f8231991&userId=17&ext=.mp4",
+                url: "https://api.dogecloud.com/player/get.mp4?vcode=5ac682e6f8231991&userId=17&ext=.mp4",
                 thum_pic: require("../assets/images/beautiful.jpg"),                   // 视频封面
                 subtitle:"https://s-sh-17-dplayercdn.oss.dogecdn.com/hikarunara.vtt",           // 字幕url
                 textarea:"",
@@ -137,9 +141,30 @@ import { Base64 } from 'js-base64';
         mounted() {
             this.initDPlayer;                       // 初始化计算属性
         },
+
         computed: {
             // 视频播放器初始化函数
             initDPlayer:function(){
+                // 判斷url的格式
+                let video = {};
+                if((this.url).toLowerCase().indexOf("m3u8") > -1){
+                    video = {
+                        url: this.url,
+                        type: 'hls',
+                        defaultQuality: 0,
+                        pic: require("../assets/images/master.jpg"),
+                        thumbnails: "",
+                    }
+                }else{
+                    video = {
+                        url:this.url,
+                        defaultQuality: 0,
+                        pic: this.thum_pic,
+                        thumbnails: "",
+                        type: 'auto',
+                    }
+                }
+
                 const dp = new DPlayer({
                     container: document.getElementById('dplayer'),
                     autoplay: false,
@@ -153,14 +178,7 @@ import { Base64 } from 'js-base64';
                     logo:  require("../assets/images/video_logo.png"),
                     volume: 0.5,
                     mutex: true,
-                    video: {
-                        url:this.url,
-                        defaultQuality: 0,
-
-                        pic: this.thum_pic,
-                        thumbnails: "",
-                        type: 'auto',
-                    },
+                    video: video,
                     // 字幕
                     subtitle: {
                         url: this.subtitle,
@@ -224,7 +242,6 @@ import { Base64 } from 'js-base64';
                 } else {
                     this.url = this.input_url;
                 }
-                console.log(this.url);
                 this.subtitle = this.input_subtitle;
             },
             open_douyin:function(){
