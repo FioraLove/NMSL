@@ -44,6 +44,8 @@
                                 <el-option label="场库短视频" value="10"></el-option>
                                 <el-option label="微博视频" value="11"></el-option>
                                 <el-option label="最右" value="12"></el-option>
+                                <el-option label="皮皮虾" value="13"></el-option>
+                                <el-option label="AcFun" value="14"></el-option>
                                 <el-option label="其它" value="99"></el-option>
                                 </el-select>
                                 <el-button slot="append" icon="el-icon-search" @click="parse()"></el-button>
@@ -87,6 +89,8 @@
                                                 <el-button plain style="margin:2px;"  @click="open_meipai">美拍</el-button>
                                                 <el-button plain style="margin:2px;"  @click="open_parse">场库视频</el-button>
                                                 <el-button plain style="margin:2px;"  @click="open_parse">微博视频</el-button>
+                                                <el-button plain style="margin:2px;"  @click="open_parse">皮皮虾</el-button>
+                                                <el-button plain style="margin:2px;"  @click="open_parse">AcFun</el-button>
                                             </el-col>
                                         </el-row>
                                     </div>
@@ -114,9 +118,9 @@
 
 
 
-<script scoped>
+<script scoped>  
     import DPlayer from "../assets/js/DPlayer.min.js";
-import { Base64 } from 'js-base64';
+    import { Base64 } from 'js-base64';
     export default {
         name: "User",
         data() {
@@ -137,9 +141,30 @@ import { Base64 } from 'js-base64';
         mounted() {
             this.initDPlayer;                       // 初始化计算属性
         },
+
         computed: {
             // 视频播放器初始化函数
             initDPlayer:function(){
+                // 判斷url的格式
+                let video = {};
+                if((this.url).toLowerCase().indexOf("m3u8") > -1){
+                    video = {
+                        url: this.url,
+                        type: 'hls',
+                        defaultQuality: 0,
+                        pic: require("../assets/images/master.jpg"),
+                        thumbnails: "",
+                    }
+                }else{
+                    video = {
+                        url:this.url,
+                        defaultQuality: 0,
+                        pic: this.thum_pic,
+                        thumbnails: "",
+                        type: 'auto',
+                    }
+                }
+
                 const dp = new DPlayer({
                     container: document.getElementById('dplayer'),
                     autoplay: false,
@@ -153,14 +178,7 @@ import { Base64 } from 'js-base64';
                     logo:  require("../assets/images/video_logo.png"),
                     volume: 0.5,
                     mutex: true,
-                    video: {
-                        url:this.url,
-                        defaultQuality: 0,
-
-                        pic: this.thum_pic,
-                        thumbnails: "",
-                        type: 'auto',
-                    },
+                    video: video,
                     // 字幕
                     subtitle: {
                         url: this.subtitle,
@@ -224,7 +242,6 @@ import { Base64 } from 'js-base64';
                 } else {
                     this.url = this.input_url;
                 }
-                console.log(this.url);
                 this.subtitle = this.input_subtitle;
             },
             open_douyin:function(){
