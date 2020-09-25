@@ -94,6 +94,11 @@ Vue.use(VueRouter,axios)
         path: '/nmsl/hidden/source',
         name: "HiddenSource",
         component: () => import('../views/HiddenSource.vue')
+    },{
+        // 留言板
+        path: '/comments',
+        name: "Comments",
+        component: () => import('../views/Comments.vue')
     }
 
 ]
