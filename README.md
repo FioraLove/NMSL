@@ -33,15 +33,16 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
    - 2020-9-14 隐私页面新增视频资源
    - 2020-9-20 调整页面布局与采用**pornhub**配色，使用api接口使用全局变量以及新增 [微博短视频解析](https://weibo.com/)
    - 2020-9-23 DPlayer新增m3u8格式视频播放以及皮皮虾，AcFun等APP视频解析接口
+   - 2020-9-25 增加带旋转图片验证码的留言板模块，实现post写入，get分页读取
 
 
 <br>
 
 > 主页：
 
-   ![](./github_images/home.gif)
+  - ![](https://cdn.jsdelivr.net/gh/FioraLove/Images/home.gif)
 
 
 > 视频解析
 
-   ![](./github_images/parse.png)
+   - ![](https://cdn.jsdelivr.net/gh/FioraLove/Images/parse.png)

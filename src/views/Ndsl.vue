@@ -95,8 +95,7 @@ export default {
         color: white;
         font-size: 0.85em;
         margin-top: 1.85em;
-        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-        
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; 
     }
     .main{
         width: 85vw;

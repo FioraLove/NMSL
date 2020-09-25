@@ -138,8 +138,8 @@ export default {
             bodyHeight:100,
             loading: true,
             rows:[{
-                content:"主页",
-                url:"/"
+                    content:"主页",
+                    url:"/"
                 },{
                     content:"动漫",
                     url:"/media"
@@ -159,9 +159,12 @@ export default {
                     url:"https://github.com/FioraLove",
                     content:"Github"
                 },{
+                    url: "/comments",
+                    content:"留言"
+                },{
                     url:"http://wpa.qq.com/msgrd?v=3&uin=3434279505&site=qq&menu=yes",
                     content:"联系我"
-            }],
+                }],
             api: this.FACTURL.baseUrl+"/nmsl/bilibili/",
             results:[]
            
