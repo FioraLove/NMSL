@@ -257,9 +257,9 @@ export default {
         max-width:100vw;
         min-height: 100vh;
     }
-    /* p,span{
+    p,span{
         color:hsla(0,0%,100%,.85);
-    } */
+    }
     .bk{
         height: 2em;
     }
