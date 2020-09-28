@@ -40,9 +40,11 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 > 主页：
 
+
   - ![](https://cdn.jsdelivr.net/gh/FioraLove/Images/home.gif)
 
 
 > 视频解析
 
-   - ![](https://cdn.jsdelivr.net/gh/FioraLove/Images/parse.png)
+
+  - ![](https://cdn.jsdelivr.net/gh/FioraLove/Images/parse.png)
