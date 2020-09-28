@@ -8,10 +8,7 @@
                     <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
 
                         <div style="margin-top: 15px;margin:0 auto;width:80%;">
-                            <el-alert
-                                title="视频测试播放"
-                                type="success"
-                                center
+                            <el-alert title="视频测试播放" type="success" center
                                 description="将视频地址添加到输入框中，某些视频若存在字幕，可将其字幕url地址添加到字幕框中">
                             </el-alert>                            
                             <el-input placeholder="请输入测试播放的视频地址" v-model="input_url" class="input-with-select" clearable>
@@ -31,21 +28,9 @@
                             </el-alert>
 
                            <el-input placeholder="请输入分享链接的视频地址(bilibili直接输入视频bv号)" v-model="input_api" class="input-with-select" clearable>
-                                <el-select v-model="select" slot="prepend" placeholder="请选择   ">
-                                <el-option label="抖音" value="1"></el-option>
-                                <el-option label="YouTube" value="2" disabled></el-option>
-                                <el-option label="哔哩哔哩" value="3"></el-option>
-                                <el-option label="好看视频" value="4"></el-option>
-                                <el-option label="六间房" value="5"></el-option>
-                                <el-option label="全民小视频" value="6"></el-option>
-                                <el-option label="陌陌视频" value="7"></el-option>
-                                <el-option label="梨视频" value="8"></el-option>
-                                <el-option label="美拍" value="9"></el-option>
-                                <el-option label="场库短视频" value="10"></el-option>
-                                <el-option label="微博视频" value="11"></el-option>
-                                <el-option label="最右" value="12"></el-option>
-                                <el-option label="皮皮虾" value="13"></el-option>
-                                <el-option label="AcFun" value="14"></el-option>
+                                <el-select v-model="select" slot="prepend" placeholder="请选择">
+                                
+                                <el-option v-for="(name, index) in rows" :label="name" :value="index+1" :key="index"></el-option>
                                 <el-option label="其它" value="99"></el-option>
                                 </el-select>
                                 <el-button slot="append" icon="el-icon-search" @click="parse()"></el-button>
@@ -73,24 +58,18 @@
                             <div class="outer-bar" >
                                 <div class="tabBar">
                                     <div class="box">
-                                        <el-row :gutter="10">
-                                            <el-col>   
-                                                <!-- Episode-data用来存每集的播放链接  -->
-                                                <!-- <el-button v-for="(row,index) in 100" :key="index" style="margin:2px;width:5em;" episode-data="blob:https://www.bilibili.com/58baed53-247f-415d-9119-554d7a08a39f"  :ref="index">{{row}}</el-button> -->
-                                                <el-button plain style="margin:2px;"  @click="open_douyin">抖音</el-button>
-                                                <el-button plain style="margin:2px;"  @click="open_douyin" disabled>YouTube</el-button>
-                                                <el-button plain style="margin:2px;"  @click="open_bili">哔哩哔哩</el-button>
-                                                <el-button plain style="margin:2px;"  @click="open_haokan">好看视频</el-button>
-                                                <el-button plain style="margin:2px;"  @click="open_sixroom">六间房</el-button>
-                                                <el-button plain style="margin:2px;"  @click="open_quanmin">全民视频</el-button>
-                                                <el-button plain style="margin:2px;"  @click="open_momo">陌陌视频</el-button>
-                                                <el-button plain style="margin:2px;"  @click="open_parse">最右</el-button>
-                                                <el-button plain style="margin:2px;"  @click="open_pear">梨视频</el-button>
-                                                <el-button plain style="margin:2px;"  @click="open_meipai">美拍</el-button>
-                                                <el-button plain style="margin:2px;"  @click="open_parse">场库视频</el-button>
-                                                <el-button plain style="margin:2px;"  @click="open_parse">微博视频</el-button>
-                                                <el-button plain style="margin:2px;"  @click="open_parse">皮皮虾</el-button>
-                                                <el-button plain style="margin:2px;"  @click="open_parse">AcFun</el-button>
+                                        <el-row :gutter="5">
+                                            <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+                                                <el-button plain type="success" @click="open_douyin">抖音</el-button>
+                                            </el-col>   
+                                            <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+                                                <el-button plain type="success" @click="open_douyin" disabled>YouTube</el-button>
+                                            </el-col>   
+                                            <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8">
+                                                <el-button plain type="success" @click="open_bili">哔哩哔哩</el-button>
+                                            </el-col>   
+                                            <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" v-for="(row,index) in datas" :key="index">
+                                                <el-button plain type="success" @click="open_parse" :key="index">{{ row }}</el-button>
                                             </el-col>
                                         </el-row>
                                     </div>
@@ -100,8 +79,6 @@
                 </el-row>
             </el-main>
         </el-container>
-
-
         
         <div class="footer">
             <div class="bk"><hr>
@@ -134,8 +111,13 @@
                 subtitle:"https://s-sh-17-dplayercdn.oss.dogecdn.com/hikarunara.vtt",           // 字幕url
                 textarea:"",
                 input_api:"",
-                api:"",
+                api:"",                             
                 select:"",
+                rows: [ "抖音", "YouTube", "哔哩哔哩", "好看视频","六间房","全民小视频","陌陌视频",
+                    "梨视频","美拍","场库短视频","微博视频","最右","皮皮虾","AcFun","快手","全民K歌"],
+                datas: ["好看视频","六间房","全民小视频","陌陌视频","梨视频","美拍","场库短视频",
+                    "微博视频","最右","皮皮虾","AcFun","快手","全民K歌"],       
+
             }
         }, 
         mounted() {
@@ -169,7 +151,7 @@
                     container: document.getElementById('dplayer'),
                     autoplay: false,
                     theme: '#FADFA3',
-                    loop: true,
+                    loop: false,
                     lang: 'zh-cn',
                     screenshot: true,
                     hotkey: true,
@@ -258,48 +240,6 @@
                     message: h('b', { style: 'color: teal'}, 'https://github.com/FioraLove/Net-Spider/blob/develop/selenium登录哔哩哔哩/哔哩哔哩视频下载/download_method_3.py')
                 })
             },
-            open_haokan:function(){
-                const h = this.$createElement;
-                this.$notify({
-                    title: '好看视频源代码',
-                    message: h('b', { style: 'color: teal'}, 'https://github.com/FioraLove/Python/blob/master/Python爬虫案例/haokan.py')
-                })
-            },
-            open_sixroom:function(){
-                const h = this.$createElement;
-                this.$notify({
-                    title: '六间房视频源代码',
-                    message: h('b', { style: 'color: teal'}, 'https://github.com/FioraLove/Python/blob/master/Python爬虫案例/六间房.py')
-                })
-            },
-            open_quanmin:function(){
-                const h = this.$createElement;
-                this.$notify({
-                    title: '全民小视频源代码',
-                    message: h('b', { style: 'color: teal'}, 'https://github.com/FioraLove/Python/blob/master/Python爬虫案例/全民小视频.py')
-                })
-            },
-            open_momo:function(){
-                const h = this.$createElement;
-                this.$notify({
-                    title: '陌陌视频源代码',
-                    message: h('b', { style: 'color: teal'}, 'https://github.com/FioraLove/Python/blob/master/Python爬虫案例/陌陌视频.py')
-                })
-            },
-            open_pear:function(){
-                const h = this.$createElement;
-                this.$notify({
-                    title: '梨视频源代码',
-                    message: h('b', { style: 'color: teal'}, 'https://github.com/FioraLove/Python/blob/master/Python爬虫案例/梨视频.py')
-                })
-            },
-            open_meipai:function(){
-                const h = this.$createElement;
-                this.$notify({
-                    title: '美拍视频源代码',
-                    message: h('b', { style: 'color: teal'}, 'https://github.com/FioraLove/Python/tree/master/Python爬虫案例/美拍')
-                })
-            },
             open_parse:function(){
                 const h = this.$createElement;
                 this.$notify({
@@ -327,19 +267,26 @@
 <!--- vuecli3组件内部引入第三方的css文件只在当前组件生效的办法 --->
 <style scoped>
     @import "../assets/css/DPlayer.min.css";
-
-
+    .box button{
+        width:90%;
+        text-align: center;
+        margin-top: 3px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+    
     /* mobile端：max-width:480 即表示当宽度小于480时，才会使用多媒体查询*/
     @media screen and (max-width:480px){
         .outer-bar{
             overflow: hidden;
-            width: 103%;
+            width: 100%;
             height: 45vh;
         }        
         .tabBar{   /* 限制滚动条的高度 */
             margin-top: 2em;
             background-color: #eee;
-            width:109%;
+            width:100%;
             height:40vh;
             overflow-y: scroll;
         }
@@ -355,13 +302,13 @@
     @media screen and (min-width:481px){   
         .outer-bar{
             overflow: hidden;
-            width: 103%;
+            width: 96%;
             height:62vh;
 
         }  
         .tabBar{   /* 限制滚动条的高度 */
             /* background-color: #eee; */
-            width:109.9%;
+            width:103%;
             height:65vh;
             overflow-y: scroll;
         }
