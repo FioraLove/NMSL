@@ -1,7 +1,7 @@
 <template> 
     <div class="media">
         <audio autoplay loop>
-            <source src="https://ws.stream.qqmusic.qq.com/M8000012D8zM22KhPg.mp3?guid=1065633172&vkey=FB5318425C39899FF8379D0FDA1B9DADC88D1A8AFD37369A87DDCEE62B83D683CF79C2E69EFDE8BCF27EC9EC00CBBA5423C425EAB4DEA65E&uin=0&fromtag=66" type="audio/mpeg">
+            <source :src="mp3" type="audio/mpeg">
                 您的浏览器不支持audio标签，无法播放音乐！
 		</audio>
         <el-container>
@@ -63,6 +63,7 @@ export default {
     data() {
         return {
             msg: 'Welcome to Your Vue.js App',
+            mp3: require('../assets/mp3/M8000012D8zM22KhPg.mp3'),
             rows: [require("../assets/images/beautiful.jpg"),require("../assets/images/tifa.jpg"),
                 require("../assets/images/nmsl.jpeg"),require("../assets/images/master.jpg"),
                 require("../assets/images/beautiful.jpg"), require("../assets/images/bk.jpg")

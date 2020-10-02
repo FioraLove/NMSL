@@ -53,7 +53,7 @@ export default {
     computed: {
         // 发送Ajax请求
         getContent:function () {
-            let app = this;
+            let vm = this;
             let session_token = sessionStorage.getItem("token");
             if(session_token == null || session_token == undefined || session_token==""){
                 alert("登录失效，请重新登录");
@@ -82,12 +82,12 @@ export default {
                             xe9527.push((b[i]).split("url=")[1]);                            
                         }
                     }
-                    app.images_rows = xe9527;
+                    vm.images_rows = xe9527;
                     //初始化默认加载第一个播放视频
-                    app.video = xe9527[0];
+                    vm.video = xe9527[0];
 
                 }else{
-                    app.rows = {"content":"暂无数据。。。"};
+                    vm.rows = {"content":"暂无数据。。。"};
                 }
             })
             .catch(function (error) {
