@@ -1,5 +1,6 @@
 <template>
   <div class="comic">
+
     <el-row>
         <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
             <div class="main">
@@ -94,7 +95,11 @@
             <el-aside width="180px;" ref="side">advertisement</el-aside>
         </template> -->
     </el-container>
-
+    <el-backtop target=".comic" :bottom="100">
+    <div class="backtops">
+        <img :src="logo" alt="UP">
+    </div>
+  </el-backtop>
     <div class="footer">
         <div class="bk"><hr></div>
         <p>本站的资源由网络第三方视频类网站收集，不提供任何视听上传服务，内容均来自各分享站点所提供的公开引用资源。</p>
@@ -115,6 +120,7 @@ export default {
     data() {
         return {
             nowYear:new Date().getFullYear(),
+            logo: require("../assets/images/backtop.png"), // 回到顶点样式图
             activeIndex: "1",           // 分类标签    
             bodyWidth:722,                 // 可视化浏览器窗口
             loading:true,                   // 初始化默认加载
@@ -270,6 +276,13 @@ export default {
     }
     .comic{
         max-width: 100%;
+        height: 100vh;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+    .backtops img{
+        width: 55px;
+        height: 55px;
     }
     .block{
         text-align: center;

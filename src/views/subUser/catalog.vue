@@ -43,7 +43,7 @@
 
 
                     <!-- 中间的图片展示模块 -->
-                    <el-col :xs="24" :sm="14" :md="14" :lg="14" :xl="14">
+                    <el-col :xs="24" :sm="14" :md="12" :lg="12" :xl="12">
                         
                         <div class="outer" v-loading="loading">
                             <div class="inner">
@@ -53,7 +53,7 @@
                     </el-col>
 
                     <!-- 章节模块 -->
-                    <el-col :xs="24" :sm="6" :md="6" :lg="6" :xl="6">
+                    <el-col :xs="24" :sm="6" :md="8" :lg="8" :xl="8">
                         <div class="follow">
                             <div><p class="star"><a href="javascript:;"><span><i class="el-icon-reading"></i>开始阅读</span></a></p></div>
                         </div>
