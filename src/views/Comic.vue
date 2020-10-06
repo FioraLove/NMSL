@@ -96,10 +96,10 @@
         </template> -->
     </el-container>
     <el-backtop target=".comic" :bottom="100">
-    <div class="backtops">
-        <img :src="logo" alt="UP">
-    </div>
-  </el-backtop>
+        <div class="backtops">
+            <img :src="logo" alt="UP">
+        </div>
+    </el-backtop>
     <div class="footer">
         <div class="bk"><hr></div>
         <p>本站的资源由网络第三方视频类网站收集，不提供任何视听上传服务，内容均来自各分享站点所提供的公开引用资源。</p>

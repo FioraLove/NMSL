@@ -11,6 +11,11 @@ import "rverify/dist/RVerify.min.css";
 
 Vue.prototype.FACTURL = facturl;
 
+import http from "axios";
+Vue.prototype = Object.assign(Vue.prototype, {
+  $http: http,
+});
+
 Vue.use(VueLazyLoad,{
 	error: require('./assets/images/failed.jpg'), // 加载错误的图片
 	loading: require('./assets/images/loading.gif') // 加载时的图片
@@ -26,7 +31,7 @@ RVerify.configure({
   title: "身份验证",
   text: "拖动滑块，使图片角度为正",
   extra: "View on Github",
-  extraLink: 'https://AhriLove.top',
+  extraLink: 'https://github.com/FioraLove',
   album: [
     "https://s.nmsl8.club/uploads/20190704/thumb/5d1d74769f2e1.png",
     "http://att3.citysbs.com/200x200/hangzhou/2020/04/15/11/dd6719bd4287d9efd49434c43563a032_v2_.jpg",
