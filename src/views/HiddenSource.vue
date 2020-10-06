@@ -84,6 +84,12 @@ export default {
                 "desc": "黄色电影 情色小说 美图漫画",
                 "bk": require("../assets/images/bg8.jpg"),
                 "url": "https://xdtv1.site/?200n-4#/vod"
+            },{
+                "time": "2020-10-02",
+                "title": "想要导航 👍👍👍👍👍",
+                "desc": "色站黄页，缔造成人影视经典，收集各类资源，省去各位狼友找片的烦恼",
+                "bk": require("../assets/images/bg9.jpg"),
+                "url": "https://xydh137.com/"
             }]
         }
     },

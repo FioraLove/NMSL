@@ -1,22 +1,20 @@
 <template>
     <div id="app" v-cloak>
-            <div>
-                <router-view>
+        <keep-alive>
+            <router-view>
                 <div id="nav">
                     <router-link to="/">Home</router-link>|
                     <router-link to="/about">About</router-link>|
+                    <router-link to="/comic">comic</router-link>|
                     <router-link :to="{name : 'User', params : {id : 5}}">user/5</router-link> |
                     <router-link :to="{path : '/list', query : {id : 8, name:'chd'}}">user/List/query</router-link>|
                     <router-link :to="{name : 'List', params : {id : 10,name:'lmm'}}">user/List/params</router-link> |
                     <router-link :to="{name : 'User', params : {id : 5}}">params的子路由</router-link> |
                     <router-link to="/axiosdemo">axios测试</router-link> |
-
-
                 </div>
-                <!-- <router-view/>，用于渲染views目录下的页面 -->
-                </router-view>
-            </div>
-
+            <!-- <router-view/>，用于渲染views目录下的页面 -->
+            </router-view>
+        </keep-alive>
     </div>
 </template>
 

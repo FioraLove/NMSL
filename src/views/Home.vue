@@ -141,8 +141,8 @@ export default {
                     content:"主页",
                     url:"/"
                 },{
-                    content:"动漫",
-                    url:"/media"
+                    content:"资讯",
+                    url:"/news"
                 },{
                     content:"漫画",
                     url:"/comic"

@@ -9,7 +9,10 @@ Vue.use(VueRouter,axios)
     {
         path: '/',
         name: 'Home',
-        component: Home
+        component: Home,
+        meta: {
+            keepAlive: true, //此组件需要被缓存   
+        }
     },
     {
         //将 path 设置为*号，将会捕获任何没有得到匹配的路由； 
@@ -18,10 +21,11 @@ Vue.use(VueRouter,axios)
         component: () => import(/* webpackChunkName: "about" */ '../views/Error.vue')
     },
     {
-        path: '/media',
-        name: 'Media',
+        // 资讯模块
+        path: '/news',
+        name: 'News',
         // 路由懒加载模式
-        component: () => import(/* webpackChunkName: "about" */ '../views/Media.vue'),
+        component: () => import(/* webpackChunkName: "about" */ '../views/News.vue'),
         children:[{
             path:"catalog",
             component:()=> import('../views/subUser/catalog.vue')
@@ -48,7 +52,7 @@ Vue.use(VueRouter,axios)
     },{
         //将 path 的前缀或后缀带*号，将会捕获特定的路由，类似于正则表达式； 
         path:'/user-*',
-        component: ()=> import('../views/Media.vue')
+        component: ()=> import('../views/News.vue')
     },{
         path: '/loveword',
         name: 'Loveword',
@@ -63,6 +67,10 @@ Vue.use(VueRouter,axios)
         name: 'Comic',
         // 路由懒加载模式
         component: () => import(/* webpackChunkName: "about" */ '../views/Comic.vue'),
+        meta: {
+            keepAlive: true, //此组件需要被缓存
+            
+        }
     },{
         // 漫画章节模块
         path: '/comic/category',
@@ -104,8 +112,18 @@ Vue.use(VueRouter,axios)
 ]
 
 const router = new VueRouter({
-  routes,
-  mode: 'history', // history表示去掉锚点，默认mode : 'hash' 
+    routes,
+    mode: 'history', // history表示去掉锚点，默认mode : 'hash' 
+    scrollBehavior(to, from, savedPosition) {
+        if (savedPosition) {
+            return savedPosition
+        } else {
+            return {
+                x: 0,
+                y: 0
+            }
+        }
+    }
 })
 
 export default router

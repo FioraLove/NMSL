@@ -29,8 +29,11 @@
 
                            <el-input placeholder="请输入分享链接的视频地址(bilibili直接输入视频bv号)" v-model="input_api" class="input-with-select" clearable>
                                 <el-select v-model="select" slot="prepend" placeholder="请选择">
+                                <template v-for="(name, index) in rows">
+                                    <el-option v-if="name == 'YouTube' " :label="name" :value="index+1" :key="index" disabled></el-option>
+                                    <el-option v-else :label="name" :value="index+1" :key="index"></el-option>
+                                </template>
                                 
-                                <el-option v-for="(name, index) in rows" :label="name" :value="index+1" :key="index"></el-option>
                                 <el-option label="其它" value="99"></el-option>
                                 </el-select>
                                 <el-button slot="append" icon="el-icon-search" @click="parse()"></el-button>
