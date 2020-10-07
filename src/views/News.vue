@@ -1,9 +1,9 @@
 <template> 
     <div class="news">
-        <audio autoplay loop>
+        <!-- <audio autoplay loop>
             <source src="https://cdn.jsdelivr.net/gh/FioraLove/CDN@v1.2.9/M8000012D8zM22KhPg.mp3" type="audio/mpeg">
                 您的浏览器不支持audio标签，无法播放音乐！
-		</audio>
+		</audio> -->
         <el-container>
             <el-main>
                 <!-- 告示窗口 -->
@@ -50,10 +50,7 @@
                                             <span v-if="index <=2" class="order" style="color:red;">{{index+1}}.</span>
                                             <span v-else class="order" style="color:#FFF;">{{index+1}}.</span>
                                             <span class="title"><a :href="cols.Url" target="_blank">{{cols.Title}}</a></span>
-                                            <template v-if="cols.hotDesc == null || cols.hotDesc == '' || cols.hotDesc == undefined">
-                                                <span class="hot">暂无数据</span>
-                                            </template>
-                                            <template v-else>
+                                            <template v-if="cols.hotDesc != null && cols.hotDesc != '' && cols.hotDesc != undefined ">
                                                 <span class="hot">{{cols.hotDesc}}</span>
                                             </template>
                                         </p>
@@ -164,11 +161,35 @@
                 })
             },
 
+            // 定义bilibili热搜api
+            getBiLiBiLiData:function(){
+                return axios({
+                    url: "https://www.tophub.fun:8888/v2/GetAllInfoGzip",
+                    method:"get",
+                    params:{
+                        id: 115,
+                        page: 0
+                    }
+                })
+            },
+
+            // 定义腾讯体育热搜api
+            getTencentSportData:function(){
+                return axios({
+                    url: "https://www.tophub.fun:8888/v2/GetAllInfoGzip",
+                    method:"get",
+                    params:{
+                        id: 1061,
+                        page: 0
+                    }
+                })
+            },
+
             // 获取热点数据
             query:function(){
                 let vm = this;
-                axios.all([this.getZhiHuData(),this.getWeiBoData(),this.getHuPuData(),this.getViewerData()])
-                .then(axios.spread(function (rsp1,rsp2,rsp3,rsp4) {
+                axios.all([this.getZhiHuData(),this.getWeiBoData(),this.getHuPuData(),this.getViewerData(),this.getBiLiBiLiData(),this.getTencentSportData()])
+                .then(axios.spread(function (rsp1,rsp2,rsp3,rsp4,rsp5,rsp6) {
                     let rows = [];
                     if(rsp1.status == 200 && rsp1.data.Code == 0){
                         let res = rsp1.data.Data;
@@ -176,7 +197,7 @@
                         let results = {};
                         let info = [];
                         // 截取前二十个热点
-                        if(parseInt(res.page)>=20){
+                        if(data.length>=20){
                             info= data.slice(1,21);
                         }else{
                             info = data.slice(1);
@@ -193,7 +214,7 @@
                         let data = res["data"];
                         let results = {};
                         let info = [];
-                        if(parseInt(res.page)>=20){
+                        if(data.length>=20){
                             info= data.slice(1,21);
                         }else{
                             info = data.slice(1);
@@ -210,7 +231,7 @@
                         let data = res["data"];
                         let results = {};
                         let info = [];
-                        if(parseInt(res.page)>=20){
+                        if(data.length>=20){
                             info= data.slice(1,21);
                         }else{
                             info = data.slice(1);
@@ -227,7 +248,7 @@
                         let data = res["data"];
                         let results = {};
                         let info = [];
-                        if(parseInt(res.page)>=20){
+                        if(data.length>=20){
                             info= data.slice(1,21);
                         }else{
                             info = data.slice(1);
@@ -236,6 +257,39 @@
                             info: info,
                             cover: "https://img.printf520.com/img/guanchaz.png",
                             description: "观察者网 | 评论员"
+                        }
+                        rows.push(results);
+                    }
+                    if(rsp5.status == 200 && rsp5.data.Code == 0){
+                        let res = rsp5.data.Data;
+                        let data = res["data"];
+                        let results = {};
+                        let info = [];
+                        if(data.length>=20){
+                            info= data.slice(1,21);
+                        }else{
+                            info = data.slice(1);
+                        }
+                        results = {
+                            info: info,
+                            cover: "https://file.ipadown.com/tophub/assets/images/media/bilibili.com.png_50x50.png",
+                            description: "哔哩哔哩 | 全站热榜"
+                        }
+                        rows.push(results);
+                    }
+                    if(rsp6.status == 200 && rsp6.data.Code == 0){
+                        let res = rsp6.data.Data;
+                        let data = res["data"];
+                        let results = {}, info = [];
+                        if(data.length>=20){
+                            info= data.slice(1,21);
+                        }else{
+                            info = data.slice(1);
+                        }
+                        results = {
+                            info: info,
+                            cover: "https://img.printf520.com/img/qq.png",
+                            description: "腾讯体育 | 今日热点"
                         }
                         rows.push(results);
                     }
@@ -557,7 +611,8 @@
 	    word-break: break-all;
         margin-bottom: 6px;
         margin-top: 10px;
-        text-indent: 1em;
+        text-indent: -1em;
+        margin-left: 1em;
         font-size: 16px;
         line-height: 20px;
         width: 94%;
