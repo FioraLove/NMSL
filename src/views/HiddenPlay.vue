@@ -22,7 +22,7 @@
                 <el-row :gutter="10">
                     <el-col :xs="8" :sm="6" :md="4" :lg="4" :xl="3" v-for="(row,index) in images_rows" :key="index">
                         <div class="chapter">
-                            <el-button size="medium" type="success" plain><span :data-url="row" @click="get_image($event)"><i class="el-icon-video-play"></i>第{{index+1}}集</span></el-button>
+                            <el-button size="medium" type="success" plain :data-url="row" @click="get_image($event)"><span :data-url="row" @click="get_image($event)"><i class="el-icon-video-play"></i>第{{index+1}}集</span></el-button>
                         </div>
                     </el-col>
                 </el-row>
@@ -137,35 +137,36 @@ export default {
         width:100%;
         height: 100vh;
     }
-@media screen  and (max-width: 500px){
-    video{
-        width:100%; 
-        height:100%;
-        object-fit:fill;
+    @media screen  and (max-width: 500px){
+        video{
+            width:100%; 
+            height:100%;
+            object-fit:fill;
+        }
+        #play{
+            width:100%;
+            height:13em;
+            text-align: center;
+            box-shadow: 4px 4px 5px rgba(177, 172, 172, 0.6);
+        }
     }
-    #play{
-        width:100%;
-        height:13em;
-        text-align: center;
-        box-shadow: 4px 4px 5px rgba(177, 172, 172, 0.6);
+    @media screen  and (min-width: 501px){
+        video{
+            width:90%; 
+            height:100%;
+            object-fit:fill;
+            box-shadow: 12px 10px 5px rgba(177, 172, 172, 0.6);
+        }
+        #play{
+            width:100%;
+            height:85vh;
+            text-align: center;
+            
+        }
     }
-}
-@media screen  and (min-width: 501px){
-    video{
-        width:90%; 
-        height:100%;
-        object-fit:fill;
-        box-shadow: 12px 10px 5px rgba(177, 172, 172, 0.6);
+    .item {
+        margin-top: 10px;
+        margin-right: 40px;
     }
-    #play{
-        width:100%;
-        height:85vh;
-        text-align: center;
-        
-    }
-}
-.item {
-    margin-top: 10px;
-    margin-right: 40px;
-}
+
 </style>

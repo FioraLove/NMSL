@@ -1,5 +1,5 @@
 <template>
-  <div class="comic">
+  <div class="hiddenVideo">
     <el-row>
         <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
             <div class="main">
@@ -30,7 +30,9 @@
             show-icon>
         </el-alert>
     </div>
-
+    <el-backtop target=".hiddenVideo" :bottom="100">
+        <div class="backtops">UP</div>
+    </el-backtop>
     <div class="line"></div>
     <el-container>
 
@@ -40,7 +42,7 @@
                     <el-col :xs="8" :sm="6" :md="6" :lg="4" :xl="4" v-for='(row,index) in rows' :key="index" style="margin-top:10px;">
                         <div class="card">
                             <div class="header">
-                                <router-link :to="{path : '/nmsl/hidden/video/play', query : {vid : row.vid, token: bs_token}}" :title="row.title">
+                                <router-link target="_blank" :to="{path : '/nmsl/hidden/video/play', query : {vid : row.vid, token: bs_token}}" :title="row.title">
                                     <img v-lazy="row.pic">
                                 </router-link>
                             </div>
@@ -57,7 +59,7 @@
 
                             <div class="card_footer">
                                 <div class="title">
-                                    <span><router-link :to="{path : '/nmsl/hidden/video/play', query : {vid : row.vid, token: bs_token}}" :title="row.title">{{(row.title).substr(4,)}}</router-link></span>
+                                    <span><router-link target="_blank" :to="{path : '/nmsl/hidden/video/play', query : {vid : row.vid, token: bs_token}}" :title="row.title">{{(row.title).replace("旧里番-","")}}</router-link></span>
                                 </div>
                                 <template>
                                     <div class="author">
@@ -103,7 +105,7 @@
 
 <script>
 export default {
-    name:"HiddenVideo",
+    name:"hiddenVideo",
     data() {
         return {
             token: window.btoa(decodeURIComponent(window.location.search.split("=")[1])),
@@ -180,16 +182,6 @@ export default {
             };
         },
 
-        deal_array:function() {
-            // 定义一个空数组
-            let a = this.rows;
-            let b = [];
-            for (let index = 0; index < a.length; index+=4) {
-                b.push(a.slice(index,index+4));
-            }
-            // 绑定数组
-            this.lists = b;
-        },
         isPC:function(){  
             let userAgentInfo = navigator.userAgent;
             let Agents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];  
@@ -212,7 +204,8 @@ export default {
                 url: this.FACTURL.baseUrl+"/nmsl/api/secret/video/",
                 method:"get",
                 headers:{
-                    Authorization: "Token "+window.btoa(sessionStorage.getItem("token")),
+                    "Authorization": "Token "+window.btoa(sessionStorage.getItem("token")),
+                    "Content-Type": "application/x-www-form-urlencoded" 
                 },
                 params:{
                     offset:this.page_size*(this.currentPage-1),
@@ -235,17 +228,11 @@ export default {
         }
 
     },
-    watch: {
-        category:{
-            handler(newVal,oldVal){
-                this.getContent();
-            }
-        }
-    },
+
 };
 </script>
 
-<style scope lang="less">
+<style scoped lang="less">
     .footer p{
         font-size: 14px;
         color: black;
@@ -259,18 +246,21 @@ export default {
     .footer div img{
         height: 3em;
     }
-    .comic{
+    .hiddenVideo{
         max-width: 100%;
         background-image: url("../assets/images/bk.jpg");
         background-repeat: no-repeat;
         background-size: cover;
         background-attachment: fixed;
+        height: 100vh;
+        overflow-x: hidden;
+        overflow-y: scroll;
     }
     .block{
         text-align: center;
         margin-top: 10px;
     }
-    a{
+    .card a{
         text-decoration: none;
         color: #F90;
         background-color: #000;
@@ -353,8 +343,10 @@ export default {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        color: black;
-        font-size: 1em;
+        padding: 1px 4px;
+        border-radius: 2px;
+        font-size: 14px;
+
     }
     .author{
         margin-top: 3px;
@@ -368,9 +360,18 @@ export default {
         font-size: 8px;
     }
     span{
-         font-family: "Microsoft YaHei", "微软雅黑", "STHeiti", "WenQuanYi Micro Hei", SimSun, sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     }
-
+    .backtops{
+        height: 100%;
+        width: 100%;
+        background-color: #F90;
+        box-shadow: 0 0 6px rgba(0,0,0, .12);
+        text-align: center;
+        line-height: 40px;
+        color: #000;
+        border-radius: 5px;
+    }
 </style>
 
 
