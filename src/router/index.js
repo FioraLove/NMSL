@@ -91,12 +91,18 @@ Vue.use(VueRouter,axios)
         // 登陆后的视频播放网址
         path: '/nmsl/hidden/video/play',
         name: "HiddenPlay",
-        component: () => import('../views/HiddenPlay.vue')
+        component: () => import('../views/HiddenPlay.vue'),
+        meta: {
+            keepAlive: true, //此组件需要被缓存   
+        }
     },{
         // 登陆后的图片浏览网址
         path: '/nmsl/hidden/picture',
         name: "HiddenPic",
-        component: () => import('../views/HiddenPic.vue')
+        component: () => import('../views/HiddenPic.vue'),
+        meta: {
+            keepAlive: true, //此组件需要被缓存   
+        }
     },{
         // 登陆后的隐私第三方资源分享
         path: '/nmsl/hidden/source',
@@ -106,7 +112,10 @@ Vue.use(VueRouter,axios)
         // 留言板
         path: '/comments',
         name: "Comments",
-        component: () => import('../views/Comments.vue')
+        component: () => import('../views/Comments.vue'),
+        meta: {
+            keepAlive: true, //此组件需要被缓存   
+        }
     }
 
 ]

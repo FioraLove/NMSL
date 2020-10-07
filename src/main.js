@@ -11,11 +11,8 @@ import "rverify/dist/RVerify.min.css";
 
 Vue.prototype.FACTURL = facturl;
 
-import http from "axios";
-Vue.prototype = Object.assign(Vue.prototype, {
-  $http: http,
-});
 
+axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded';
 Vue.use(VueLazyLoad,{
 	error: require('./assets/images/failed.jpg'), // 加载错误的图片
 	loading: require('./assets/images/loading.gif') // 加载时的图片
