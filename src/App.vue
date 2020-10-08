@@ -8,6 +8,8 @@
                     <router-link to="/nmsl/hidden/video/play">play</router-link>|
                     <router-link to="/nmsl/hidden/picture">picture</router-link>|
                     <router-link to="/comments">comments</router-link>|
+                    <router-link to="/tools">tools</router-link>|
+                    <router-link to="/tools/json">json</router-link>|
                 </div>
             <!-- <router-view/>，用于渲染views目录下的页面 -->
             </router-view>

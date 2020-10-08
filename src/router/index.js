@@ -117,6 +117,11 @@ Vue.use(VueRouter,axios)
         meta: {
             keepAlive: true, //此组件需要被缓存
         }
+    },{
+        // 在线工具模块：json数组
+        path:"/tools/json",
+        name: "Json",
+        component:()=> import('../views/Tools/json.vue')
     }
 
 ]

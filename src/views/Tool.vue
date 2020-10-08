@@ -22,10 +22,12 @@
                                 <hr>
                             </div>
                             <p class="desc">{{row.description}}</p>
+                            
                             <p class="check"><el-link  :href="row.url" target="_blank" type="success">进入<i class="el-icon-link"></i></el-link></p>
                         </el-card>
                     </el-col>
                 </el-row>
+                <router-view/>
             </el-main>
         </el-container>
     </div>
@@ -38,10 +40,10 @@ export default {
         return {
             rows: [require("../assets/images/tifa.jpg"),require("../assets/images/nmsl.jpeg"),require("../assets/images/comic.jpg")],
             results:[{
-                cover: "https://file.ipadown.com/tophub/assets/images/media/zhihu.com.png_50x50.png",
+                cover: "https://bkimg.cdn.bcebos.com/pic/63d9f2d3572c11df6ba8d108682762d0f703c2a4?x-bce-process=image/resize,m_lfit,w_268,limit_1/format,f_jpg",
                 title: "json数组生成器",
                 description: "将多组字符串生成标准的json数组",
-                url: "https://AhriLove.top"
+                url: "/tools/json"
             }]
         }
     },
@@ -61,8 +63,8 @@ export default {
         height: 100%;
     }
     .category img{
-        width: 25px;
-        height: 25px;
+        width: 40px;
+        height: 40px;
         border-radius: 12.5px;
     }
     .category .title{
