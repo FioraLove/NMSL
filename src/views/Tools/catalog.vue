@@ -347,12 +347,13 @@ export default {
         .introduction .author{
             font-size: 1em;
             margin:0px;
-        }      .bar-right .title{
-        font-size:1.5em;
-        margin-top:8px;
-        margin-bottom: 6px;
-        font-family: 'Courier New', Courier, monospace;
-    }       
+        }      
+        .bar-right .title{
+            font-size:1.5em;
+            margin-top:8px;
+            margin-bottom: 6px;
+            font-family: 'Courier New', Courier, monospace;
+        }       
     }
 
     @media screen and (min-width:507px) and (max-width: 808px) {

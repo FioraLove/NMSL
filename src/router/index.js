@@ -28,21 +28,14 @@ Vue.use(VueRouter,axios)
         component: () => import(/* webpackChunkName: "about" */ '../views/News.vue'),
         children:[{
             path:"catalog",
-            component:()=> import('../views/subUser/catalog.vue')
+            component:()=> import('../views/Tools/catalog.vue')
         }]
     },
     {
         path: '/video',
         name: 'Video',
         // 创建子路由/user/:id/profile 与 /user/:id/post
-        component: () => import(/* webpackChunkName: "about" */ '../views/Video.vue'),
-        children : [{ 
-            path : 'profile', 
-            component:()=> import('../views/subUser/profile.vue') 
-        },{ 
-            path : 'posts', 
-            component:()=> import('../views/subUser/posts.vue') 
-        }]
+        component: () => import(/* webpackChunkName: "about" */ '../views/Video.vue')
     },
     {   // 音频MP3模块
         path: '/audio',     // query模式
@@ -76,7 +69,7 @@ Vue.use(VueRouter,axios)
         path: '/comic/category',
         name: 'Category',
         // 路由懒加载模式
-        component: () => import(/* webpackChunkName: "about" */ '../views/subUser/catalog.vue')     
+        component: () => import(/* webpackChunkName: "about" */ '../views/Tools/catalog.vue')     
     },{
         // 管理员主页，仅自己可见
         path: '/nmsl/admin/secret',
@@ -115,6 +108,14 @@ Vue.use(VueRouter,axios)
         component: () => import('../views/Comments.vue'),
         meta: {
             keepAlive: true, //此组件需要被缓存   
+        }
+    },{
+        // 工具箱模块
+        path: '/tools',
+        name: "Tools",
+        component: () => import('../views/Tool.vue'),
+        meta: {
+            keepAlive: true, //此组件需要被缓存
         }
     }
 

@@ -156,6 +156,9 @@ export default {
                     content:"抽象圣经",
                     url:"/ndsl"
                 },{
+                    content:"工具箱",
+                    url:"/tools"
+                },{
                     url:"https://github.com/FioraLove",
                     content:"Github"
                 },{
