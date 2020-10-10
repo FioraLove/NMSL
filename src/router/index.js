@@ -65,11 +65,20 @@ Vue.use(VueRouter,axios)
             
         }
     },{
-        // 漫画章节模块
+        // 漫画章节目录模块
         path: '/comic/category',
         name: 'Category',
         // 路由懒加载模式
-        component: () => import(/* webpackChunkName: "about" */ '../views/Tools/catalog.vue')     
+        component: () => import(/* webpackChunkName: "about" */ '../views/Tools/catalog.vue'),
+        // meta: {
+        //     keepAlive: true, //此组件需要被缓存
+            
+        // }
+    },,{
+        // 漫画模块：具体章节
+        path:"/comic/chapter",
+        name: "Chapters",
+        component:()=> import('../views/Tools/chapter.vue')
     },{
         // 管理员主页，仅自己可见
         path: '/nmsl/admin/secret',

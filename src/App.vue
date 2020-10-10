@@ -5,6 +5,7 @@
                 <div id="nav">
                     <router-link to="/">Home</router-link>|
                     <router-link to="/comic">comic</router-link>|
+                    <!-- <router-link to="/comic/category">comicCatalog</router-link>| -->
                     <router-link to="/nmsl/hidden/video/play">play</router-link>|
                     <router-link to="/nmsl/hidden/picture">picture</router-link>|
                     <router-link to="/comments">comments</router-link>|

@@ -51,7 +51,7 @@
                     <el-col :xs="8" :sm="6" :md="6" :lg="4" :xl="4" v-for='(row,index) in rows' :key="index" style="margin-top:10px;">
                         <div class="card">
                             <div class="header">
-                                <router-link target="_blank" :to="{path : '/comic/category', query : {sid : row.sid, cover: row.cover, update:row.update_content,time:row.update}}" :title="row.title"><img v-lazy="row.cover"></router-link>
+                                <router-link :to="{path : '/comic/category', query : {sid : row.sid, cover: row.cover, update:row.update_content,time:row.update}}" :title="row.title"><img v-lazy="row.cover"></router-link>
                             </div>
                             <template v-if ="flag ==false">                            
                                 <div class="card_date">
