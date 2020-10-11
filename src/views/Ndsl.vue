@@ -17,7 +17,7 @@
 
 
 
-<script scope>
+<script>
 
 import  ClipboardJS  from '../assets/js/clipboard.min.js'
 export default {

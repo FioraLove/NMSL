@@ -30,39 +30,27 @@ import Viewer from 'v-viewer';
 import Vue from 'vue';
 Vue.use(Viewer)
 export default {
+    name:"Chapters",
     data() {
-        name:"Chapter"
         return {
-            sid: '',
-            cid: '',
+            sid: "",
+            cid: "",
             img_list: [],
             loading: true,
             flag:true,                      // 是否是PC端
         }
     },
-    
+    created() {
+        this.sid = this.$route.query.sid;
+        this.cid = this.$route.query.cid;
+
+    },
     mounted() {
-        this.sid=this.$route.query.sid;
-        this.cid=this.$route.query.cid;
         this.isPC();
-        this.getContent();
+        this.getContent;
     },
 
     computed: {
-
-    },
-
-    methods: {
-        isPC:function(){  
-            let userAgentInfo = navigator.userAgent;
-            let Agents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];  
-            let flag = true;  
-            for (let v = 0; v < Agents.length; v++) {  
-                if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; }  
-            }  
-            this.flag = flag;
-        },
-
         // 发送Ajax请求
         getContent:function(){
             let vm = this;
@@ -95,21 +83,37 @@ export default {
                 console.log(error);
             });
         },
+    },
 
+    methods: {
+        isPC:function(){  
+            let userAgentInfo = navigator.userAgent;
+            let Agents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];  
+            let flag = true;  
+            for (let v = 0; v < Agents.length; v++) {  
+                if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; }  
+            }  
+            this.flag = flag;
+        }
     },
     watch: {
         cid: {
-            deep: true,
-            handler: function (newVal, oldVal) {
-                this.getContent();
+            handler(newVal,oldVal){
+                this.getContent;
             }
         },
-        sid: {
-            deep: true,
-            handler: function (newVal, oldVal) {
-                this.getContent();
+        // sid: {
+        //     deep: true,
+        //     handler: function (newVal, oldVal) {
+        //         this.getContent;
+        //     }
+        // },
+        '$route'(to, from) {
+            if (from.path == "/comic/category") {  /// 判断条件2  监听路由名 监听你从什么路由跳转过来的
+                this.sid = this.$route.query.sid;
+                this.cid = this.$route.query.cid;
             }
-        },
+        }
     },
     
 }

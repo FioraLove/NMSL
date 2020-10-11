@@ -1,5 +1,5 @@
 <template>
-    <div class="comic-category">
+    <div class="comic-category" :key="sid">
         <el-container>
             <el-main>
                 <!-- 漫画详细页 -->
@@ -93,12 +93,13 @@
 <script>
 import { Base64 } from 'js-base64';
 export default {
+    name:"Category",
     data() {
         return {
-            sid:this.$route.query.sid,
-            cover:this.$route.query.cover,
-            update:this.$route.query.update,
-            update_time:this.$route.query.time,
+            sid:"",
+            cover:"",
+            update:"",
+            update_time:"",
             author_info:{},                         // 作者简介信息组
             lists:[],
             rows:[],
@@ -111,7 +112,12 @@ export default {
             currentPage:1,             // 当前页数
         }
     },
-    
+    created() {
+        this.sid=this.$route.query.sid;
+        this.cover=this.$route.query.cover;
+        this.update=this.$route.query.update;
+        this.update_time=this.$route.query.time;
+    },
     mounted() {
         this.isPC();
         this.getContent();
@@ -192,8 +198,17 @@ export default {
             deep: true,
             handler: function (newVal, oldVal) {
                 this.getInfo;
+                this.getContent();
             }
         },
+        '$route'(to, from) {
+            if (from.path == "/comic") {  /// 判断条件2  监听路由名 监听你从什么路由跳转过来的
+                this.sid=this.$route.query.sid;
+                this.cover=this.$route.query.cover;
+                this.update=this.$route.query.update;
+                this.update_time=this.$route.query.time;
+            }
+        }
     },
     
 }

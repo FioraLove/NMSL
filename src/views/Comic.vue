@@ -1,6 +1,5 @@
 <template>
   <div class="comic">
-
     <el-row>
         <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
             <div class="main">
@@ -13,7 +12,7 @@
                             <el-menu-item index="4">侦探推理</el-menu-item>
                             <el-menu-item index="5">耽美爱情</el-menu-item>
                             <el-menu-item index="6">生活漫画</el-menu-item>
-                    </el-menu>  
+                    </el-menu>
                 </template>
                 <template v-else>
                     <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect"
@@ -117,6 +116,7 @@
 <script>
 let Base64 = require('js-base64').Base64;
 export default {
+    name:"Comic",
     data() {
         return {
             nowYear:new Date().getFullYear(),
@@ -132,12 +132,19 @@ export default {
             loading:true,               // 页面加载中特效
             page_size:36,               // 每页展示卡片数
             rows:[],
-            lists:[]
+            lists:[],
+            Key:"",
         };
     },
+    
+    // created() {
+    //     if(this.$route.query) {
+    //         this.id = this.$route.query.id;
+    //         this.init();
+    //     }
+    // },
+
     mounted:function(){
-        this.resizeChart();         //添加窗口变化监听事件   
-        // this.deal_aside;
         this.getContent();
         this.isPC();
     },
@@ -196,23 +203,8 @@ export default {
                     break;
             }
         },
-        //重设图表高宽
-        resizeChart(){
-            //监听窗口高宽变化，注意要使用箭头函数
-            window.onresize = () =>{
-            };
-        },
 
-        deal_array:function() {
-            // 定义一个空数组
-            let a = this.rows;
-            let b = [];
-            for (let index = 0; index < a.length; index+=4) {
-                b.push(a.slice(index,index+4));
-            }
-            // 绑定数组
-            this.lists = b;
-        },
+
         isPC:function(){  
             let userAgentInfo = navigator.userAgent;
             let Agents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];  
@@ -255,12 +247,21 @@ export default {
             handler(newVal,oldVal){
                 this.getContent();
             }
-        }
+        },
+        // '$route'(to, from) {
+        //     if (to.path == "/comic/category") {  /// 判断条件2  监听路由名 监听你从什么路由跳转过来的
+        //         // this.sid=this.$route.query.sid;
+        //         // this.cover=this.$route.query.cover;
+        //         // this.update=this.$route.query.update;
+        //         // this.update_time=this.$route.query.time;
+        //         this.Key = new Date().getTime();
+        //     }
+        // }
     },
 };
 </script>
 
-<style scope lang="less">
+<style scoped lang="less">
     .footer p{
         font-size: 14px;
         color: black;
