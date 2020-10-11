@@ -25,24 +25,13 @@ Vue.use(VueRouter,axios)
         path: '/news',
         name: 'News',
         // 路由懒加载模式
-        component: () => import(/* webpackChunkName: "about" */ '../views/News.vue'),
-        children:[{
-            path:"catalog",
-            component:()=> import('../views/subUser/catalog.vue')
-        }]
+        component: () => import(/* webpackChunkName: "about" */ '../views/News.vue')
     },
     {
         path: '/video',
         name: 'Video',
         // 创建子路由/user/:id/profile 与 /user/:id/post
-        component: () => import(/* webpackChunkName: "about" */ '../views/Video.vue'),
-        children : [{ 
-            path : 'profile', 
-            component:()=> import('../views/subUser/profile.vue') 
-        },{ 
-            path : 'posts', 
-            component:()=> import('../views/subUser/posts.vue') 
-        }]
+        component: () => import(/* webpackChunkName: "about" */ '../views/Video.vue')
     },
     {   // 音频MP3模块
         path: '/audio',     // query模式
@@ -72,11 +61,23 @@ Vue.use(VueRouter,axios)
             
         }
     },{
-        // 漫画章节模块
+        // 漫画章节目录模块
         path: '/comic/category',
         name: 'Category',
         // 路由懒加载模式
-        component: () => import(/* webpackChunkName: "about" */ '../views/subUser/catalog.vue')     
+        component: () => import(/* webpackChunkName: "about" */ '../views/Tools/catalog.vue'),
+        meta: {
+            keepAlive: true, //此组件需要被缓存
+        }
+    },,{
+        // 漫画模块：具体章节
+        path:"/comic/chapter",
+        name: "Chapters",
+        component:()=> import('../views/Tools/chapter.vue'),
+        meta: {
+            keepAlive: true, //此组件需要被缓存
+            
+        }
     },{
         // 管理员主页，仅自己可见
         path: '/nmsl/admin/secret',
@@ -116,6 +117,19 @@ Vue.use(VueRouter,axios)
         meta: {
             keepAlive: true, //此组件需要被缓存   
         }
+    },{
+        // 工具箱模块
+        path: '/tools',
+        name: "Tools",
+        component: () => import('../views/Tool.vue'),
+        meta: {
+            keepAlive: true, //此组件需要被缓存
+        }
+    },{
+        // 在线工具模块：json数组
+        path:"/tools/json",
+        name: "Json",
+        component:()=> import('../views/Tools/json.vue')
     }
 
 ]

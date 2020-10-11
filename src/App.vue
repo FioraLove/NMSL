@@ -1,23 +1,53 @@
 <template>
+    <!-- <div id="app" v-cloak :key="Key"> -->
     <div id="app" v-cloak>
-        <keep-alive>
+        <!-- <keep-alive>
             <router-view>
                 <div id="nav">
                     <router-link to="/">Home</router-link>|
                     <router-link to="/comic">comic</router-link>|
+                    <router-link to="/comic/category">comicCatalog</router-link>|
+                    <router-link to="/comic/chapter">comicChapter</router-link>|
                     <router-link to="/nmsl/hidden/video/play">play</router-link>|
                     <router-link to="/nmsl/hidden/picture">picture</router-link>|
                     <router-link to="/comments">comments</router-link>|
+                    <router-link to="/tools">tools</router-link>|
+                    <router-link to="/tools/json">json</router-link>|
                 </div>
-            <!-- <router-view/>，用于渲染views目录下的页面 -->
+            <router-view/>，用于渲染views目录下的页面
+            </router-view>
+        </keep-alive> -->
+        <keep-alive>
+            <router-view v-if="$route.meta.keepAlive">
+                   <router-link to="/">Home</router-link>|
+                    <router-link to="/comic">comic</router-link>|
+                    <router-link to="/comic/category">comicCatalog</router-link>|
+                    <router-link to="/comic/chapter">comicChapter</router-link>|
+                    <router-link to="/nmsl/hidden/video/play">play</router-link>|
+                    <router-link to="/nmsl/hidden/picture">picture</router-link>|
+                    <router-link to="/comments">comments</router-link>|
+                    <router-link to="/tools">tools</router-link>|
+                    <router-link to="/tools/json">json</router-link>|
             </router-view>
         </keep-alive>
+        <router-view v-if="!$route.meta.keepAlive">
+            
+        </router-view>
     </div>
 </template>
 
 <script>
     export default {
-
+        // data() {
+        // return {
+        //     Key: ''
+        // };
+        // },
+        // watch: {
+        // $route: function(newUrl, oldUrl) {
+        //     this.Key = new Date().getTime();
+        // }
+        // }
     }
 </script>
 

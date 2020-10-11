@@ -179,7 +179,7 @@ export default {
 };
 </script>
 
-<style scope lang="less">
+<style scoped lang="less">
     .video{
         max-width: 100vw;
         min-height: 100vh;

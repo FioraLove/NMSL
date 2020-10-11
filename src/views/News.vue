@@ -36,7 +36,32 @@
 
                 <!-- 新闻资讯 -->
                 <el-row :gutter="10">
-                    <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="6" v-for="(row,num) in results" :key="num">
+                    <div class="modual" v-loading="loading" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)">
+                        <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="6" v-for="(row,num) in results" :key="num">
+                            <div class="category">
+                                <img :src="row.cover">&nbsp;&nbsp;
+                                <span class="company" >{{row.description}}</span>
+                                <hr>
+                            </div>
+                            <div class="outer">
+                                <div class="card">
+                                    <div class="box" v-for="(cols,index) in row.info" :key="index">
+                                        <div class="new">
+                                            <p>
+                                                <span v-if="index <=2" class="order" style="color:red;">{{index+1}}.</span>
+                                                <span v-else class="order" style="color:#FFF;">{{index+1}}.</span>
+                                                <span class="title"><a :href="cols.Url" target="_blank">{{cols.Title}}</a></span>
+                                                <template v-if="cols.hotDesc != null && cols.hotDesc != '' && cols.hotDesc != undefined ">
+                                                    <span class="hot">{{cols.hotDesc}}</span>
+                                                </template>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </el-col>
+                    </div>
+                    <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="6" v-for="(row,num) in response" :key="num">
                         <div class="category">
                             <img :src="row.cover">&nbsp;&nbsp;
                             <span class="company" >{{row.description}}</span>
@@ -52,6 +77,9 @@
                                             <span class="title"><a :href="cols.Url" target="_blank">{{cols.Title}}</a></span>
                                             <template v-if="cols.hotDesc != null && cols.hotDesc != '' && cols.hotDesc != undefined ">
                                                 <span class="hot">{{cols.hotDesc}}</span>
+                                            </template>
+                                            <template v-if="cols.type != null && cols.type != '' && cols.type != undefined ">
+                                                <span class="hot">{{cols.type}}</span>
                                             </template>
                                         </p>
                                     </div>
@@ -90,14 +118,17 @@
         name: 'news',
         data() {
             return {
+                loading: true,
                 rows: [require("../assets/images/tifa.jpg"),require("../assets/images/nmsl.jpeg"),require("../assets/images/comic.jpg")],
                 results: [],
+                response: []
             }
         },
         mounted() {
             this.resizeChart(); // 监听窗口变化事件
             this.renderBarChart();
             this.query();
+             this.query2();
         },
         computed: {
             // 基于准备好的dom，初始化echarts实例
@@ -185,9 +216,46 @@
                 })
             },
 
+            // 定义微信24h热文帮热搜api
+            getWeChatData:function(){
+                return axios({
+                    url: "https://www.tophub.fun:8888/v2/GetAllInfoGzip",
+                    method:"get",
+                    params:{
+                        id: 11,
+                        page: 0
+                    }
+                })
+            },
+
+            // 定义鱼塘热点api
+            getMoFishData:function(){
+                return axios({
+                    url: "https://www.tophub.fun:8888/v2/GetAllInfoGzip",
+                    method:"get",
+                    params:{
+                        id: 1065,
+                        page: 0
+                    }
+                })
+            },
+
+            // 定义凤凰网热点api
+            getPhoenixData:function(){
+                return axios({
+                    url: "https://www.tophub.fun:8888/v2/GetAllInfoGzip",
+                    method:"get",
+                    params:{
+                        id: 126,
+                        page: 0
+                    }
+                })
+            },
+
             // 获取热点数据
             query:function(){
                 let vm = this;
+                this.loading=true;
                 axios.all([this.getZhiHuData(),this.getWeiBoData(),this.getHuPuData(),this.getViewerData(),this.getBiLiBiLiData(),this.getTencentSportData()])
                 .then(axios.spread(function (rsp1,rsp2,rsp3,rsp4,rsp5,rsp6) {
                     let rows = [];
@@ -292,6 +360,7 @@
                             description: "腾讯体育 | 今日热点"
                         }
                         rows.push(results);
+                        vm.loading=false;
                     }
 
                     // 绑定数据
@@ -306,6 +375,74 @@
     
             },
 
+            // 获取热点数据
+            query2:function(){
+                let vm = this;
+                axios.all([this.getWeChatData(),this.getMoFishData(),this.getPhoenixData()])
+                .then(axios.spread(function (rsp1,rsp2,rsp3) {
+                    let rows = [];
+                    if(rsp1.status == 200 && rsp1.data.Code == 0){
+                        let res = rsp1.data.Data;
+                        let data = res["data"];
+                        let results = {};
+                        let info = [];
+                        // 截取前二十个热点
+                        if(data.length>=20){
+                            info= data.slice(1,21);
+                        }else{
+                            info = data.slice(1);
+                        }
+                        results = {
+                            info: info,
+                            cover: "https://file.ipadown.com/tophub/assets/images/media/mp.weixin.qq.com.png_50x50.png",
+                            description: "微信 | 24h热文榜"
+                        }
+                        rows.push(results);
+                    }
+                    if(rsp2.status == 200 && rsp2.data.Code == 0){
+                        let res = rsp2.data.Data;
+                        let data = res["data"];
+                        let results = {};
+                        let info = [];
+                        // 截取前二十个热点
+                        if(data.length>=20){
+                            info= data.slice(1,21);
+                        }else{
+                            info = data.slice(1);
+                        }
+                        results = {
+                            info: info,
+                            cover: "https://img.printf520.com/DeepinScrot-4643.png",
+                            description: "鱼塘 | TOP榜"
+                        }
+                        rows.push(results);
+                    }
+                    if(rsp3.status == 200 && rsp3.data.Code == 0){
+                        let res = rsp3.data.Data;
+                        let data = res["data"];
+                        let results = {};
+                        let info = [];
+                        // 截取前二十个热点
+                        if(data.length>=20){
+                            info= data.slice(1,21);
+                        }else{
+                            info = data.slice(1);
+                        }
+                        results = {
+                            info: info,
+                            cover: "https://img.printf520.com/img/fenghuang.png",
+                            description: "凤凰网 | 实时热点"
+                        }
+                        rows.push(results);
+                    }
+                    // 绑定数据
+                    vm.response = rows;
+                }))
+                .catch(function (error) {
+                    console.log(error);
+                });
+    
+            },
 
             // 渲染排名动态变化
             renderBarChart:function (){
@@ -637,13 +774,13 @@
     }
     .outer{
         width:100%;
-        height:28em;
+        height:26em;
         overflow: hidden;
         
     }
     .outer .card{
         width:104%;
-        height: 26em;
+        height: 24em;
         overflow-x: auto;/*可滑动*/
     }
 
@@ -696,5 +833,7 @@
         color: #000;
         border-radius: 5px;
     }
-
+    .modual{
+        margin: 0px;
+    }
 </style>

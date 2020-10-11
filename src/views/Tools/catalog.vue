@@ -1,5 +1,5 @@
 <template>
-    <div class="comic-category">
+    <div class="comic-category" :key="sid">
         <el-container>
             <el-main>
                 <!-- 漫画详细页 -->
@@ -35,38 +35,43 @@
 
                 <el-row :gutter="10">
                     <!-- 空白模块 -->
-                    <template v-if="flag">
+                    <!-- <template v-if="flag">
                         <el-col :xs="24" :sm="4" :md="4" :lg="4" :xl="4">
                             <div class="ad">ad广告区</div>
                         </el-col>
-                    </template>
+                    </template> -->
 
 
                     <!-- 中间的图片展示模块 -->
-                    <el-col :xs="24" :sm="14" :md="12" :lg="12" :xl="12">
-                        
-                        <div class="outer" v-loading="loading">
-                            <div class="inner">
-                                <div class="pic-box" v-for="(row,index) in rows" :key="index"><img v-lazy="row"></div>
+                    <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+                        <div class="card">
+                            <div class="outer" v-loading="loading">
+                                <div class="inner">
+                                    <div class="follow">
+                                        <div><p class="star"><a href="javascript:;"><span><i class="el-icon-reading"></i>开始阅读</span></a></p></div>
+                                    </div>
+                                    <el-row :gutter="10">
+                                        <el-col :xs="8" :sm="8" :md="6" :lg="4" :xl="4" v-for="(lis,index) in chapter_arr" :key="index">
+                                            <router-link :to="{path : '/comic/chapter', query : {sid : lis.uid, cid: lis.cid}}">
+                                                <el-button type="danger" plain :title="lis.chapter_title">{{lis.chapter_title}}</el-button>
+                                            </router-link>
+                                        </el-col>
+                                    </el-row>
+                                        <div class="block">
+                                            <el-pagination
+                                            @current-change="handleCurrentChange"
+                                            :current-page.sync="currentPage"
+                                            :page-size="page_size"
+                                            layout="prev, pager, next"
+                                            :pager-count="pager_count"
+                                            :total="count">
+                                            </el-pagination>
+                                        </div>
+                                </div>
                             </div>
                         </div>
                     </el-col>
 
-                    <!-- 章节模块 -->
-                    <el-col :xs="24" :sm="6" :md="8" :lg="8" :xl="8">
-                        <div class="follow">
-                            <div><p class="star"><a href="javascript:;"><span><i class="el-icon-reading"></i>开始阅读</span></a></p></div>
-                        </div>
-                        <div class="chapter-lists">
-                            <div class="inBox">
-                                <ul>
-                                    <li v-for="(lis,index) in chapter_arr" :key="index">
-                                        <p @click="get_image($event)" :data-item="index">{{lis.chapter_title}}</p>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </el-col>
                 </el-row>
             </el-main>
         </el-container>
@@ -88,21 +93,31 @@
 <script>
 import { Base64 } from 'js-base64';
 export default {
+    name:"Category",
     data() {
         return {
-            sid:this.$route.query.sid,
-            cover:this.$route.query.cover,
-            update:this.$route.query.update,
-            update_time:this.$route.query.time,
+            sid:"",
+            cover:"",
+            update:"",
+            update_time:"",
             author_info:{},                         // 作者简介信息组
             lists:[],
             rows:[],
             flag:true,
             loading:true,
             chapter_arr:[],                 // 章节id
+            page_size: 36,
+            pager_count:5,                  // 页码按钮的数量，当总页数超过该值时会折叠
+            count:0,                    // 查询返回的数据总数
+            currentPage:1,             // 当前页数
         }
     },
-    
+    created() {
+        this.sid=this.$route.query.sid;
+        this.cover=this.$route.query.cover;
+        this.update=this.$route.query.update;
+        this.update_time=this.$route.query.time;
+    },
     mounted() {
         this.isPC();
         this.getContent();
@@ -114,7 +129,7 @@ export default {
         getInfo:function(){
             let app = this;
             axios({
-                url: this.FACTURL.baseUrl+"/nmsl/api/comic/author",
+                url: this.FACTURL.baseUrl+"/nmsl/api/comic/author/",
                 method:"get",
                 params:{
                     uid: Base64.encode(this.sid)
@@ -143,86 +158,86 @@ export default {
             }  
             this.flag = flag;
         },
+        // 页码改变触发事件
+        handleCurrentChange:function(val){
+            // 点击页码跳转时，执行改计算属性
+            this.getContent();
+        },
         // 发送Ajax请求
         getContent:function(){
-            let app = this;
+            let vm = this;
             axios({
-                url: this.FACTURL.baseUrl+"/nmsl/api/comic/chapter",
+                url: this.FACTURL.baseUrl+"/nmsl/api/comic/chapter/",
                 method:"get",
                 params:{
                     uid: Base64.encode(this.sid),
-                    offset:'0',
-                    limit:'800'
+                    offset:this.page_size*(this.currentPage-1),
+                    limit: this.page_size,
                 }
             })
             .then(function(response){
-                app.loading = true;
+                vm.loading = true;
                 if(response.status == 200 && response.data.count != 0){
                     
-                    let xe9527 = (response.data.results[0]["images_url"]).split("'");
-                    let arr = [];
-                    for (let index = 1; index < xe9527.length; index+=2) {
-                        // 由于数据库数据结构设置错误，导致无法使用json
-                        arr.push(xe9527[index]);
-                    }
-                    if (arr.length<1) arr = JSON.parse(response.data.results[0]["images_url"]);
-                    app.rows = arr;
-                    app.chapter_arr = response.data.results;
+                    vm.chapter_arr = response.data.results;
+                    vm.count = response.data.count;
                 }else{
-                    app.chapter_arr = [];
-                    app.rows = ["https://p.pstatp.com/origin/ffbf0000e0493d37284c"];
+                    vm.chapter_arr = [];
+                    vm.count = 0;
                 }
-                app.loading = false;
+                vm.loading = false;
             })
             .catch(function (error) {
                 console.log(error);
             });
         },
-        get_image:function(el){
-            this.loading = true;
-            // 获取当前点击元素的属性值
-            let a = parseInt(el.target.dataset.item);
-            // let a = parseInt(el.target.getAttribute("data-item"));
 
-            let b = (this.chapter_arr[a]["images_url"]).split("'");
-            if(b.length<=1){
-                this.rows = JSON.parse(this.chapter_arr[a]["images_url"]);
-            }else{
-                let arr = [];
-                for (let index = 1; index < b.length; index+=2){
-                    // 由于数据库数据结构设置错误，导致无法使用json
-                    arr.push(b[index]);
-                }
-                this.rows = arr;
-            }
-            this.loading = false;
-            
-        }
     },
     watch: {
         sid: {
             deep: true,
             handler: function (newVal, oldVal) {
                 this.getInfo;
+                this.getContent();
             }
         },
+        '$route'(to, from) {
+            if (from.path == "/comic") {  /// 判断条件2  监听路由名 监听你从什么路由跳转过来的
+                this.sid=this.$route.query.sid;
+                this.cover=this.$route.query.cover;
+                this.update=this.$route.query.update;
+                this.update_time=this.$route.query.time;
+            }
+        }
     },
     
 }
 </script>
 
 <style scoped>
+    .block .el-pagination{
+        background-color: transparent !important;
+        text-align: center;
+    }
+    button{
+        width:100%;
+        text-overflow: ellipsis;
+        text-emphasis: none;
+        white-space: nowrap;
+        overflow: hidden;
+        text-align: left;
+        margin-bottom: 8px;
+    }
     .follow{
         width: 100%;
         height:5em;
-        padding:0 0 0 6px
+
     }
     .follow div{
-        width: 90%;
+        width: 98%;
         border-radius: 6px;
         padding: 12px;
         background-color:rgba(177, 172, 172, 0.2);
-        text-align: center;
         overflow: hidden;
     }
     .star{
@@ -232,6 +247,7 @@ export default {
         font-size: 1.5em;
         border-radius: 6px;
         cursor: pointer;
+        text-align: center;
         background-color:#14abef;
         font-family: 'Courier New', Courier, monospace;
         margin: 0px;
@@ -240,6 +256,7 @@ export default {
         float:left;
         width:100%;
         height:1.86em;
+        text-align: center;
         font-size: 1.5em;
         border-radius: 6px;
         background-color:rgba(177, 172, 172, 0.3);
@@ -347,12 +364,13 @@ export default {
         .introduction .author{
             font-size: 1em;
             margin:0px;
-        }      .bar-right .title{
-        font-size:1.5em;
-        margin-top:8px;
-        margin-bottom: 6px;
-        font-family: 'Courier New', Courier, monospace;
-    }       
+        }      
+        .bar-right .title{
+            font-size:1.5em;
+            margin-top:8px;
+            margin-bottom: 6px;
+            font-family: 'Courier New', Courier, monospace;
+        }       
     }
 
     @media screen and (min-width:507px) and (max-width: 808px) {
@@ -389,19 +407,15 @@ export default {
     .outer{
         width:100%;
         background-color: transparent;
-        overflow: hidden;
-        height: 95vh;
         cursor: pointer;
-        box-shadow: 10px 10px 5px rgba(177, 172, 172, 0.6);
-        border-radius: 8px;
+
     }
     .outer .inner{
-        width:105%;
-        overflow-y:scroll;
-        height: 98vh;
+        width:100%;
+        /* padding: 1em; */
     }
 
-    .chapter-lists{
+    /* .chapter-lists{
         width:100%;
         overflow: hidden;
         height: 85vh;
@@ -410,7 +424,7 @@ export default {
         width:106.6%;
         overflow-y:scroll;
         height: 88vh;
-    }
+    } */
 
     .pic-box img{
         width: 100%;
@@ -433,47 +447,8 @@ export default {
         height: 95vh;
     }
     .comic-category{
-
+        min-height: 100vh;
         background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
-    }
-    ul{
-        padding: 5px;
-        cursor: pointer;
-    }
-    li{
-        list-style: none;
-        width:100%;
-        height:5.8vh;
-        border-radius: 8px;
-        background-color:#EBEEF5;
-    }
-    li:hover{
-        list-style: none;
-        width:100%;
-        height:5.8vh;
-        border-radius: 5px;
-        background-color: rgba(255, 99, 71, 0.5);
-
-    }
-    li p{
-        margin:6px 6px 6px 12px;
-        font-size: 13px;
-        position: relative;
-        color: #252525;
-        top:13px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-    li p:hover{
-        margin:6px 6px 6px 12px;
-        font-size: 14px;
-        position: relative;
-        color: #252525;
-        top:13px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
     }
 
 </style>

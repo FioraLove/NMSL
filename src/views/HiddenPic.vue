@@ -262,7 +262,7 @@ export default {
 };
 </script>
 
-<style scope lang="less">
+<style scoped lang="less">
     .footer p{
         font-size: 14px;
         color: black;
