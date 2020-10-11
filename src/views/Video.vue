@@ -194,7 +194,7 @@
             parse:function(){
                 // 先清空文本域
                 this.textarea = "";
-                let app = this;
+                let vm = this;
                 if(this.select == "" || this.input_api == ""){
                     alert("请选择解析的视频类型和地址");
                 }else{
@@ -208,10 +208,10 @@
                     })
                     .then(function(response){
                         if(response.status == 200){
-                            app.textarea = response.data;
+                            vm.textarea = response.data;
                             
                         }else{
-                            app.textarea = "";
+                            vm.textarea = "";
                         }
                     })
                     .catch(function (error) {
