@@ -116,10 +116,10 @@
                 input_api:"",
                 api:"",                             
                 select:"",
-                rows: [ "抖音", "YouTube", "哔哩哔哩", "好看视频","六间房","全民小视频","陌陌视频",
-                    "梨视频","美拍","场库短视频","微博视频","最右","皮皮虾","AcFun","快手","全民K歌","西瓜视频"],
-                datas: ["好看视频","六间房","全民小视频","陌陌视频","梨视频","美拍","场库短视频",
-                    "微博视频","最右","皮皮虾","AcFun","快手","全民K歌","西瓜视频"],       
+                rows: [ "抖音", "YouTube", "哔哩哔哩", "好看视频","六间房","全民小视频","陌陌视频","梨视频","美拍",
+                    "场库短视频","微博视频","最右","皮皮虾","AcFun","快手","全民K歌","西瓜视频","秒拍","小红书"],
+                datas: ["好看视频","六间房","全民小视频","陌陌视频","梨视频","美拍","场库短视频","微博视频","最右",
+                    "皮皮虾","AcFun","快手","全民K歌","西瓜视频","秒拍","小红书"],       
 
             }
         }, 
@@ -194,7 +194,7 @@
             parse:function(){
                 // 先清空文本域
                 this.textarea = "";
-                let app = this;
+                let vm = this;
                 if(this.select == "" || this.input_api == ""){
                     alert("请选择解析的视频类型和地址");
                 }else{
@@ -208,10 +208,10 @@
                     })
                     .then(function(response){
                         if(response.status == 200){
-                            app.textarea = response.data;
+                            vm.textarea = response.data;
                             
                         }else{
-                            app.textarea = "";
+                            vm.textarea = "";
                         }
                     })
                     .catch(function (error) {

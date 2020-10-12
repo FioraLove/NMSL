@@ -75,8 +75,7 @@ Vue.use(VueRouter,axios)
         name: "Chapters",
         component:()=> import('../views/Tools/chapter.vue'),
         meta: {
-            keepAlive: true, //此组件需要被缓存
-            
+            keepAlive: true, //此组件需要被缓存  
         }
     },{
         // 管理员主页，仅自己可见
