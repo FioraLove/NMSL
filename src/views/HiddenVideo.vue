@@ -45,12 +45,14 @@
                                 <router-link target="_blank" :to="{path : '/nmsl/hidden/video/play', query : {vid : row.vid, token: bs_token}}" :title="row.title">
                                     <img v-lazy="row.pic">
                                 </router-link>
+                            </div>                          
+                            <div class="card_date" v-if="parseInt(row.judge) == row.judge">
+                                <span>{{ parseFloat(row.judge)}}.0</span>
                             </div>
-                            <template>                            
-                                <div class="card_date">
-                                    <span>{{ parseFloat(row.judge)}}</span>
-                                </div>
-                            </template>
+                            <div class="card_date" v-else>
+                                <span>{{ parseFloat(row.judge)}}</span>
+                            </div>
+
                             <template v-if="flag">                            
                                 <div class="card_update">
                                     <span>{{row.update}}</span>
