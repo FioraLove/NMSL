@@ -46,13 +46,9 @@
                                     <img v-lazy="row.pic">
                                 </router-link>
                             </div>                          
-                            <div class="card_date" v-if="parseInt(row.judge) == row.judge">
-                                <span>{{ parseFloat(row.judge)}}.0</span> 
+                            <div class="card_date">
+                                <span>{{ parseInt(row.judge) == row.judge ? (row.judge)+".0": parseFloat(row.judge) }}</span> 
                             </div>
-                            <div class="card_date" v-else>
-                                <span>{{ parseFloat(row.judge)}}</span>
-                            </div>
-
                             <template v-if="flag">                            
                                 <div class="card_update">
                                     <span>{{row.update}}</span>
@@ -63,13 +59,9 @@
                                 <div class="title">
                                     <span><router-link target="_blank" :to="{path : '/nmsl/hidden/video/play', query : {vid : row.vid, token: bs_token}}" :title="row.title">{{(row.title).replace("旧里番-","")}}</router-link></span>
                                 </div>
-                                <template>
                                     <div class="author">
-                                        <!-- <span><el-rate :value="parseFloat(row.judge)" disabled show-score text-color="#ff9900" score-template="{value}"></el-rate></span> -->
                                         <span>清晰度：{{row.quality == ''?'暂无':row.quality}}</span>
                                     </div>
-                                </template>
-
                             </div>
                         </div>
                     </el-col>

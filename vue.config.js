@@ -45,5 +45,12 @@ module.exports = {
             jQuery: 'jquery',
             'window.jQuery': 'jquery'
         }])
-    }
+    },
+    configureWebpack:{
+        externals: {
+            'vue': 'Vue',
+            'element-ui': 'ELEMENT',
+            'axios': 'axios',
+        }
+      }
 }

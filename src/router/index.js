@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 import axios from '../plugins/axios'
 
 Vue.use(VueRouter,axios)
@@ -9,7 +8,7 @@ Vue.use(VueRouter,axios)
     {
         path: '/',
         name: 'Home',
-        component: Home,
+        component: () => import(/* webpackChunkName: "about" */ '../views/Home.vue'),
         meta: {
             keepAlive: true, //此组件需要被缓存   
         }
