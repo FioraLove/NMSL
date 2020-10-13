@@ -1,8 +1,8 @@
-import Vue from 'vue'
-import './plugins/axios'
+// import Vue from 'vue'
+// import './plugins/axios'
 import App from './App.vue'
 import router from './router'
-import ElementUI from 'element-ui';
+// import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import VueLazyLoad from 'vue-lazyload'; // 懒加载
 import facturl from './store/facturl.js';
@@ -17,7 +17,7 @@ Vue.use(VueLazyLoad,{
 	loading: require('./assets/images/loading.gif') // 加载时的图片
 });
 Vue.config.productionTip = false
-Vue.use(ElementUI);
+// Vue.use(ElementUI);
 
 Vue.use(RVerify);
 RVerify.configure({

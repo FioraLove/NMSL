@@ -11,6 +11,13 @@
                                 </el-carousel-item>
                             </el-carousel>
                         </div>
+                        <div class="tips">
+                            <p class="names">新法师英雄·Seraphine</p>
+                            <p class="lover">
+                                <span><a href="http://lol.qq.com/nexus/pc/detail.html?tagtype=128&docid=1734503245344037970" target="_blank" rel="noopener noreferrer">永远滴神！只爱此一人！(还有阿狸)</a></span>
+                                <img src="https://t1.picb.cc/uploads/2020/10/13/tUvJ4K.jpg" alt="AhriLove">
+                            </p>
+                        </div>
                     </el-col>
                 </el-row>
                 <el-row :gutter="10">
@@ -23,7 +30,7 @@
                             </div>
                             <p class="desc">{{row.description}}</p>
                             
-                            <p class="check"><el-link  :href="row.url" target="_blank" type="success">进入<i class="el-icon-link"></i></el-link></p>
+                            <p class="check"><el-link  :href="row.url" type="success">进入<i class="el-icon-link"></i></el-link></p>
                         </el-card>
                     </el-col>
                 </el-row>
@@ -38,7 +45,10 @@ export default {
     name:"Tools",
     data() {
         return {
-            rows: [require("../assets/images/tifa.jpg"),require("../assets/images/nmsl.jpeg"),require("../assets/images/comic.jpg")],
+            // rows: [require("../assets/images/tifa.jpg"),require("../assets/images/nmsl.jpeg"),require("../assets/images/comic.jpg")],
+            rows: ["https://wx4.sinaimg.cn/mw690/006fwRswly1gjml1nj7yrj31hc0u0ajv.jpg",
+                    "https://wx4.sinaimg.cn/mw690/006fwRswly1gjml1niotyj31ev0u07ah.jpg",
+                    "https://wx3.sinaimg.cn/mw690/006fwRswly1gjml1niykvj31f10u0k0c.jpg"],
             results:[{
                 cover: "https://bkimg.cdn.bcebos.com/pic/63d9f2d3572c11df6ba8d108682762d0f703c2a4?x-bce-process=image/resize,m_lfit,w_268,limit_1/format,f_jpg",
                 title: "json数组生成器",
@@ -52,14 +62,37 @@ export default {
 </script>
 
 <style scoped>
+    .tips p{
+        text-align: center;
+        font-family: "PingFang SC";
+        font-size: 1.2em;
+    }
+    .names{
+        font-weight: 700;
+        margin: 0px;
+    }
+    .lover{
+        color: #F56C6C;
+        margin-top: 0px;
+    }
+    .lover img{
+        height: 2em;
+        border-radius: 8px;
+        position: relative;
+        top:12px;
+    }
+    .lover a{
+        color: #F56C6C;
+        text-decoration: none;
+    }
     .box-card {
         width: 100%;
         margin-bottom: 10px;
         border-radius: 6px;
     }
     .block img{
-        object-fit: cover;
-        width: 100%;
+        /* object-fit: cover; */
+        /* width: 100%; */
         height: 100%;
     }
     .category img{
