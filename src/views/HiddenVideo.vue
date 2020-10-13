@@ -47,7 +47,7 @@
                                 </router-link>
                             </div>                          
                             <div class="card_date" v-if="parseInt(row.judge) == row.judge">
-                                <span>{{ parseFloat(row.judge)}}.0</span>
+                                <span>{{ parseFloat(row.judge)}}.0</span> 
                             </div>
                             <div class="card_date" v-else>
                                 <span>{{ parseFloat(row.judge)}}</span>
