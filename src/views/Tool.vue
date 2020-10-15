@@ -45,10 +45,8 @@ export default {
     name:"Tools",
     data() {
         return {
-            // rows: [require("../assets/images/tifa.jpg"),require("../assets/images/nmsl.jpeg"),require("../assets/images/comic.jpg")],
-            rows: ["https://wx4.sinaimg.cn/mw690/006fwRswly1gjml1nj7yrj31hc0u0ajv.jpg",
-                    "https://wx4.sinaimg.cn/mw690/006fwRswly1gjml1niotyj31ev0u07ah.jpg",
-                    "https://wx3.sinaimg.cn/mw690/006fwRswly1gjml1niykvj31f10u0k0c.jpg"],
+            rows: [require("../assets/images/seraphine1.jpg"),require("../assets/images/seraphine2.jpg"),require("../assets/images/seraphine3.jpg")
+                ,require("../assets/images/seraphine4.jpg"),require("../assets/images/seraphine5.jpg")],
             results:[{
                 cover: "https://bkimg.cdn.bcebos.com/pic/63d9f2d3572c11df6ba8d108682762d0f703c2a4?x-bce-process=image/resize,m_lfit,w_268,limit_1/format,f_jpg",
                 title: "json数组生成器",
@@ -91,9 +89,9 @@ export default {
         border-radius: 6px;
     }
     .block img{
-        /* object-fit: cover; */
-        /* width: 100%; */
-        height: 100%;
+        object-fit: contain;
+        width: 100%;
+        /* height: 100%; */
     }
     .category img{
         width: 40px;

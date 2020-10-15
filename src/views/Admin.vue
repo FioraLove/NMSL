@@ -135,9 +135,6 @@
                 data:{
                     username: this.logindata.username.trim().toString(),
                     password: this.logindata.password.trim().toString()
-                },
-                headers:{
-                    "Content-Type":"application/json"
                 }
             })
             .then(function(response){

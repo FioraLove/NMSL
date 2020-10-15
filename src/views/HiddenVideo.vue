@@ -187,7 +187,7 @@ export default {
         },
         // 发送Ajax请求
         getContent:function () {
-            let app = this;
+            let vm = this;
             let session_token = sessionStorage.getItem("token");
             if(session_token == null || session_token == undefined || session_token==""){
                 alert("登录失效，请重新登录");
@@ -198,8 +198,7 @@ export default {
                 url: this.FACTURL.baseUrl+"/nmsl/api/secret/video/",
                 method:"get",
                 headers:{
-                    "Authorization": "Token "+window.btoa(sessionStorage.getItem("token")),
-                    "Content-Type": "application/x-www-form-urlencoded" 
+                    "Authorization": "Token "+window.btoa(sessionStorage.getItem("token"))
                 },
                 params:{
                     offset:this.page_size*(this.currentPage-1),
@@ -208,13 +207,13 @@ export default {
             })
             .then(function(response){
                 if(response.status == 200){
-                    app.rows = response.data.results;
-                    app.count = response.data.count;
+                    vm.rows = response.data.results;
+                    vm.count = response.data.count;
                 }else{
-                    app.rows = {"content":"暂无数据。。。"};
+                    vm.rows = {"content":"暂无数据。。。"};
                 }
                 // 关闭加载动画
-                app.loading=false;
+                vm.loading=false;
             })
             .catch(function (error) {
                 console.log(error);

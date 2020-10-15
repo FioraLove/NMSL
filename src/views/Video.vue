@@ -117,9 +117,9 @@
                 api:"",                             
                 select:"",
                 rows: [ "抖音", "YouTube", "哔哩哔哩", "好看视频","六间房","全民小视频","陌陌视频","梨视频","美拍",
-                    "场库短视频","微博视频","最右","皮皮虾","AcFun","快手","全民K歌","西瓜视频","秒拍","小红书"],
+                    "场库短视频","微博视频","最右","皮皮虾","AcFun","快手","全民K歌","西瓜视频","秒拍","小红书","小咖秀"],
                 datas: ["好看视频","六间房","全民小视频","陌陌视频","梨视频","美拍","场库短视频","微博视频","最右",
-                    "皮皮虾","AcFun","快手","全民K歌","西瓜视频","秒拍","小红书"],       
+                    "皮皮虾","AcFun","快手","全民K歌","西瓜视频","秒拍","小红书","小咖秀"],       
 
             }
         }, 
@@ -192,6 +192,10 @@
         },
         methods: {
             parse:function(){
+                // 构建headers签名算法
+                let d = new Date();
+                let timer = ((d.getTime())/1000).toFixed();
+
                 // 先清空文本域
                 this.textarea = "";
                 let vm = this;
@@ -203,7 +207,9 @@
                         method:"post",
                         data:{
                             category: Base64.encode(this.select),
-                            url:this.input_api
+                            url:this.input_api,
+                            time: timer,
+                            signature: Base64.encode(this.FACTURL.signature+"&"+timer)
                         }
                     })
                     .then(function(response){
