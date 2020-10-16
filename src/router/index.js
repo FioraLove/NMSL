@@ -128,6 +128,11 @@ Vue.use(VueRouter,axios)
         path:"/tools/json",
         name: "Json",
         component:()=> import('../views/Tools/json.vue')
+    },{
+        // 在线工具模块：av与bv互换
+        path:"/tools/av2bv",
+        name: "Av2bv",
+        component:()=> import('../views/Tools/av2bv.vue')
     }
 
 ]

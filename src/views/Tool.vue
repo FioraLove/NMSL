@@ -15,7 +15,7 @@
                             <p class="names">新法师英雄·Seraphine</p>
                             <p class="lover">
                                 <span><a href="http://lol.qq.com/nexus/pc/detail.html?tagtype=128&docid=1734503245344037970" target="_blank" rel="noopener noreferrer">永远滴神！只爱此一人！(还有阿狸)</a></span>
-                                <img src="https://t1.picb.cc/uploads/2020/10/13/tUvJ4K.jpg" alt="AhriLove">
+                                <img src="https://cdn.jsdelivr.net/gh/FioraLove/Images/tUvJ4K.jpg" alt="AhriLove">
                             </p>
                         </div>
                     </el-col>
@@ -48,11 +48,16 @@ export default {
             rows: [require("../assets/images/seraphine1.jpg"),require("../assets/images/seraphine2.jpg"),require("../assets/images/seraphine3.jpg")
                 ,require("../assets/images/seraphine4.jpg"),require("../assets/images/seraphine5.jpg")],
             results:[{
-                cover: "https://bkimg.cdn.bcebos.com/pic/63d9f2d3572c11df6ba8d108682762d0f703c2a4?x-bce-process=image/resize,m_lfit,w_268,limit_1/format,f_jpg",
-                title: "json数组生成器",
-                description: "将多组字符串生成标准的json数组",
-                url: "/tools/json"
-            }]
+                    cover: "https://bkimg.cdn.bcebos.com/pic/63d9f2d3572c11df6ba8d108682762d0f703c2a4?x-bce-process=image/resize,m_lfit,w_268,limit_1/format,f_jpg",
+                    title: "json数组生成器",
+                    description: "将多组字符串生成标准的json数组",
+                    url: "/tools/json"
+                },{
+                    cover: "https://file.ipadown.com/tophub/assets/images/media/bilibili.com.png_50x50.png",
+                    title: "哔哩哔哩 AV/BV 转换",
+                    description: "在线哔哩哔哩 AV/BV 互相转换",
+                    url: "/tools/av2bv"
+                }]
         }
     },
 
