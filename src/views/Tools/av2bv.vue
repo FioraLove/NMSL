@@ -5,7 +5,7 @@
                 <el-row :gutter="10">
                     <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
                         <div style="margin-top: 15px;margin:0 auto;width:80%;">
-                            <el-alert title="bilibili AV与BV号互转" type="success" center
+                            <el-alert title="bilibili AV与BV号互转" type="success" center show-icon
                                 description="将AV或BV号粘贴到文本框中">
                             </el-alert>
                             <el-input type="textarea" placeholder="请输入AV号或BV号：（如av170001或BV17x411w7KC）"  v-model="parse" maxlength="66" show-word-limit :rows="3" >

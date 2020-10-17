@@ -88,9 +88,8 @@
 
 <style scoped>
     @import "../assets/css/style.css";
-    .tips{
-        width:93vw;
-        margin:0 auto;
+    .copyright{
+        padding-bottom: 0px;
     }
 </style>
 

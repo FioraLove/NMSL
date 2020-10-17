@@ -20,7 +20,7 @@
                         </div>
                     </el-col>
                 </el-row>
-                <el-row :gutter="10">
+                <el-row :gutter="20">
                     <el-col :xs="24" :sm="8" :md="8" :lg="6" :xl="4" v-for="(row,index) in results" :key="index">
                         <el-card class="box-card" shadow="hover">
                             <div class="category">
@@ -55,8 +55,18 @@ export default {
                 },{
                     cover: "https://file.ipadown.com/tophub/assets/images/media/bilibili.com.png_50x50.png",
                     title: "哔哩哔哩 AV/BV 转换",
-                    description: "在线哔哩哔哩 AV/BV 互相转换",
+                    description: "在线哔哩哔哩 AV/BV号 互相转换",
                     url: "/tools/av2bv"
+                },{
+                    cover: "https://cdn.jsdelivr.net/gh/FioraLove/Images/mobile.jpg",
+                    title: "手机号码归属地查询",
+                    description: "查询归属地/号码段/卡类型/运营商...",
+                    url: "/tools/tel"
+                },{
+                    cover: "https://cdn.jsdelivr.net/gh/FioraLove/Images/trash.jpg",
+                    title: "垃圾分类查询",
+                    description: "干垃圾？湿垃圾？垃圾分类查询",
+                    url: "/tools/trash"
                 }]
         }
     },

@@ -8,7 +8,7 @@
                     <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
 
                         <div style="margin-top: 15px;margin:0 auto;width:80%;">
-                            <el-alert title="视频测试播放" type="success" center
+                            <el-alert title="视频测试播放" type="success" center show-icon
                                 description="将视频地址添加到输入框中，某些视频若存在字幕，可将其字幕url地址添加到字幕框中">
                             </el-alert>                            
                             <el-input placeholder="请输入测试播放的视频地址" v-model="input_url" class="input-with-select" clearable>
@@ -24,6 +24,7 @@
                                 title="视频解析接口"
                                 type="warning"
                                 center
+                                show-icon
                                 description="打开短视频APP，点开某个视频，点击右下角分享按钮，在分享弹框中点击复制链接或通过分享到微信QQ等获取分享链接">
                             </el-alert>
 
