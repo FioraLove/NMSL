@@ -504,8 +504,8 @@ export default {
         overflow-y: auto;/*可滑动*/
     }
     .box{
-        width: 5em;
-        margin-left: 8px;
+        margin-left: 1em;
+        margin-right: 6px;
         height: 2.5em;
         display: inline-block; /*行内块级元素*/
     }
