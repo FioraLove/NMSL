@@ -6,7 +6,7 @@
                     <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
                         <div id="play">
                             <video controls id="playVideos">
-                                <source :src="video" type="video/mp4">
+                                <source src="" type="video/mp4">
                                 <!-- <source src="movie.ogg" type="video/ogg">
                                 <source src="movie.webm" type="video/webm">
                                 <object data="movie.mp4" width="320" height="240">
@@ -84,7 +84,8 @@ export default {
                     }
                     vm.images_rows = xe9527;
                     //初始化默认加载第一个播放视频
-                    vm.video = xe9527[0];
+                    let videos = document.getElementById('playVideos');
+                    videos.src = xe9527[0];
 
                 }else{
                     vm.rows = {"content":"暂无数据。。。"};
