@@ -64,9 +64,24 @@ export default {
                     url: "/tools/tel"
                 },{
                     cover: "https://cdn.jsdelivr.net/gh/FioraLove/Images/trash.jpg",
-                    title: "垃圾分类查询",
+                    title: "AI垃圾分类查询",
                     description: "干垃圾？湿垃圾？垃圾分类查询",
                     url: "/tools/trash"
+                },{
+                    cover: "https://cdn.jsdelivr.net/gh/FioraLove/Images/yulu.jpg",
+                    title: "精神语录",
+                    description: "🔥My name is 精神小伙🔥",
+                    url: "/tools/yulu"
+                },{
+                    cover: "https://cdn.jsdelivr.net/gh/FioraLove/Images/express.jpg",
+                    title: "快递单号查询",
+                    description: "中通/圆通/申通",
+                    url: "/tools/express"
+                },{
+                    cover: "https://cdn.jsdelivr.net/gh/FioraLove/Images/sang.jpg",
+                    title: "每日得物鸡汤",
+                    description: "网抑云阴乐·生不出人，我很抱歉",
+                    url: "/tools/dewu"
                 }]
         }
     },

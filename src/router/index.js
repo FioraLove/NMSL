@@ -143,6 +143,21 @@ Vue.use(VueRouter,axios)
         path:"/tools/trash",
         name: "Trash",
         component:()=> import('../views/Tools/trash.vue')
+    },{
+        // 在线工具模块：精神语录
+        path:"/tools/yulu",
+        name: "Yulu",
+        component:()=> import('../views/Tools/yulu.vue')
+    },{
+        // 在线工具模块：快递单号查询
+        path:"/tools/express",
+        name: "Express",
+        component:()=> import('../views/Tools/express.vue')
+    },{
+        // 在线工具模块：每日得物鸡汤
+        path:"/tools/dewu",
+        name: "Dewu",
+        component:()=> import('../views/Tools/dewu.vue')
     }
 
 ]
