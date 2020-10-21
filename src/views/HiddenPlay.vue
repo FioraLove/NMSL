@@ -79,7 +79,7 @@ export default {
                         let a = res[index];
                         let b = JSON.parse(a.images_url);
                         for (let i= 0; i< b.length; i++) {
-                            xe9527.push((b[i]).split("url=")[1]);                            
+                            xe9527.push((b[i]).replace("id.8008xs.com","e1.umaaa.xyz").split("url=")[1]);                            
                         }
                     }
                     vm.images_rows = xe9527;

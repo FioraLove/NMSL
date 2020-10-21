@@ -128,6 +128,21 @@ Vue.use(VueRouter,axios)
         path:"/tools/json",
         name: "Json",
         component:()=> import('../views/Tools/json.vue')
+    },{
+        // 在线工具模块：av与bv互换
+        path:"/tools/av2bv",
+        name: "Av2bv",
+        component:()=> import('../views/Tools/av2bv.vue')
+    },{
+        // 在线工具模块：手机号相关信息查询
+        path:"/tools/tel",
+        name: "Tel",
+        component:()=> import('../views/Tools/tel.vue')
+    },{
+        // 在线工具模块：垃圾分类查询查询
+        path:"/tools/trash",
+        name: "Trash",
+        component:()=> import('../views/Tools/trash.vue')
     }
 
 ]

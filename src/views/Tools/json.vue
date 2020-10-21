@@ -5,7 +5,7 @@
                 <el-row :gutter="10">
                     <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
                         <div style="margin-top: 15px;margin:0 auto;width:80%;">
-                            <el-alert title="Json标准数组在线生成工具" type="success" center
+                            <el-alert title="Json标准数组在线生成工具" type="success" center show-icon
                                 description="将多组字符串粘贴到文本框中，每组字符串请使用统一的英文逗号来分隔">
                             </el-alert>
                             <el-input type="textarea" placeholder="请输入内容"  v-model="parse" maxlength="888" show-word-limit :rows="5" >

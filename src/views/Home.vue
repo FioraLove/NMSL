@@ -141,7 +141,7 @@ export default {
                     content:"主页",
                     url:"/"
                 },{
-                    content:"资讯",
+                    content:"热榜",
                     url:"/news"
                 },{
                     content:"漫画",
@@ -150,7 +150,7 @@ export default {
                     content:"音乐",
                     url:"/audio"
                 },{
-                    content:"视频解析",
+                    content:"短视频解析",
                     url:"/video"
                 },{
                     content:"抽象圣经",
@@ -163,7 +163,7 @@ export default {
                     content:"Github"
                 },{
                     url: "/comments",
-                    content:"留言"
+                    content:"留言板"
                 },{
                     url:"http://wpa.qq.com/msgrd?v=3&uin=3434279505&site=qq&menu=yes",
                     content:"联系我"
@@ -504,8 +504,8 @@ export default {
         overflow-y: auto;/*可滑动*/
     }
     .box{
-        width: 5em;
-        margin-left: 8px;
+        margin-left: 1em;
+        margin-right: 6px;
         height: 2.5em;
         display: inline-block; /*行内块级元素*/
     }

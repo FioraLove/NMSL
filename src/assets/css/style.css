@@ -213,7 +213,8 @@ body {
 .main-bg {
     background-repeat: no-repeat;
     background-position: center;
-    background-image: url("https://tool.liumingye.cn/bingimg/img.php");
+    background-image: url("https://tenapi.cn/acg");
+    /* background-image: url("https://tool.liumingye.cn/bingimg/img.php"); */
     background-size: cover;
     -webkit-background-size: cover;
     -moz-background-size: cover;

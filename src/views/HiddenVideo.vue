@@ -43,9 +43,9 @@
                         <div class="card">
                             <div class="header">
                                 <router-link target="_blank" :to="{path : '/nmsl/hidden/video/play', query : {vid : row.vid, token: bs_token}}" :title="row.title">
-                                    <img v-lazy="row.pic">
+                                    <img v-lazy="(row.pic).replace('cdn888.8008xs.com','cdn888.umaaa.xyz')">
                                 </router-link>
-                            </div>                          
+                            </div>
                             <div class="card_date">
                                 <span>{{ parseInt(row.judge) == row.judge ? (row.judge)+".0": parseFloat(row.judge) }}</span> 
                             </div>
