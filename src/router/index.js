@@ -27,10 +27,9 @@ Vue.use(VueRouter,axios)
         component: () => import(/* webpackChunkName: "about" */ '../views/News.vue')
     },
     {
-        path: '/video',
-        name: 'Video',
-        // 创建子路由/user/:id/profile 与 /user/:id/post
-        component: () => import(/* webpackChunkName: "about" */ '../views/Video.vue')
+        path: '/parse',
+        name: 'Parse',
+        component: () => import(/* webpackChunkName: "about" */ '../views/Parse.vue')
     },
     {   // 音频MP3模块
         path: '/audio',     // query模式

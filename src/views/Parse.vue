@@ -7,7 +7,7 @@
 
                     <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
 
-                        <div style="margin-top: 15px;margin:0 auto;width:80%;">
+                        <div style="margin:0 auto;width:80%;">
                             <el-alert title="视频测试播放" type="success" center show-icon
                                 description="将视频地址添加到输入框中，某些视频若存在字幕，可将其字幕url地址添加到字幕框中">
                             </el-alert>                            
@@ -103,11 +103,11 @@
     import DPlayer from "../assets/js/DPlayer.min.js";
     import { Base64 } from 'js-base64';
     export default {
-        name: "User",
+        name: "Parse",
         data() {
             return {
                 nowYear:new Date().getFullYear(),
-                loading:true,                       // 加载动画
+                loading: false,                       // 加载动画
                 input_url: '',                      // 输入的视频播放地址
                 input_subtitle: '',                 // 输入的字幕加载地址
                 url: "https://api.dogecloud.com/player/get.mp4?vcode=5ac682e6f8231991&userId=17&ext=.mp4",
@@ -118,9 +118,10 @@
                 api:"",                             
                 select:"",
                 rows: [ "抖音", "YouTube", "哔哩哔哩", "好看视频","六间房","全民小视频","陌陌视频","梨视频","美拍","场库短视频",
-                    "微博视频","最右","皮皮虾","AcFun","快手","全民K歌","西瓜视频","秒拍","小红书","小咖秀","轻视频","开眼视频","腾讯微视","虎牙"],
+                    "微博视频","最右","皮皮虾","AcFun","快手","全民K歌","西瓜视频","秒拍","小红书","小咖秀","轻视频","开眼视频","腾讯微视","火山短视频","虎牙视频",
+                    "抖音Ⅱ","绿洲"],
                 datas: ["好看视频","六间房","全民小视频","陌陌视频","梨视频","美拍","场库短视频","微博视频","最右","皮皮虾","AcFun",
-                    "快手","全民K歌","西瓜视频","秒拍","小红书","小咖秀","轻视频","开眼视频","腾讯微视","虎牙"],       
+                    "快手","全民K歌","西瓜视频","秒拍","小红书","小咖秀","轻视频","开眼视频","腾讯微视","火山短视频","虎牙视频","抖音Ⅱ","绿洲"],       
 
             }
         }, 
@@ -196,7 +197,6 @@
                 // 构建headers签名算法
                 let d = new Date();
                 let timer = ((d.getTime())/1000).toFixed();
-
                 // 先清空文本域
                 this.textarea = "";
                 let vm = this;
@@ -225,7 +225,6 @@
                         console.log(error);
                     })
                 }
-
             },
             play:function () {
                 if (this.input_url.length <= 20) {

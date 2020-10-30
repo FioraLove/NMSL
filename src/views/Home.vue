@@ -151,7 +151,7 @@ export default {
                     url:"/audio"
                 },{
                     content:"短视频解析",
-                    url:"/video"
+                    url:"/parse"
                 },{
                     content:"抽象圣经",
                     url:"/ndsl"
