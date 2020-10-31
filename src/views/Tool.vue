@@ -82,6 +82,11 @@ export default {
                     title: "每日得物鸡汤",
                     description: "网抑云阴乐·生不出人，我很抱歉",
                     url: "/tools/dewu"
+                },{
+                    cover: "https://cdn.jsdelivr.net/gh/FioraLove/Images/sang.jpg",
+                    title: "福利大放送",
+                    description: "随机输出手机分辨率的cosplay或福利姬等美图",
+                    url: "/tools/girl"
                 }]
         }
     },

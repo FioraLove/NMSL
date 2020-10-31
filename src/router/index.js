@@ -157,6 +157,11 @@ Vue.use(VueRouter,axios)
         path:"/tools/dewu",
         name: "Dewu",
         component:()=> import('../views/Tools/dewu.vue')
+    },{
+        // 在线工具模块：随机输出cosplay或福利姬等美图
+        path:"/tools/girl",
+        name: "Girl",
+        component:()=> import('../views/Tools/girl.vue')
     }
 
 ]
