@@ -1,7 +1,27 @@
 var webpack = require('webpack');
+
+// 是否为生产环境
+const isProduction = process.env.NODE_ENV !== 'development';
+// gzip压缩
+const CompressionWebpackPlugin = require('compression-webpack-plugin')
+
 module.exports = {
-    //publicPath: './',   // 编译部署时使用
+    /**
+     *  生产环境打包设置 
+     */
+    // publicPath: process.env.NODE_ENV === 'production' ? '/test/' : '/',
+    // outputDir: 'dist/test',
+    // assetsDir: 'static',
+    // productionSourceMap: false,     // 关闭map文件
+
+    /**
+     * 开发环境路由设置
+     * 
+     */
     publicPath: '/',       // 这个是在测试路由为‘history’时，动态参数匹配params模式时才会使用
+
+
+
     devServer: {
         // port: 8000,      // 配置开发环境运行端口号       
         // //配置代理，解决跨域请求后台数据的问题
@@ -30,12 +50,33 @@ module.exports = {
             '/bili':{
                 target: 'https://api.bilibili.com/x/',
                 ws: true,
-                changeOrigin: true, 
+                changeOrigin: true,
                 pathRewrite: {
                     '^/bili': ''  // rewrite path
                 }
             },
 
+        }
+    },
+
+    // gzip压缩
+    configureWebpack: config => {
+        // 生产环境相关配置
+        if (isProduction) {
+            //gzip压缩
+            const productionGzipExtensions = ['html', 'js', 'css']
+            config.plugins.push(
+                new CompressionWebpackPlugin({
+                    filename: '[path].gz[query]',
+                    algorithm: 'gzip',
+                    test: new RegExp(
+                        '\\.(' + productionGzipExtensions.join('|') + ')$'
+                    ),
+                    threshold: 10240, // 只有大小大于该值的资源会被处理 10240
+                    minRatio: 0.8, // 只有压缩率小于这个值的资源才会被处理
+                    deleteOriginalAssets: false // 删除原文件
+                })
+            )
         }
     },
     chainWebpack: config => {
@@ -45,6 +86,15 @@ module.exports = {
             jQuery: 'jquery',
             'window.jQuery': 'jquery'
         }])
+
+        // ============压缩图片 start============
+        config.module
+            .rule('images')
+            .use('image-webpack-loader')
+            .loader('image-webpack-loader')
+            .options({ bypassOnDebug: true })
+            .end()
+        // ============压缩图片 end============
     },
     configureWebpack:{
         externals: {
@@ -52,5 +102,5 @@ module.exports = {
             'element-ui': 'ELEMENT',
             'axios': 'axios',
         }
-      }
+    }
 }

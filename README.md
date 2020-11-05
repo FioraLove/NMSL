@@ -49,3 +49,12 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 
   - ![](https://cdn.jsdelivr.net/gh/FioraLove/Images/parse.png)
+
+
+### 生产部署
+
+生产环境部署时，请将一下文件参数重新调整
+
+- facturl.js里的baseUrl
+- vue.config.js里的publicPath
+- index.js里的router的base: process.env.BASE_URL

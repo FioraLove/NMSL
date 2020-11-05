@@ -168,7 +168,8 @@ Vue.use(VueRouter,axios)
 
 const router = new VueRouter({
     routes,
-    mode: 'history', // history表示去掉锚点，默认mode : 'hash' 
+    mode: 'history', // history表示去掉锚点，默认mode : 'hash'
+    // base: process.env.BASE_URL,
     scrollBehavior(to, from, savedPosition) {
         if (savedPosition) {
             return savedPosition
