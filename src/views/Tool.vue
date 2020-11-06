@@ -87,6 +87,11 @@ export default {
                     title: "福利大放送",
                     description: "随机输出cosplay或福利姬等美图",
                     url: "/tools/girl"
+                },{
+                    cover: "https://cdn.jsdelivr.net/gh/FioraLove/Images/maijiaxiu.png",
+                    title: "淘宝买家秀",
+                    description: "随机输出淘宝买家秀评论和图片",
+                    url: "/tools/tao"
                 }]
         }
     },

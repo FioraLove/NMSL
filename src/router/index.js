@@ -162,6 +162,11 @@ Vue.use(VueRouter,axios)
         path:"/tools/girl",
         name: "Girl",
         component:()=> import('../views/Tools/girl.vue')
+    },{
+        // 在线工具模块：淘宝买家秀
+        path:"/tools/tao",
+        name: "Tao",
+        component:()=> import('../views/Tools/tao.vue')
     }
 
 ]

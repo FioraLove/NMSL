@@ -120,9 +120,10 @@
                 select:"",
                 rows: [ "抖音", "YouTube", "哔哩哔哩", "好看视频","六间房","全民小视频","陌陌视频","梨视频","美拍","场库短视频",
                     "微博视频","最右","皮皮虾","AcFun","快手","全民K歌","西瓜视频","秒拍","小红书","小咖秀","轻视频","开眼视频","腾讯微视","火山短视频","虎牙视频",
-                    "抖音Ⅱ","绿洲","皮皮搞笑"],
+                    "抖音Ⅱ","绿洲视频","皮皮搞笑","Vue Vlog","Instagram"],
                 datas: ["好看视频","六间房","全民小视频","陌陌视频","梨视频","美拍","场库短视频","微博视频","最右","皮皮虾","AcFun",
-                    "快手","全民K歌","西瓜视频","秒拍","小红书","小咖秀","轻视频","开眼视频","腾讯微视","火山短视频","虎牙视频","抖音Ⅱ","绿洲","皮皮搞笑"],       
+                    "快手","全民K歌","西瓜视频","秒拍","小红书","小咖秀","轻视频","开眼视频","腾讯微视","火山短视频","虎牙视频","抖音Ⅱ","绿洲视频","皮皮搞笑","Vue Vlog",
+                    "Instagram"],       
 
             }
         }, 
@@ -204,20 +205,39 @@
                 if(this.select == "" || this.input_api == ""){
                     toast("请选择解析的视频类型和地址");
                 }else{
-                    axios({
-                        url: this.FACTURL.baseUrl+"/nmsl/api/video/parse/",
-                        method:"post",
-                        data:{
-                            category: Base64.encode(this.select),
-                            url:this.input_api,
-                            time: timer,
-                            signature: Base64.encode(this.FACTURL.signature+"&"+timer)
+                    // 定义axios的config参数配置
+                    let config = {};
+
+                    if (this.select == 30) {
+                        // 30 代表Instagram
+                        config = {
+                            url: "https://tenapi.cn/ins/",
+                            method:"get",
+                            params:{
+                                url: String(this.input_api).trim(),
+                            }
                         }
-                    })
+                    } else {
+                        // 使用自定义的api
+                        config = {
+                            url: this.FACTURL.baseUrl+"/nmsl/api/video/parse/",
+                            method:"post",
+                            data:{
+                                category: Base64.encode(this.select),
+                                url:this.input_api,
+                                time: timer,
+                                signature: Base64.encode(this.FACTURL.signature+"&"+timer)
+                            }
+                        }
+                    }
+                    axios(config)
                     .then(function(response){
                         if(response.status == 200){
-                            vm.textarea = response.data;
-                            
+                            if (vm.select == 30) {
+                                vm.textarea = JSON.stringify(response.data);
+                            } else {
+                                vm.textarea = response.data;
+                            }
                         }else{
                             vm.textarea = "";
                         }
