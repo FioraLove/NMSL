@@ -262,7 +262,7 @@ export default {
     @media screen and (max-width:480px){
         .card{
             width: 100%;
-            height: 13em;
+            height: 16em;
             position: relative;
             background-color: transparent;
         }
@@ -275,7 +275,7 @@ export default {
         }
         .card .header{
             width: 100%;
-            height: 9.8em;
+            height: 12.8em;
         }
         .card .card_update{
             position:absolute;
@@ -287,7 +287,7 @@ export default {
     @media screen and (min-width:481px){
         .card{
             max-width: 100%;
-            height: 18.7em;
+            height: 20em;
             position: relative;
             background-color: transparent;
         }
@@ -300,12 +300,12 @@ export default {
         }
         .card .header{
             width: 100%;
-            height: 13.7em;
+            height: 16em;
         }
         .card .card_update{
             position:absolute;
             left: 3px;
-            bottom: 5.2em;
+            bottom: 4em;
             background-color: #feeeed;
         }        
     }
@@ -330,7 +330,7 @@ export default {
         color: #ed1941;
     }
     .title{
-        margin-top: 12px;
+        margin-top: 6px;
         width:100%;
         height:1.5em;
         overflow: hidden;
@@ -342,7 +342,6 @@ export default {
 
     }
     .author{
-        margin-top: 3px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
