@@ -101,6 +101,7 @@
 
 <script scoped>  
     import DPlayer from "../assets/js/DPlayer.min.js";
+    import {toast} from "../assets/js/toast.js";
     import { Base64 } from 'js-base64';
     export default {
         name: "Parse",
@@ -201,7 +202,7 @@
                 this.textarea = "";
                 let vm = this;
                 if(this.select == "" || this.input_api == ""){
-                    alert("请选择解析的视频类型和地址");
+                    toast("请选择解析的视频类型和地址");
                 }else{
                     axios({
                         url: this.FACTURL.baseUrl+"/nmsl/api/video/parse/",
@@ -276,6 +277,7 @@
 <!--- vuecli3组件内部引入第三方的css文件只在当前组件生效的办法 --->
 <style scoped>
     @import "../assets/css/DPlayer.min.css";
+    @import "../assets/css/toast.css";
     .box button{
         width:90%;
         text-align: center;

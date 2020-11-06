@@ -46,6 +46,7 @@
 </template>
 
 <script>
+import {toast} from "../../assets/js/toast.js";
 export default {
     name:"Express",
     data() {
@@ -82,7 +83,7 @@ export default {
             // 开始加载数据
             this.loading = true;
             if(this.select == "" || this.input_api == ""){
-                alert("请选择具体快递公司和输入正确的快递单号");
+                toast("请选择具体快递公司和输入正确的快递单号");
                 vm.loading=false;
             } else {
                 let sid = '';
@@ -134,6 +135,7 @@ export default {
 </script>
 
 <style scoped>
+    @import "../../assets/css/toast.css";
     p{
         color: black;
     }
