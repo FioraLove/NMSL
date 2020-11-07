@@ -92,6 +92,11 @@ export default {
                     title: "淘宝买家秀",
                     description: "随机输出淘宝买家秀评论和图片",
                     url: "/tools/tao"
+                },{
+                    cover: "https://cdn.jsdelivr.net/gh/FioraLove/Images/maijiaxiu.png",
+                    title: "待定",
+                    description: "I9研发中",
+                    url: "/tools/card"
                 }]
         }
     },

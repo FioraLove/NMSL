@@ -167,6 +167,11 @@ Vue.use(VueRouter,axios)
         path:"/tools/tao",
         name: "Tao",
         component:()=> import('../views/Tools/tao.vue')
+    },{
+        // 在线工具模块：身份证查询
+        path:"/tools/card",
+        name: "Card",
+        component:()=> import('../views/Tools/card.vue')
     }
 
 ]

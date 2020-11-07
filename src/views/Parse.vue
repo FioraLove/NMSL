@@ -30,12 +30,11 @@
 
                            <el-input placeholder="请输入分享链接的视频地址(bilibili直接输入视频bv号)" v-model="input_api" class="input-with-select" clearable>
                                 <el-select v-model="select" slot="prepend" placeholder="请选择">
-                                <template v-for="(name, index) in rows">
-                                    <el-option v-if="name == 'YouTube' " :label="name" :value="index+1" :key="index" disabled></el-option>
-                                    <el-option v-else :label="name" :value="index+1" :key="index"></el-option>
-                                </template>
-                                
-                                <el-option label="其它" value="99"></el-option>
+                                    <template v-for="(name, index) in rows">
+                                        <el-option v-if="name == 'YouTube' " :label="name" :value="index+1" :key="index" disabled></el-option>
+                                        <el-option v-else :label="name" :value="index+1" :key="index"></el-option>
+                                    </template>
+                                    <el-option label="其它" value="99"></el-option>
                                 </el-select>
                                 <el-button slot="append" icon="el-icon-search" @click="parse()"></el-button>
                             </el-input>
@@ -120,10 +119,10 @@
                 select:"",
                 rows: [ "抖音", "YouTube", "哔哩哔哩", "好看视频","六间房","全民小视频","陌陌视频","梨视频","美拍","场库短视频",
                     "微博视频","最右","皮皮虾","AcFun","快手","全民K歌","西瓜视频","秒拍","小红书","小咖秀","轻视频","开眼视频","腾讯微视","火山短视频","虎牙视频",
-                    "抖音Ⅱ","绿洲视频","皮皮搞笑","Vue Vlog","Instagram"],
+                    "抖音Ⅱ","绿洲视频","皮皮搞笑","Vue Vlog","Instagram","比心陪练","逗拍","Before避风","酷秀短视频"],
                 datas: ["好看视频","六间房","全民小视频","陌陌视频","梨视频","美拍","场库短视频","微博视频","最右","皮皮虾","AcFun",
                     "快手","全民K歌","西瓜视频","秒拍","小红书","小咖秀","轻视频","开眼视频","腾讯微视","火山短视频","虎牙视频","抖音Ⅱ","绿洲视频","皮皮搞笑","Vue Vlog",
-                    "Instagram"],       
+                    "Instagram","比心陪练","逗拍","Before避风","酷秀短视频"],       
 
             }
         }, 
@@ -419,7 +418,7 @@
         color: bisque;
     }
     .el-select .el-input {
-    width: 130px;
+        width: 130px;
     }
     .input-with-select .el-input-group__prepend {
         background-color: #fff;
