@@ -309,6 +309,11 @@ export default {
         .card .header{
             width: 100%;
             height: 9.8em;
+        }
+        .card .card_update{
+            position:absolute;
+            left: 3px;
+            bottom: 3.2em;
         }    
     }
     @media screen and (min-width:481px){
@@ -329,7 +334,12 @@ export default {
             width: 100%;
             height: 13.7em;
             cursor: pointer;
-        }        
+        }
+        .card .card_update{
+            position:absolute;
+            left: 3px;
+            bottom: 5.2em;
+        }  
     }
 
     .card .card_date{
@@ -340,11 +350,7 @@ export default {
         background-color: coral;
         border-radius: 20%;
     }
-    .card .card_update{
-        position:absolute;
-        left: 3px;
-        bottom: 5.2em;
-    }
+
     .card_date span{
         text-transform: uppercase;
         font-size: 18px;
