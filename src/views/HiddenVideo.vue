@@ -126,7 +126,6 @@ export default {
         // 解密token
         // 原生bs64加密的token
         this.bs_token = decodeURIComponent(window.location.search.split("=")[1]);
-        // this.token = window.btoa(decodeURIComponent(window.location.search.split("=")[1])); 
         this.restaurants = this.loadAll();
     },
     destoryed: function(){

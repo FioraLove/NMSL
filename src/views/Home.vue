@@ -106,14 +106,23 @@
         <!-- 导航栏模块 -->
         <div class="main">
             <div class="tabBar">
-                <div class="box" v-for='(row,index) in rows' :key="index">
-                    <template v-if="row.content == '联系我' ">
-                        <a :href="row.url" target="_blank"><p>{{row.content}}</p></a>
-                    </template>
-                    <template v-else>
-                        <a :href="row.url" target="_self"><p>{{row.content}}</p></a>
-                    </template>
-                    
+                <template v-for='(row,index) in rows'>
+                    <div class="box" :key="index" v-if="row.url == '/pixiv' " @click="send">
+                        <a href="javascript:;" target="_self"><p>{{row.content}}</p></a>
+                        <!-- <a :href="row.url" target="_self"><p>{{row.content}}</p></a> -->
+                    </div>
+                    <div class="box" :key="index" v-else>
+                        <template v-if="row.content == '联系我' ">
+                            <a :href="row.url" target="_blank"><p>{{row.content}}</p></a>
+                        </template>
+                        <template v-else>
+                            <a :href="row.url" target="_self"><p>{{row.content}}</p></a>
+                        </template>
+                    </div>
+                </template>
+
+                <div class="box" @click="send">
+                    <a href="javascript:;"><p style="color:#F90;font-weight:700;">Pornbar</p></a>
                 </div>
             </div>
         </div>
@@ -121,11 +130,11 @@
 </template>
 
 
-<script scoped>
+<script>
 // 组件 .vue 文件：模板(template) + 脚本(scpirt) + 样式(style)
 // 导入自定义的组件
 import HelloWorld from '@/components/HelloWorld.vue';
-// import "../assets/js/sakura.js";
+import {toast} from "../assets/js/toast.js";
 export default {
     name: 'Home',
     components: {
@@ -149,6 +158,9 @@ export default {
                 },{
                     content:"音乐",
                     url:"/audio"
+                },{
+                    content:"Pixiv",
+                    url:"/pixiv"
                 },{
                     content:"短视频解析",
                     url:"/parse"
@@ -200,10 +212,13 @@ export default {
         }
     },
     methods: {
-        open() {
+        open:function() {
             this.$alert('你的 <strong>点赞➕关注➕转发➕投币</strong><hr> 就是对我最大的鼓励', 'BILIBILI🍻[]~(￣▽￣)~*', {
                dangerouslyUseHTMLString: true
             });
+        },
+        send:function() {
+            toast("因其特殊性，暂不对外开放，404哟！(ง •_•)ง \n  推荐: https://pixiviz.pwp.app/ \n https://www.acg-gov.com/");
         }
 
     }
@@ -211,6 +226,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+    @import "../assets/css/toast.css";
     .home{
         background-image: url("../assets/images/background.png");
         background-attachment: fixed;

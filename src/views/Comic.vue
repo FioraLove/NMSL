@@ -384,8 +384,3 @@ export default {
     }
 
 </style>
-
-
-
-
-

@@ -308,8 +308,3 @@ export default {
     }
 
 </style>
-
-
-
-
-

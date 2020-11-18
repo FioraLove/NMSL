@@ -123,6 +123,11 @@ Vue.use(VueRouter,axios)
             keepAlive: true, //此组件需要被缓存
         }
     },{
+        // Pixiv插画模块
+        path: '/pixiv',
+        name: "Pixiv",
+        component: () => import('../views/Pixiv.vue')
+    },{
         // 在线工具模块：json数组
         path:"/tools/json",
         name: "Json",
