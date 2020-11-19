@@ -6,52 +6,73 @@
             </el-col>
             <el-col :xs="14" :sm="14" :md="14" :lg="14" :xl="14">
                 <div class="search">
-                    <input class="effect-1" type="text" placeholder="Placeholder Text" v-model="keyword"><i class="el-icon-s-promotion"></i>
+                    <input class="effect-1" type="text" placeholder="Placeholder Text" v-model="keyword"><i class="el-icon-s-promotion" @click="seek"></i>
                 </div>
             </el-col>
         </el-row>
         <el-container>
             <el-main>
-                <el-form ref="form" :model="form" label-width="100px" class="demo-ruleForm">
-                <el-form-item label="日期">
-                    <el-col :span="11">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="form.date" style="width: 100%;"></el-date-picker>
-                    </el-col>
-                </el-form-item>
-                <el-form-item label="模式">
-                    <el-select v-model="form.mode" placeholder="请选择模式">
-                    <el-option label="每日" value="daily"></el-option>
-                    <el-option label="每周" value="weekly"></el-option>
-                    <el-option label="每月" value="monthly"></el-option>
-                    <el-option label="新画师" value="rookie"></el-option>
-                    <el-option label="原创" value="original"></el-option>
-                    <el-option label="男性向" value="male"></el-option>
-                    <el-option label="女性向" value="female"></el-option>
-                    <el-option label="每日工口" value="daily_r18" disabled></el-option>
-                    <el-option label="每周工口" value="weekly_r18"></el-option>
-                    <el-option label="男性工口" value="male_r18" disabled></el-option>
-                    <el-option label="女性腐向" value="female_r18" disabled></el-option>
-                    <el-option label="工口加强型（猎奇）" value="r18g" disabled></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="排行榜类别">
-                    <el-select v-model="form.region" placeholder="请选择排行榜类别">
-                    <el-option label="所有" value="all"></el-option>
-                    <el-option label="插画" value="illust"></el-option>
-                    <el-option label="漫画" value="manga"></el-option>
-                    <el-option label="动图" value="ugoira"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="起始页">
-                    <el-slider v-model="form.page"  show-input :min="1" :max="10">
-                    </el-slider>
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" @click="onSubmit">搜索</el-button>
-                </el-form-item>
-                </el-form>
+                <el-radio-group v-model="isCollapse" style="margin-bottom: 6px;" size="small">
+                    <el-radio-button :label="false">展开</el-radio-button>
+                    <el-radio-button :label="true">收起</el-radio-button>
+                </el-radio-group>
+
+                <el-menu class="el-menu-vertical-demo" :collapse="isCollapse">
+                    <el-submenu index="1">
+                        <template slot="title">
+                            <i class="el-icon-s-fold"></i>
+                            <span slot="title">排行榜</span>
+                        </template>
+
+                        <el-form ref="form" :model="form" label-width="100px" class="demo-ruleForm">
+                            <el-form-item label="日期">
+                                <el-col>
+                                <el-date-picker type="date" placeholder="选择日期" v-model="form.date"></el-date-picker>
+                                </el-col>
+                            </el-form-item>
+                            <el-form-item label="模式">
+                                <el-select v-model="form.mode" placeholder="请选择模式">
+                                <el-option label="每日" value="daily"></el-option>
+                                <el-option label="每周" value="weekly"></el-option>
+                                <el-option label="每月" value="monthly"></el-option>
+                                <el-option label="新画师" value="rookie"></el-option>
+                                <el-option label="原创" value="original"></el-option>
+                                <el-option label="男性向" value="male"></el-option>
+                                <el-option label="女性向" value="female"></el-option>
+                                <el-option label="每日工口" value="daily_r18" disabled></el-option>
+                                <el-option label="每周工口" value="weekly_r18"></el-option>
+                                <el-option label="男性工口" value="male_r18" disabled></el-option>
+                                <el-option label="女性腐向" value="female_r18" disabled></el-option>
+                                <el-option label="工口加强型（猎奇）" value="r18g" disabled></el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="排行榜类别">
+                                <el-select v-model="form.region" placeholder="请选择排行榜类别">
+                                <el-option label="所有" value="all"></el-option>
+                                <el-option label="插画" value="illust"></el-option>
+                                <el-option label="漫画" value="manga"></el-option>
+                                <el-option label="动图" value="ugoira"></el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="起始页">
+                                <el-slider v-model="form.page"  show-input :min="1" :max="10" style="width: 90%;">
+                                </el-slider>
+                            </el-form-item>
+                            <el-form-item>
+                                <el-button type="primary" @click="onSubmit">搜索</el-button>
+                            </el-form-item>
+                        </el-form>
+                    </el-submenu>
+                    <el-menu-item index="2">
+                        <i class="el-icon-loading"></i>
+                        <span slot="title">Demo</span>
+                    </el-menu-item>
+                </el-menu>
             </el-main>
         </el-container>
+            <div class="search-content search-content-blocked" ref="warning" style="display:none;">
+                <p>{{message}}</p>
+            </div>
         <el-container>
             <el-main class="images"  v-viewer>
                 <el-row :gutter="15">
@@ -69,6 +90,9 @@
                     </el-col>
                 </el-row>
             </el-main>
+            <el-footer>
+                <div class="next-page" ref="nextpages" style="display:none;"><el-button type="danger" round @click="loadNext">下一页</el-button></div>
+            </el-footer>
         </el-container>
   </div>
 </template>
@@ -87,6 +111,10 @@ export default {
             ranking_type: "",
             mode: "",
             date: "",
+            isCollapse: true,
+            keywordBlocked: false,
+            message: "",
+            offset: 0,
             form: {
                 mode: '',
                 region: '',
@@ -115,10 +143,7 @@ export default {
                 method:"get",
                 params:params,
                 headers:{
-                    token: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJCYWR3b21hbiIsInV1aWQiOiI0MDdkZDNhN2ZiZGE0OGQ2YTc0ZmZhOTA1OWE4MjQ0NSIsI"
-                        +"mlhdCI6MTYwNTY5MzY3MywiYWNjb3VudCI6IntcImVtYWlsXCI6XCI5ODA3MTA0MjVAcXEuY29tXCIsXCJnZW5kZXJcIjotMSxcImhhc"
-                        +"1Byb25cIjowLFwiaWRcIjozODgsXCJwYXNzV29yZFwiOlwiNmI0MzA4ZTc2MjQ4OWQ4NmZkOTgxNTFmYmI0NzZkMmVcIixcInN0YXR1c1"
-                        +"wiOjAsXCJ1c2VyTmFtZVwiOlwiQmFkd29tYW5cIn0iLCJqdGkiOiIzODgifQ.xAZKG5COJvneTEBI0Uxs6OgcbTrKhV7XtIZqzNhOwpU"
+                    token: this.FACTURL.pixiv_token
                 }
             })
             .then(function(response){
@@ -146,7 +171,7 @@ export default {
                 console.log(error);
             });
         },
-
+        // 自定义条件排行榜
         onSubmit:function(){
             let form = this.form;
             let date = form.date;
@@ -164,15 +189,115 @@ export default {
                 page: form.page
             }
             this.search(params);
+        },
+
+        // 搜索函数
+        seek:function(){
+            let vm = this;
+            let flag_blocked = false;
+            
+            // 关键字是否为空
+            if(this.keyword == '' || this.keyword == null){
+                this.message = "关键字不可为空哟... ┑(￣Д ￣)┍ ";
+                this.$refs.warning.style.display='block';
+                this.$refs.nextpages.style.display='none';
+                // 关键词为空时，查询
+                return false;
+            }
+
+            // 屏蔽词检查
+            const BLOCK_WORDS = [/r-?18/i, /18-?r/i, /^色图$/,/^中出$/];
+            for (let pattern of BLOCK_WORDS) {
+                if (pattern.test(this.keyword)) {
+                    flag_blocked = true;
+                    break;
+                }
+            }
+            if (flag_blocked) {
+                this.message = "别搜了，这里真的没有色图...";
+                this.$refs.warning.style.display='block';
+                this.$refs.nextpages.style.display='none';
+            } else {
+                axios({
+                    url:"https://api.acg-gov.com/public/search",
+                    method:"get",
+                    params: {
+                        q: this.keyword,
+                        offset: this.offset
+                    },
+                    headers:{
+                        token: this.FACTURL.pixiv_token
+                    }
+                })
+                .then(function(response){
+                    if (response.status == 200) {
+                        let result = response["data"]["illusts"];
+                        // 对返回结果判断
+                        if (result == [] || response["data"]["next_url"] ==null || response["data"]["next_url"] ==undefined) {
+                            vm.message = "数据加载已加载完毕 (●ˇ∀ˇ●) ";
+                            vm.$refs.warning.style.display='block';
+                            vm.$refs.nextpages.style.display='none';
+                            // 清空数据
+                            vm.photoList = [];
+                        } else {
+                            let rows = [];
+                            for (let index = 0; index < result.length; index++) {
+                                let obj = {};
+                                obj["title"] = result[index]["title"];
+                                let image_url = result[index]["image_urls"]["medium"];
+                                // 处理图片路径
+                                obj["url"] = image_url.replace("https://i.pximg.net","https://i.pixiv.cat");
+                                rows.push(obj);
+                            }
+                            // 绑定数据
+                            vm.photoList = rows;
+                            vm.$refs.warning.style.display='none';
+                            vm.$refs.nextpages.style.display='block';
+                        }
+                    } else {
+                        
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            }
+        },
+
+        // 加载下一页
+        loadNext:function(){
+            this.offset = this.offset+30;
+            this.seek();
         }
     },
     watch: {
+        keyword:{
+            handler: function (newVal, oldVal) {
+                this.offset = 0;
+            },           
+            deep: true
+        },
 
     },
 };
 </script>
 
 <style scoped>
+    .search-content-blocked {
+        width: 100%;
+        text-align: center;
+        margin-top: 1.8rem;
+        color: #da7a85;
+        font-weight: 700;
+        filter: blur(0.6px);
+    }
+    .next-page {
+        width: 100%;
+        text-align: center;
+    }
+    .el-form-item{
+        margin-bottom: 8px !important;
+    }
     input[type="text"]{
         font: 15px/24px "Lato", Arial, sans-serif;
         color: #333;
@@ -197,6 +322,7 @@ export default {
     }
     .pixiv{
         background: #f9f7f6;
+        min-height: 100vh;
     }
     .item-left{
         font-weight: 700;
@@ -210,6 +336,10 @@ export default {
         color: black;
     }
     @media screen and (max-width:480px){
+        .el-menu-vertical-demo:not(.el-menu--collapse) {
+            width: 100%;
+            min-height: 100px;
+        }
         .card{
             max-width: 100%;
             height: 14em;
@@ -233,6 +363,10 @@ export default {
         }    
     }
     @media screen and (min-width:481px){
+        .el-menu-vertical-demo:not(.el-menu--collapse) {
+            width: 70%;
+            min-height: 100px;
+        }
         .card{
             max-width: 100%;
             height: 20em;

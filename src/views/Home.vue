@@ -112,15 +112,10 @@
                         <!-- <a :href="row.url" target="_self"><p>{{row.content}}</p></a> -->
                     </div>
                     <div class="box" :key="index" v-else>
-                        <template v-if="row.content == '联系我' ">
-                            <a :href="row.url" target="_blank"><p>{{row.content}}</p></a>
-                        </template>
-                        <template v-else>
-                            <a :href="row.url" target="_self"><p>{{row.content}}</p></a>
-                        </template>
+                        <a :href="row.url" target="_blank" v-if="row.content == '联系我'"><p>{{row.content}}</p></a>
+                        <a :href="row.url" target="_self" v-else><p>{{row.content}}</p></a>
                     </div>
                 </template>
-
                 <div class="box" @click="send">
                     <a href="javascript:;"><p style="color:#F90;font-weight:700;">Pornbar</p></a>
                 </div>
