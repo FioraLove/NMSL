@@ -110,7 +110,7 @@
             }
         },
         mounted() {
-            this.query();
+            // this.query();
             this.query2();
         },
         computed: {
@@ -333,9 +333,8 @@
                             description: "腾讯体育 | 今日热点"
                         }
                         rows.push(results);
-                        vm.loading=false;
                     }
-
+                    vm.loading=false;
                     // 绑定数据
                     vm.results = rows;
                     
@@ -408,6 +407,7 @@
                         }
                         rows.push(results);
                     }
+                    vm.loading=false;
                     // 绑定数据
                     vm.response = rows;
                 }))

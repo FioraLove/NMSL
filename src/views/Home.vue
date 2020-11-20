@@ -9,7 +9,7 @@
                     <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="8">
                         <div class="card">
                             <div class="header">
-                                <a href="javascript:;" title="AhriLove"><img src="https://cdn.jsdelivr.net/gh/FioraLove/CDN@1.0/Avatar.png" alt=""></a>
+                                <a href="javascript:;" title="AhriLove"><img src="https://cdn.jsdelivr.net/gh/FioraLove/Images/seraphines.jpg" alt=""></a>
                             </div>
 
                             <div class="card_footer">
@@ -107,7 +107,7 @@
         <div class="main">
             <div class="tabBar">
                 <template v-for='(row,index) in rows'>
-                    <div class="box" :key="index" v-if="row.url == '/pixiv' " @click="send">
+                    <div class="box" :key="index" v-if="row.url == '/pixivs' " @click="send">
                         <a href="javascript:;" target="_self"><p>{{row.content}}</p></a>
                         <!-- <a :href="row.url" target="_self"><p>{{row.content}}</p></a> -->
                     </div>
