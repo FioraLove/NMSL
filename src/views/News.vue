@@ -37,7 +37,7 @@
                 <!-- 新闻资讯 -->
                 <el-row :gutter="10">
                     <div class="modual" v-loading="loading" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.8)">
-                        <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="6" v-for="(row,num) in results" :key="num">
+                        <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="6" v-for="(row,num) in response" :key="num">
                             <div class="category">
                                 <img :src="row.cover">&nbsp;&nbsp;
                                 <span class="company" >{{row.description}}</span>
@@ -54,6 +54,9 @@
                                                 <template v-if="cols.hotDesc != null && cols.hotDesc != '' && cols.hotDesc != undefined ">
                                                     <span class="hot">{{cols.hotDesc}}</span>
                                                 </template>
+                                                <template v-if="cols.type != null && cols.type != '' && cols.type != undefined ">
+                                                    <span class="hot">{{cols.type}}</span>
+                                                </template>
                                             </p>
                                         </div>
                                     </div>
@@ -61,15 +64,15 @@
                             </div>
                         </el-col>
                     </div>
-                    <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="6" v-for="(row,num) in response" :key="num">
+                    <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="6" v-for="(row,num) in items" :key="num" style="margin-bottom:1em;">
                         <div class="category">
                             <img :src="row.cover">&nbsp;&nbsp;
-                            <span class="company" >{{row.description}}</span>
+                            <span class="company" @click="query(row.classCode)">{{row.description}}</span>
                             <hr>
                         </div>
-                        <div class="outer">
+                        <div class="outer" v-if="row.results.length > 0 ">
                             <div class="card">
-                                <div class="box" v-for="(cols,index) in row.info" :key="index">
+                                <div class="box" v-for="(cols,index) in row.results" :key="index">
                                     <div class="new">
                                         <p>
                                             <span v-if="index <=2" class="order" style="color:red;">{{index+1}}.</span>
@@ -77,9 +80,6 @@
                                             <span class="title"><a :href="cols.Url" target="_blank">{{cols.Title}}</a></span>
                                             <template v-if="cols.hotDesc != null && cols.hotDesc != '' && cols.hotDesc != undefined ">
                                                 <span class="hot">{{cols.hotDesc}}</span>
-                                            </template>
-                                            <template v-if="cols.type != null && cols.type != '' && cols.type != undefined ">
-                                                <span class="hot">{{cols.type}}</span>
                                             </template>
                                         </p>
                                     </div>
@@ -89,7 +89,6 @@
                     </el-col>
                 </el-row>
             </el-main>
-
         </el-container>
         <el-backtop target=".news" :bottom="100">
             <div class="backtops">UP</div>
@@ -103,14 +102,43 @@
         name: 'news',
         data() {
             return {
-                loading: true,
+                loading: false,
                 rows: [require("../assets/images/tifa.jpg"),require("../assets/images/nmsl.jpeg"),require("../assets/images/comic.jpg")],
-                results: [],
-                response: []
+                response: [],
+                items: [{  // 热点公司描述数据集
+                    cover: "https://file.ipadown.com/tophub/assets/images/media/zhihu.com.png_50x50.png",
+                    description: "知乎 | 热榜",
+                    results: [],
+                    classCode: "1"
+                },{
+                    cover: "https://file.ipadown.com/tophub/assets/images/media/s.weibo.com.png_50x50.png",
+                    description: "微博 | 热搜榜",
+                    results: [],
+                    classCode: "2"
+                },{
+                    cover: "https://file.ipadown.com/tophub/assets/images/media/bbs.hupu.com.png_50x50.png",
+                    description: "虎扑 | 步行街热帖",
+                    results: [],
+                    classCode: "3"
+                },{
+                    cover: "https://img.printf520.com/img/guanchaz.png",
+                    description: "观察者网 | 评论员",
+                    results: [],
+                    classCode: "4"
+                },{
+                    cover: "https://file.ipadown.com/tophub/assets/images/media/bilibili.com.png_50x50.png",
+                    description: "哔哩哔哩 | 全站热榜",
+                    results: [],
+                    classCode: "5"
+                },{
+                    cover: "https://img.printf520.com/img/qq.png",
+                    description: "腾讯体育 | 今日热点",
+                    results: [],
+                    classCode: "6"
+                }]
             }
         },
         mounted() {
-            // this.query();
             this.query2();
         },
         computed: {
@@ -226,124 +254,133 @@
             },
 
             // 获取热点数据
-            query:function(){
+            query:function(classCode){
                 let vm = this;
                 this.loading=true;
-                axios.all([this.getZhiHuData(),this.getWeiBoData(),this.getHuPuData(),this.getViewerData(),this.getBiLiBiLiData(),this.getTencentSportData()])
-                .then(axios.spread(function (rsp1,rsp2,rsp3,rsp4,rsp5,rsp6) {
-                    let rows = [];
-                    if(rsp1.status == 200 && rsp1.data.Code == 0){
-                        let res = rsp1.data.Data;
-                        let data = res["data"];
-                        let results = {};
-                        let info = [];
-                        // 截取前二十个热点
-                        if(data.length>=20){
-                            info= data.slice(1,21);
-                        }else{
-                            info = data.slice(1);
-                        }
-                        results = {
-                            info: info,
-                            cover: "https://file.ipadown.com/tophub/assets/images/media/zhihu.com.png_50x50.png",
-                            description: "知乎 | 热榜"
-                        }
-                        rows.push(results);
-                    }
-                    if(rsp2.status == 200 && rsp2.data.Code == 0){
-                        let res = rsp2.data.Data;
-                        let data = res["data"];
-                        let results = {};
-                        let info = [];
-                        if(data.length>=20){
-                            info= data.slice(1,21);
-                        }else{
-                            info = data.slice(1);
-                        }
-                        results = {
-                            info: info,
-                            cover: "https://file.ipadown.com/tophub/assets/images/media/s.weibo.com.png_50x50.png",
-                            description: "微博 | 热搜榜"
-                        }
-                        rows.push(results);
-                    }
-                    if(rsp3.status == 200 && rsp3.data.Code == 0){
-                        let res = rsp3.data.Data;
-                        let data = res["data"];
-                        let results = {};
-                        let info = [];
-                        if(data.length>=20){
-                            info= data.slice(1,21);
-                        }else{
-                            info = data.slice(1);
-                        }
-                        results = {
-                            info: info,
-                            cover: "https://file.ipadown.com/tophub/assets/images/media/bbs.hupu.com.png_50x50.png",
-                            description: "虎扑 | 步行街热帖"
-                        }
-                        rows.push(results);
-                    }
-                    if(rsp4.status == 200 && rsp4.data.Code == 0){
-                        let res = rsp4.data.Data;
-                        let data = res["data"];
-                        let results = {};
-                        let info = [];
-                        if(data.length>=20){
-                            info= data.slice(1,21);
-                        }else{
-                            info = data.slice(1);
-                        }
-                        results = {
-                            info: info,
-                            cover: "https://img.printf520.com/img/guanchaz.png",
-                            description: "观察者网 | 评论员"
-                        }
-                        rows.push(results);
-                    }
-                    if(rsp5.status == 200 && rsp5.data.Code == 0){
-                        let res = rsp5.data.Data;
-                        let data = res["data"];
-                        let results = {};
-                        let info = [];
-                        if(data.length>=20){
-                            info= data.slice(1,21);
-                        }else{
-                            info = data.slice(1);
-                        }
-                        results = {
-                            info: info,
-                            cover: "https://file.ipadown.com/tophub/assets/images/media/bilibili.com.png_50x50.png",
-                            description: "哔哩哔哩 | 全站热榜"
-                        }
-                        rows.push(results);
-                    }
-                    if(rsp6.status == 200 && rsp6.data.Code == 0){
-                        let res = rsp6.data.Data;
-                        let data = res["data"];
-                        let results = {}, info = [];
-                        if(data.length>=20){
-                            info= data.slice(1,21);
-                        }else{
-                            info = data.slice(1);
-                        }
-                        results = {
-                            info: info,
-                            cover: "https://img.printf520.com/img/qq.png",
-                            description: "腾讯体育 | 今日热点"
-                        }
-                        rows.push(results);
-                    }
-                    vm.loading=false;
-                    // 绑定数据
-                    vm.results = rows;
-                    
-
-
-                }))
-                .catch(function (error) {
-                    console.log(error);
-                });
+                // 判断请求api类型
+                switch (classCode) {
+                    case "1":
+                        this.getZhiHuData()
+                        .then(function(rsp1) {
+                            if(rsp1.status == 200 && rsp1.data.Code == 0){
+                                let res = rsp1.data.Data;
+                                let data = res["data"];
+                                let info = [];
+                                // 截取前二十个热点
+                                if(data.length>=20){
+                                    info= data.slice(1,21);
+                                }else{
+                                    info = data.slice(1);
+                                }
+                                // 绑定数据
+                                (vm.items)[0]["results"] = info;
+                            }
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                        break;
+                    case "2":
+                        this.getWeiBoData()
+                        .then(function(rsp) {
+                            if(rsp.status == 200 && rsp.data.Code == 0){
+                                let res = rsp.data.Data;
+                                let data = res["data"];
+                                let info = [];
+                                if(data.length>=20){
+                                    info= data.slice(1,21);
+                                }else{
+                                    info = data.slice(1);
+                                }
+                                (vm.items)[1]["results"] = info;
+                            }
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                        break;
+                    case "3":
+                        this.getHuPuData()
+                        .then(function(rsp) {
+                            if(rsp.status == 200 && rsp.data.Code == 0){
+                                let res = rsp.data.Data;
+                                let data = res["data"];
+                                let info = [];
+                                if(data.length>=20){
+                                    info= data.slice(1,21);
+                                }else{
+                                    info = data.slice(1);
+                                }
+                                (vm.items)[2]["results"] = info;
+                            }
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                        break;
+                    case "4":
+                        this.getViewerData()
+                        .then(function(rsp) {
+                            if(rsp.status == 200 && rsp.data.Code == 0){
+                                let res = rsp.data.Data;
+                                let data = res["data"];
+                                let info = [];
+                                if(data.length>=20){
+                                    info= data.slice(1,21);
+                                }else{
+                                    info = data.slice(1);
+                                }
+                                (vm.items)[3]["results"] = info;
+                            }
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                        break;
+                    case "5":
+                        this.getBiLiBiLiData()
+                        .then(function(rsp) {
+                            if(rsp.status == 200 && rsp.data.Code == 0){
+                                let res = rsp.data.Data;
+                                let data = res["data"];
+                                let info = [];
+                                if(data.length>=20){
+                                    info= data.slice(1,21);
+                                }else{
+                                    info = data.slice(1);
+                                }
+                                (vm.items)[4]["results"] = info;
+                            }
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                        break;
+                    case "6":
+                        this.getTencentSportData()
+                        .then(function(rsp) {
+                            if(rsp.status == 200 && rsp.data.Code == 0){
+                                let res = rsp.data.Data;
+                                let data = res["data"];
+                                let info = [];
+                                // 截取前二十个热点
+                                if(data.length>=20){
+                                    info= data.slice(1,21);
+                                }else{
+                                    info = data.slice(1);
+                                }
+                                (vm.items)[5]["results"] = info;
+                            }
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                        break;
+                
+                    default:
+                        break;
+                }
+                vm.loading=false;
     
             },
 
@@ -490,6 +527,7 @@
         font-weight: 700;
         color: hsla(0,0%,100%,.85);
         position: relative;
+        cursor: pointer;
         top: -5px;
     }
 
