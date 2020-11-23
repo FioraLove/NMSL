@@ -97,13 +97,8 @@ export default {
         getContent:function () {
             let app = this;
             axios({
-                // api1:自定义的api接口
-                url:"migu/migu/remoting/scr_search_tag",
+                url:"migus/migu/remoting/scr_search_tag",
                 method:"get",
-                // headers:{
-                //     "Host":"m.music.migu.cn",
-                //     "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36"
-                // },
                 params:{
                     rows:this.page_size,
                     type:2,

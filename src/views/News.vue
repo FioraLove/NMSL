@@ -148,7 +148,7 @@
             // 定义知乎热搜api
             getZhiHuData:function(){
                 return axios({
-                    url: "https://www.tophub.fun:8888/v2/GetAllInfoGzip",
+                    url: "tophub/v2/GetAllInfoGzip",
                     method:"get",
                     params:{
                         id: 1,
@@ -160,7 +160,7 @@
             // 定义知乎热搜访问api
             getWeiBoData:function(){
                 return axios({
-                    url: "https://www.tophub.fun:8888/v2/GetAllInfoGzip",
+                    url: "tophub/v2/GetAllInfoGzip",
                     method:"get",
                     params:{
                         id: 58,
@@ -172,7 +172,7 @@
             // 定义虎扑热搜api
             getHuPuData:function(){
                 return axios({
-                    url: "https://www.tophub.fun:8888/v2/GetAllInfoGzip",
+                    url: "tophub/v2/GetAllInfoGzip",
                     method:"get",
                     params:{
                         id: 2,
@@ -184,7 +184,7 @@
             // 定义观察者网热搜api
             getViewerData:function(){
                 return axios({
-                    url: "https://www.tophub.fun:8888/v2/GetAllInfoGzip",
+                    url: "tophub/v2/GetAllInfoGzip",
                     method:"get",
                     params:{
                         id: 123,
@@ -196,7 +196,7 @@
             // 定义bilibili热搜api
             getBiLiBiLiData:function(){
                 return axios({
-                    url: "https://www.tophub.fun:8888/v2/GetAllInfoGzip",
+                    url: "tophub/v2/GetAllInfoGzip",
                     method:"get",
                     params:{
                         id: 115,
@@ -208,7 +208,7 @@
             // 定义腾讯体育热搜api
             getTencentSportData:function(){
                 return axios({
-                    url: "https://www.tophub.fun:8888/v2/GetAllInfoGzip",
+                    url: "tophub/v2/GetAllInfoGzip",
                     method:"get",
                     params:{
                         id: 1061,
@@ -220,7 +220,7 @@
             // 定义微信24h热文帮热搜api
             getWeChatData:function(){
                 return axios({
-                    url: "https://www.tophub.fun:8888/v2/GetAllInfoGzip",
+                    url: "tophub/v2/GetAllInfoGzip",
                     method:"get",
                     params:{
                         id: 11,
@@ -232,7 +232,7 @@
             // 定义鱼塘热点api
             getMoFishData:function(){
                 return axios({
-                    url: "https://www.tophub.fun:8888/v2/GetAllInfoGzip",
+                    url: "tophub/v2/GetAllInfoGzip",
                     method:"get",
                     params:{
                         id: 1065,
@@ -244,7 +244,7 @@
             // 定义凤凰网热点api
             getPhoenixData:function(){
                 return axios({
-                    url: "https://www.tophub.fun:8888/v2/GetAllInfoGzip",
+                    url: "tophub/v2/GetAllInfoGzip",
                     method:"get",
                     params:{
                         id: 126,
