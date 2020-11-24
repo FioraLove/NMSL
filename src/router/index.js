@@ -41,10 +41,6 @@ Vue.use(VueRouter,axios)
         path:'/user-*',
         component: ()=> import('../views/News.vue')
     },{
-        path: '/loveword',
-        name: 'Loveword',
-        component: () => import(/* webpackChunkName: "about" */ '../views/Loveword.vue')
-    },{
         path: '/ndsl',
         name: 'Ndsl',
         component: () => import(/* webpackChunkName: "about" */ '../views/Ndsl.vue')
@@ -56,7 +52,6 @@ Vue.use(VueRouter,axios)
         component: () => import(/* webpackChunkName: "about" */ '../views/Comic.vue'),
         meta: {
             keepAlive: true, //此组件需要被缓存
-            
         }
     },{
         // 漫画章节目录模块

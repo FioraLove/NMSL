@@ -41,9 +41,6 @@
 
     <div class="line"></div>
     <el-container>
-        <!-- <template v-if="flag">
-            <el-aside width="180px;" ref="side">advertisement</el-aside>
-        </template> -->
         <el-container>
             <el-main>
                 <el-row :gutter="15">
@@ -90,9 +87,6 @@
                 </div>
             </el-footer>
         </el-container>
-        <!-- <template v-if="flag">
-            <el-aside width="180px;" ref="side">advertisement</el-aside>
-        </template> -->
     </el-container>
     <el-backtop target=".comic" :bottom="100">
         <div class="backtops">
@@ -120,30 +114,23 @@ export default {
     data() {
         return {
             nowYear:new Date().getFullYear(),
-            logo: require("../assets/images/backtop.png"), // 回到顶点样式图
-            activeIndex: "1",           // 分类标签    
-            bodyWidth:722,                 // 可视化浏览器窗口
-            loading:true,                   // 初始化默认加载
-            category:"1",
-            pager_count:5,                  // 页码按钮的数量，当总页数超过该值时会折叠
-            flag:true,                      // 是否是PC端
-            count:0,                    // 查询返回的数据总数
-            currentPage:1,             // 当前页数
-            loading:true,               // 页面加载中特效
-            page_size:36,               // 每页展示卡片数
+            logo: require("../assets/images/backtop.png"),  // 回到顶点样式图
+            activeIndex: "1",                               // 分类标签    
+            bodyWidth:722,                                  // 可视化浏览器窗口
+            loading:true,                                   // 初始化默认加载
+            category:"1",                                   // 默认漫画分类
+            pager_count:5,                                  // 页码按钮的数量，当总页数超过该值时会折叠
+            flag:true,                                      // 是否是PC端
+            count:0,                                        // 查询返回的数据总数
+            currentPage:1,                                  // 当前页数
+            loading:true,                                   // 页面加载中特效
+            page_size:36,                                   // 每页展示卡片数
             rows:[],
             lists:[],
             Key:"",
         };
     },
     
-    // created() {
-    //     if(this.$route.query) {
-    //         this.id = this.$route.query.id;
-    //         this.init();
-    //     }
-    // },
-
     mounted:function(){
         this.getContent();
         this.isPC();
@@ -175,13 +162,12 @@ export default {
         handleCurrentChange:function(val){
             // 点击页码跳转时，执行改计算属性
             this.getContent();
-        },        
+        },
+        // 漫画分类条件选择
         handleSelect(key, keyPath) {
             switch (key) {
                 case "1":
                     this.category = "1";
-                    console.log(typeof(key));
-                    console.log(keyPath);
                     break;
                 case "2":
                     this.category = "2";
@@ -200,11 +186,10 @@ export default {
                     break;
                 default:
                     this.category = "1";
-                    break;
             }
         },
 
-
+        // 判断当前的PC或mobile端设备
         isPC:function(){  
             let userAgentInfo = navigator.userAgent;
             let Agents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];  
@@ -214,7 +199,7 @@ export default {
             }  
             this.flag = flag;
         },
-        // 发送Ajax请求
+        // 获取漫画数据
         getContent:function () {
             let vm = this;
             axios({
@@ -240,7 +225,6 @@ export default {
                 console.log(error);
             });
         }
-
     },
     watch: {
         category:{
@@ -374,7 +358,6 @@ export default {
     .author{
         margin-top: 1em;
         font-size: 11px;
-
     }
     .author el-rate{
         font-size: 8px;
@@ -382,5 +365,4 @@ export default {
     span{
          font-family: "Microsoft YaHei", "微软雅黑", "STHeiti", "WenQuanYi Micro Hei", SimSun, sans-serif;
     }
-
 </style>

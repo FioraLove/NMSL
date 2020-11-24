@@ -105,13 +105,9 @@ export default {
     data() {
         name:"Pixiv";
         return {
-            keyword:"",                 // 搜索关键词
-            photoList: [],
-            ranking_type: "",
-            mode: "",
-            date: "",
+            keyword:"",                         // 搜索关键词
+            photoList: [],                      // 结果数据集
             isCollapse: false,
-            keywordBlocked: false,
             message: "",
             offset: 0,
             max_pages: 10,
@@ -120,7 +116,7 @@ export default {
                 mode: '',
                 region: '',
                 date: '',
-                page: 1,                    // 分页
+                page: 1,                        // 分页
             }
         };
     },

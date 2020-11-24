@@ -126,16 +126,9 @@
 
 
 <script>
-// 组件 .vue 文件：模板(template) + 脚本(scpirt) + 样式(style)
-// 导入自定义的组件
-import HelloWorld from '@/components/HelloWorld.vue';
 import {toast} from "../assets/js/toast.js";
 export default {
     name: 'Home',
-    components: {
-        HelloWorld
-    },
-
     data(){
         return {
             nowYear:new Date().getFullYear(),
@@ -188,17 +181,17 @@ export default {
     computed:{
         // 发送Ajax请求
         getContent:function () {
-            let app = this;
+            let vm = this;
             axios({
                 url:this.api,
                 method:"get"
             })
             .then(function(response){
                 if(response.status == 200 && response.data.status==1){
-                    app.loading = false;
-                    app.results = (response.data).vlist;
+                    vm.loading = false;
+                    vm.results = (response.data).vlist;
                 }else{
-                    app.results = [];
+                    vm.results = [];
                 }
             })
             .catch(function (error) {
@@ -234,8 +227,6 @@ export default {
         box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
         border-radius: 4px;
     }
-
-
 
     @media screen and (max-width:998px){
         .card{
@@ -569,6 +560,4 @@ export default {
         cursor: pointer;
         text-decoration: none;
     }
-
-
 </style>

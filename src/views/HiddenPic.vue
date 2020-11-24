@@ -385,8 +385,3 @@ export default {
     }
 
 </style>
-
-
-
-
-

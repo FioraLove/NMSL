@@ -348,7 +348,6 @@ export default {
         }        
     }
 
-
     .card .card_date{
         position:absolute;
         right: 3px;
@@ -403,8 +402,3 @@ export default {
         border-radius: 5px;
     }
 </style>
-
-
-
-
-

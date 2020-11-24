@@ -7,7 +7,7 @@ const CompressionWebpackPlugin = require('compression-webpack-plugin')
 
 module.exports = {
     /**
-     *  生产环境打包设置 
+     *  生产环境打包设置
      */
     // publicPath: process.env.NODE_ENV === 'production' ? '/test/' : '/',
     // outputDir: 'dist/test',
@@ -16,12 +16,11 @@ module.exports = {
 
     /**
      * 开发环境路由设置
-     * 
      */
-    publicPath: '/',       // 这个是在测试路由为‘history’时，动态参数匹配params模式时才会使用
+    publicPath: '/',
 
     devServer: {   
-        // //配置代理，解决跨域请求后台数据的问题
+        // the proxy setting: to solve CORS
         proxy: {
             '/migus':{
                 target: 'https://m.music.migu.cn/',  // target host
@@ -39,7 +38,6 @@ module.exports = {
                     '^/tophub': ''
                 }
             }
-
         }
     },
 
