@@ -514,6 +514,7 @@ export default {
     .box p{
         text-align: center;
         font-size: 18px;
+        margin-top: 18px;
         font-family: 'Courier New', Courier, monospace;
     }
 
@@ -527,7 +528,6 @@ export default {
     .bg{
         width: 100%;
         height: 2.5em;
-
         overflow: hidden;   /*父元素添加overflow*/
     }
 
