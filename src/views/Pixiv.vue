@@ -311,6 +311,48 @@ export default {
 </style>
 <style scoped>
     @import "../assets/css/toast.css";
+    input::-webkit-input-placeholder { /* WebKit browsers */ 
+        color: #da7a85;
+        text-align: center;
+        transition: 50ms;
+        border-radius: 2rem;
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: .05em;
+    }
+    input{
+        color: #da7a85;
+        text-align: center;
+        transition: 50ms;
+        letter-spacing: .05em;
+    }
+    input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+        color: #da7a85;
+        text-align: center;
+        transition: 50ms;
+        border-radius: 2rem;
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: .05em;
+    }
+    input::-moz-placeholder { /* Mozilla Firefox 19+ */
+        color: #da7a85;
+        text-align: center;
+        transition: 50ms;
+        border-radius: 2rem;
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: .05em;
+    }
+    input:-ms-input-placeholder { /* Internet Explorer 10+ */ 
+        color: #da7a85;
+        text-align: center;
+        transition: 50ms;
+        border-radius: 2rem;
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: .05em;
+    }
     .search-content-blocked {
         width: 100%;
         text-align: center;
@@ -322,7 +364,6 @@ export default {
     .el-menu{
         background-color: transparent !important;
     }
-
     .next-page {
         width: 100%;
         text-align: center;
@@ -331,8 +372,9 @@ export default {
         margin-bottom: 8px !important;
     }
     input[type="text"]{
-        font: 15px/24px "Lato", Arial, sans-serif;
-        color: #333;
+        font-size: 16px;
+        font-weight: 600;
+        color: #da7a85;
         width: 85%;
         box-sizing: border-box;
         letter-spacing: 1px;

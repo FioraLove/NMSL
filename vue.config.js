@@ -31,7 +31,7 @@ module.exports = {
                 }
             },
             '/tophub':{
-                target: 'https://www.tophub.fun:8888/',
+                target: 'https://api.tophub.fun/',
                 ws: true,
                 changeOrigin: true,
                 pathRewrite: {
