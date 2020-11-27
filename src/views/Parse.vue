@@ -7,7 +7,7 @@
 
                     <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
 
-                        <div style="margin-top: 15px;margin:0 auto;width:80%;">
+                        <div style="margin:0 auto;width:80%;">
                             <el-alert title="视频测试播放" type="success" center show-icon
                                 description="将视频地址添加到输入框中，某些视频若存在字幕，可将其字幕url地址添加到字幕框中">
                             </el-alert>                            
@@ -30,12 +30,11 @@
 
                            <el-input placeholder="请输入分享链接的视频地址(bilibili直接输入视频bv号)" v-model="input_api" class="input-with-select" clearable>
                                 <el-select v-model="select" slot="prepend" placeholder="请选择">
-                                <template v-for="(name, index) in rows">
-                                    <el-option v-if="name == 'YouTube' " :label="name" :value="index+1" :key="index" disabled></el-option>
-                                    <el-option v-else :label="name" :value="index+1" :key="index"></el-option>
-                                </template>
-                                
-                                <el-option label="其它" value="99"></el-option>
+                                    <template v-for="(name, index) in rows">
+                                        <el-option v-if="name == 'YouTube' ||  name == '抖音' " :label="name" :value="index+1" :key="index" disabled></el-option>
+                                        <el-option v-else :label="name" :value="index+1" :key="index"></el-option>
+                                    </template>
+                                    <el-option label="其它" value="99"></el-option>
                                 </el-select>
                                 <el-button slot="append" icon="el-icon-search" @click="parse()"></el-button>
                             </el-input>
@@ -57,7 +56,7 @@
                     <el-col :xs="24" :sm="7" :md="7" :lg="7" :xl="7">
                         <!-- 右侧滚动的集数 -->
                         <div class="follow">
-                            <div><p class="star"><a href="javascript:;"><span><i class="el-icon-video-camera-solid"></i> 短视频解析</span></a></p></div>
+                            <div><p class="star"><a href="javascript:;"><span><i class="el-icon-video-camera-solid"></i>短视频源码</span></a></p></div>
                         </div>
                             <div class="outer-bar" >
                                 <div class="tabBar">
@@ -101,13 +100,14 @@
 
 <script scoped>  
     import DPlayer from "../assets/js/DPlayer.min.js";
+    import {toast} from "../assets/js/toast.js";
     import { Base64 } from 'js-base64';
     export default {
-        name: "User",
+        name: "Parse",
         data() {
             return {
                 nowYear:new Date().getFullYear(),
-                loading:true,                       // 加载动画
+                loading: false,                       // 加载动画
                 input_url: '',                      // 输入的视频播放地址
                 input_subtitle: '',                 // 输入的字幕加载地址
                 url: "https://api.dogecloud.com/player/get.mp4?vcode=5ac682e6f8231991&userId=17&ext=.mp4",
@@ -118,9 +118,11 @@
                 api:"",                             
                 select:"",
                 rows: [ "抖音", "YouTube", "哔哩哔哩", "好看视频","六间房","全民小视频","陌陌视频","梨视频","美拍","场库短视频",
-                    "微博视频","最右","皮皮虾","AcFun","快手","全民K歌","西瓜视频","秒拍","小红书","小咖秀","轻视频","开眼视频","腾讯微视"],
+                    "微博视频","最右","皮皮虾","AcFun","快手","全民K歌","西瓜视频","秒拍","小红书","小咖秀","轻视频","开眼视频","腾讯微视","火山短视频","虎牙视频",
+                    "抖音Ⅱ","绿洲视频","皮皮搞笑","Vue Vlog","Instagram","比心陪练","逗拍","Before避风","酷秀短视频"],
                 datas: ["好看视频","六间房","全民小视频","陌陌视频","梨视频","美拍","场库短视频","微博视频","最右","皮皮虾","AcFun",
-                    "快手","全民K歌","西瓜视频","秒拍","小红书","小咖秀","轻视频","开眼视频","腾讯微视"],       
+                    "快手","全民K歌","西瓜视频","秒拍","小红书","小咖秀","轻视频","开眼视频","腾讯微视","火山短视频","虎牙视频","抖音Ⅱ","绿洲视频","皮皮搞笑","Vue Vlog",
+                    "Instagram","比心陪练","逗拍","Before避风","酷秀短视频"],       
 
             }
         }, 
@@ -196,27 +198,45 @@
                 // 构建headers签名算法
                 let d = new Date();
                 let timer = ((d.getTime())/1000).toFixed();
-
                 // 先清空文本域
                 this.textarea = "";
                 let vm = this;
                 if(this.select == "" || this.input_api == ""){
-                    alert("请选择解析的视频类型和地址");
+                    toast("请选择解析的视频类型和地址");
                 }else{
-                    axios({
-                        url: this.FACTURL.baseUrl+"/nmsl/api/video/parse/",
-                        method:"post",
-                        data:{
-                            category: Base64.encode(this.select),
-                            url:this.input_api,
-                            time: timer,
-                            signature: Base64.encode(this.FACTURL.signature+"&"+timer)
+                    // 定义axios的config参数配置
+                    let config = {};
+
+                    if (this.select == 30) {
+                        // 30 代表Instagram
+                        config = {
+                            url: "https://tenapi.cn/ins/",
+                            method:"get",
+                            params:{
+                                url: String(this.input_api).trim(),
+                            }
                         }
-                    })
+                    } else {
+                        // 使用自定义的api
+                        config = {
+                            url: this.FACTURL.baseUrl+"/nmsl/api/video/parse/",
+                            method:"post",
+                            data:{
+                                category: Base64.encode(this.select),
+                                url:this.input_api,
+                                time: timer,
+                                signature: Base64.encode(this.FACTURL.signature+"&"+timer)
+                            }
+                        }
+                    }
+                    axios(config)
                     .then(function(response){
                         if(response.status == 200){
-                            vm.textarea = response.data;
-                            
+                            if (vm.select == 30) {
+                                vm.textarea = JSON.stringify(response.data);
+                            } else {
+                                vm.textarea = response.data;
+                            }
                         }else{
                             vm.textarea = "";
                         }
@@ -225,7 +245,6 @@
                         console.log(error);
                     })
                 }
-
             },
             play:function () {
                 if (this.input_url.length <= 20) {
@@ -277,6 +296,7 @@
 <!--- vuecli3组件内部引入第三方的css文件只在当前组件生效的办法 --->
 <style scoped>
     @import "../assets/css/DPlayer.min.css";
+    @import "../assets/css/toast.css";
     .box button{
         width:90%;
         text-align: center;
@@ -398,7 +418,7 @@
         color: bisque;
     }
     .el-select .el-input {
-    width: 130px;
+        width: 130px;
     }
     .input-with-select .el-input-group__prepend {
         background-color: #fff;

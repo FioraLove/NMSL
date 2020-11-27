@@ -72,21 +72,19 @@
                 <div class="clear"></div>
             </div>
 
-
-
             <!-- copyright -->
             <div class="copyright">
                 <h2>Copyright &copy; 2019 - {{nowYear}} 版权所有| by
                     <a href="#">Badwoman</a>
                 </h2>
             </div>
-            <!-- //copyright -->
         </div>
     </div>
 
 </template>
 
 <style scoped>
+    @import "../assets/css/toast.css";
     @import "../assets/css/style.css";
     .copyright{
         padding-bottom: 0px;
@@ -94,8 +92,8 @@
 </style>
 
 <script>
-
-  export default {
+import {toast} from "../assets/js/toast.js";
+export default {
     name:"Admin",
     data() {
         return {
@@ -125,7 +123,7 @@
         login:function(){
             let vm = this;
             if (this.logindata.username == "" || this.logindata.password=="") {
-                alert("账号或密码不能为空，请重新检查 ε=ε=ε=(~￣▽￣)~");
+                toast("账号或密码不能为空，请重新检查 ε=ε=ε=(~￣▽￣)~");
             }
             axios({
                 // api1:自定义的api接口
@@ -152,13 +150,13 @@
 
                 }else{
                     vm.token = "暂无Token";
-                    alert("账号或密码错误，请重新检查 ε=ε=ε=(~￣▽￣)~");
+                    toast("账号或密码错误，请重新检查 ε=ε=ε=(~￣▽￣)~");
                 }
             })
             .catch(function (error) {
                 console.log(error);
                 vm.token = "暂无Token";
-                alert("账号或密码错误，请重新检查 ε=ε=ε=(~￣▽￣)~");
+                toast("账号或密码错误，请重新检查 ε=ε=ε=(~￣▽￣)~");
             })
         }
     },

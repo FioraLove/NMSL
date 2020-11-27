@@ -16,19 +16,17 @@
 </template>
 
 
-
 <script>
-
 import  ClipboardJS  from '../assets/js/clipboard.min.js'
 export default {
     name:"axios",
     data() {
         return {
-            loading: false,
-            rows:{},    // 嘴臭数据集
-            currentPage: parseInt(Math.random()*100),     // 当前页数
-            limit:1,    // limit偏差限制
-            count:0,    // 返回数据量总数
+            loading: false,                                 // 加载动画
+            rows:{},                                        // 嘴臭数据集
+            currentPage: parseInt(Math.random()*100),       // 当前页数
+            limit:1,                                        // limit偏差限制
+            count:0,                                        // 返回数据量总数
         }
     },
     mounted() {
@@ -45,7 +43,7 @@ export default {
             });
          },
         getContent:function () { 
-            let app = this;
+            let vm = this;
             axios({
                 url: this.FACTURL.baseUrl+"/nmsl/ndsl/10/",
                 method:"get",
@@ -58,12 +56,12 @@ export default {
                 }
             })
             .then(function(response){
-                if(response.status == 200 && (app.currentPage) <= response.data.count ){
-                    app.count = response.data.count;
-                    app.rows = response.data.result[0];
-                    app.currentPage++;
+                if(response.status == 200 && (vm.currentPage) <= response.data.count ){
+                    vm.count = response.data.count;
+                    vm.rows = response.data.result[0];
+                    vm.currentPage++;
                 }else{
-                    app.rows = {"content":"暂无数据。。。"};
+                    vm.rows = {"content":"暂无数据。。。"};
                 }
             })
             .catch(function (error) {
@@ -74,7 +72,7 @@ export default {
             const h = this.$createElement;
             this.$notify({
             title: '源代码',
-            message: h('i', { style: 'color: teal'}, 'https://github.com/FioraLove/Python/blob/master/Python爬虫案例/嘴臭生成器.py ')
+            message: h('i', { style: 'color: teal'}, 'https://github.com/FioraLove/Python/blob/master/Python爬虫案例/嘴臭生成器.py')
         });}
     }
 }

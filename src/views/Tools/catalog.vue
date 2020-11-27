@@ -120,7 +120,7 @@ export default {
     },
     mounted() {
         this.isPC();
-        this.getContent();
+        // this.getContent();
         this.getInfo;
     },
 

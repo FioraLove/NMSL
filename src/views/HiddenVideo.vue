@@ -20,15 +20,14 @@
             </div>
         </el-col>
     </el-row>
-    <!-- 告示窗口 -->
-    <div>
-        <el-alert
-            title="关于视频资源的说明"
-            type="warning"
-            center
-            description="资源由网络第三方视频类网站收集，不提供任何视听上传服务，内容均来自各分享站点所提供的公开引用资源"
-            show-icon>
-        </el-alert>
+
+    <div class="search-box">
+        <el-autocomplete popper-class="my-autocomplete" v-model="content" :fetch-suggestions="querySearch" placeholder="输入你想找的洞洞" @select="kewordSelect" clearable>
+            <template slot-scope="{ item }">
+                <div class="name">{{ item.value }}</div>
+            </template>
+            <el-button slot="append" icon="el-icon-female" @click="handleIconClick" class="serach"></el-button>
+        </el-autocomplete>
     </div>
     <el-backtop target=".hiddenVideo" :bottom="100">
         <div class="backtops">UP</div>
@@ -105,6 +104,8 @@ export default {
             token: window.btoa(decodeURIComponent(window.location.search.split("=")[1])),
             bs_token:"",
             nowYear:new Date().getFullYear(),
+            keyword:"",                 // 搜索关键词
+            content:"",
             activeIndex: "1",           // 分类标签    
             bodyWidth:722,                 // 可视化浏览器窗口
             loading:true,                   // 初始化默认加载
@@ -115,18 +116,17 @@ export default {
             currentPage:1,             // 当前页数
             loading:true,               // 页面加载中特效
             page_size:36,               // 每页展示卡片数
-            rows:[],
-            lists:[]
+            restaurants: [],
+            rows:[]
         };
     },
     mounted:function(){
-        this.resizeChart();         //添加窗口变化监听事件   
         this.getContent();
         this.isPC();
         // 解密token
         // 原生bs64加密的token
         this.bs_token = decodeURIComponent(window.location.search.split("=")[1]);
-        // this.token = window.btoa(decodeURIComponent(window.location.search.split("=")[1])); 
+        this.restaurants = this.loadAll();
     },
     destoryed: function(){
         // 解除监听事件
@@ -155,7 +155,34 @@ export default {
         handleCurrentChange:function(val){
             // 点击页码跳转时，执行改计算属性
             this.getContent();
-        },        
+        },
+        querySearch:function(queryString, cb){
+            var restaurants = this.restaurants;
+            var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants;
+            // 调用 callback 返回建议列表的数据
+            cb(results);
+        },
+        createFilter:function(queryString) {
+            return (restaurant) => {
+            return (restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+            };
+        },
+        loadAll:function(){
+            return [
+                { "value": "内衣办公室"},
+                { "value": "人妻"},
+                { "value": "Boin"},
+                { "value": "兄嫁"},
+                { "value": "DISCIPLINE"},
+                { "value": "洗濯屋"},
+                { "value": "HEARTWORK"}
+            ];
+        },
+        kewordSelect:function(item) {
+            console.log(item);
+            this.keyword = item.value;
+        },
+
         handleSelect(key, keyPath) {
             switch (key) {
                 case "1":
@@ -169,11 +196,11 @@ export default {
                     break;
             }
         },
-        //重设图表高宽
-        resizeChart(){
-            //监听窗口高宽变化，注意要使用箭头函数
-            window.onresize = () =>{
-            };
+
+        // 搜索触发事件
+        handleIconClick:function(){
+            this.keyword = this.content;
+            this.getContent();
         },
 
         isPC:function(){  
@@ -202,7 +229,8 @@ export default {
                 },
                 params:{
                     offset:this.page_size*(this.currentPage-1),
-                    limit: this.page_size
+                    limit: this.page_size,
+                    keyword: this.keyword
                 }
             })
             .then(function(response){
@@ -226,6 +254,16 @@ export default {
 </script>
 
 <style scoped lang="less">
+    .serach{
+        background-color: #F90 !important;
+        color: #000 !important;
+        font-size: 1.15em !important;
+        border:0px !important;
+    }
+    .search-box{
+        text-align: center;
+        margin: 8px;
+    }
     .footer p{
         font-size: 14px;
         color: black;
@@ -262,7 +300,7 @@ export default {
     @media screen and (max-width:480px){
         .card{
             width: 100%;
-            height: 13em;
+            height: 16em;
             position: relative;
             background-color: transparent;
         }
@@ -275,7 +313,7 @@ export default {
         }
         .card .header{
             width: 100%;
-            height: 9.8em;
+            height: 12.8em;
         }
         .card .card_update{
             position:absolute;
@@ -287,7 +325,7 @@ export default {
     @media screen and (min-width:481px){
         .card{
             max-width: 100%;
-            height: 18.7em;
+            height: 20em;
             position: relative;
             background-color: transparent;
         }
@@ -300,16 +338,15 @@ export default {
         }
         .card .header{
             width: 100%;
-            height: 13.7em;
+            height: 16em;
         }
         .card .card_update{
             position:absolute;
             left: 3px;
-            bottom: 5.2em;
+            bottom: 4em;
             background-color: #feeeed;
         }        
     }
-
 
     .card .card_date{
         position:absolute;
@@ -330,7 +367,7 @@ export default {
         color: #ed1941;
     }
     .title{
-        margin-top: 12px;
+        margin-top: 6px;
         width:100%;
         height:1.5em;
         overflow: hidden;
@@ -342,7 +379,6 @@ export default {
 
     }
     .author{
-        margin-top: 3px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -366,8 +402,3 @@ export default {
         border-radius: 5px;
     }
 </style>
-
-
-
-
-

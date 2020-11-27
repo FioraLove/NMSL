@@ -1,23 +1,24 @@
 <template>
-    <div class="trash">
+    <div class="card">
         <el-container>
             <el-main>
                 <el-row :gutter="10">
                     <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
                         <div style="margin-top: 15px;margin:0 auto;width:80%;">
-                            <el-alert title="垃圾分类查询" type="success" center  show-icon
-                                description="将待查询的垃圾粘贴到文本框中">
+                            <el-alert title="身份证查询" type="success" center  show-icon
+                                description="郑重声明：不会保存存储身份证信息，仅展示其地区 性别 年龄">
                             </el-alert>
-                            <el-input type="textarea" placeholder="请输入待查询垃圾(e.g., 电脑)"  v-model="parse" maxlength="66" show-word-limit :rows="3" >
+                            <el-input placeholder="请输入内容" v-model="id_card">
+                                <template slot="prepend">身份证号：</template>
+                                <el-button slot="append" icon="el-icon-search" @click="getCard"></el-button>
                             </el-input>
                             <br>
-                            <div class="desc"><el-button type="primary" icon="el-icon-s-grid" @click="getTel">Run</el-button></div>
+                            
                         </div>
                         <div style="margin-top: 15px;margin:0 auto;width:80%;">
                             <br>
                             <el-input type="textarea" :rows="5"  placeholder="解析结果"  v-model="textarea" v-loading="loading"> 
                             </el-input>
-                            
                         </div>
                     </el-col>
                 </el-row>
@@ -29,12 +30,11 @@
 
 <script>
 export default {
-    name:"Trash",
+    name:"Card",
     data() {
         return {
-            rows: [],
-            parse:"",
             textarea:"",
+            id_card: "",
             loading: false
         }
     },
@@ -45,24 +45,24 @@ export default {
         
     },
     methods: {
-        getTel:function () {
+        getCard:function () {
             let vm = this;
             // 清空数据
             this.textarea = '';
             // 开始加载数据
             this.loading = true;
             axios({
-                url: "https://api.oioweb.cn/api/aigarbage.php",
-                method:"get",
-                params:{
-                    key:this.parse.trim()
+                url: "https://www.toolnb.com/Dev/Tools/getSfz.html",
+                method:"post",
+                data:{
+                    id: this.id_card
                 }
             })
             .then(function(response){
                 if(response.status == 200){
-                    vm.textarea = response.data.msg;
+                    vm.textarea = response.data.data["0"];
                 }else{
-                    vm.textarea="暂无数据，请检查相关参数正确性👨‍✈️👨‍✈️👨‍✈️";
+                    vm.textarea="干了这碗得物鸡汤！ ☠☠☠";
                 }
                 // 关闭加载动画
                 vm.loading = false;
@@ -83,5 +83,9 @@ export default {
     .desc{
         text-align: center;
         margin-top: 1em;
+    }
+    .dewu{
+        background-image: linear-gradient(to right, #434343 0%, black 100%);
+        height: 100vh;
     }
 </style>

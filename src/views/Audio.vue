@@ -56,7 +56,7 @@
             <div class="bk"><hr></div>
             <p>本站的资源由网络第三方视频类网站收集，本站不提供任何视听上传服务，所有内容均来自各分享站点所提供的公开引用资源。</p>
             <p>若本站收录的节目无意侵犯了贵司版权，请给网页底部邮箱地址来信，我们会及时处理和回复，谢谢</p>
-            <p>Copyright © 2019-2020. All Rights Reserved. 站长统计</p>
+            <p>Copyright © 2019-{{currYear}}. All Rights Reserved. 站长统计</p>
             <div>
                 <a href="https://AhriLove.top" target="_self"><img src="https://cdn.jsdelivr.net/gh/FioraLove/Images/D:/data/imagesaaa.png" alt="AhriLove"></a>
             </div>
@@ -66,19 +66,18 @@
 
 <script>
 export default {
+    name: "Audio",
     data() {
         return {
-            bodyWidth:1920,
-            keyword:"抖音",                 // 搜索关键词
-            rows:[],                    // 查询返回数据集
-            count:0,                    // 查询返回的数据总数
-            currentPage:1,             // 当前页数
-            loading:true,               // 页面加载中特效
-            page_size:36,               // 每页展示卡片数
+            currYear: (new Date()).getFullYear(),   // 当前时间年
+            keyword:"抖音",                         // 搜索关键词
+            rows:[],                                // 查询返回数据集
+            count:0,                                // 查询返回的数据总数
+            currentPage:1,                          // 当前页数
+            loading:true,                           // 页面加载中特效
+            page_size:36,                           // 每页展示卡片数
             restaurants: [],
-            content:"",
-            defaultImg: 'this.src="'+require("../assets/images/loading.gif")+'"'
-            
+            content:""
         };
     },
 
@@ -97,13 +96,8 @@ export default {
         getContent:function () {
             let app = this;
             axios({
-                // api1:自定义的api接口
-                url:"migu/migu/remoting/scr_search_tag",
+                url:"migus/migu/remoting/scr_search_tag",
                 method:"get",
-                // headers:{
-                //     "Host":"m.music.migu.cn",
-                //     "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36"
-                // },
                 params:{
                     rows:this.page_size,
                     type:2,
@@ -308,8 +302,3 @@ export default {
     }
 
 </style>
-
-
-
-
-

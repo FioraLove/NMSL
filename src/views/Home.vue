@@ -9,7 +9,7 @@
                     <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="8">
                         <div class="card">
                             <div class="header">
-                                <a href="javascript:;" title="AhriLove"><img src="https://cdn.jsdelivr.net/gh/FioraLove/CDN@1.0/Avatar.png" alt=""></a>
+                                <a href="javascript:;" title="AhriLove"><img src="https://cdn.jsdelivr.net/gh/FioraLove/Images/seraphines.jpg" alt=""></a>
                             </div>
 
                             <div class="card_footer">
@@ -106,14 +106,18 @@
         <!-- 导航栏模块 -->
         <div class="main">
             <div class="tabBar">
-                <div class="box" v-for='(row,index) in rows' :key="index">
-                    <template v-if="row.content == '联系我' ">
-                        <a :href="row.url" target="_blank"><p>{{row.content}}</p></a>
-                    </template>
-                    <template v-else>
-                        <a :href="row.url" target="_self"><p>{{row.content}}</p></a>
-                    </template>
-                    
+                <template v-for='(row,index) in rows'>
+                    <div class="box" :key="index" v-if="row.url == '/pixivs' " @click="send">
+                        <a href="javascript:;" target="_self"><p>{{row.content}}</p></a>
+                        <!-- <a :href="row.url" target="_self"><p>{{row.content}}</p></a> -->
+                    </div>
+                    <div class="box" :key="index" v-else>
+                        <a :href="row.url" target="_blank" v-if="row.content == '联系我'"><p>{{row.content}}</p></a>
+                        <a :href="row.url" target="_self" v-else><p>{{row.content}}</p></a>
+                    </div>
+                </template>
+                <div class="box" @click="send">
+                    <a href="javascript:;"><p style="color:#F90;font-weight:700;">Pornbar</p></a>
                 </div>
             </div>
         </div>
@@ -121,17 +125,10 @@
 </template>
 
 
-<script scoped>
-// 组件 .vue 文件：模板(template) + 脚本(scpirt) + 样式(style)
-// 导入自定义的组件
-import HelloWorld from '@/components/HelloWorld.vue';
-// import "../assets/js/sakura.js";
+<script>
+import {toast} from "../assets/js/toast.js";
 export default {
     name: 'Home',
-    components: {
-        HelloWorld
-    },
-
     data(){
         return {
             nowYear:new Date().getFullYear(),
@@ -150,8 +147,11 @@ export default {
                     content:"音乐",
                     url:"/audio"
                 },{
+                    content:"Pixiv",
+                    url:"/pixiv"
+                },{
                     content:"短视频解析",
-                    url:"/video"
+                    url:"/parse"
                 },{
                     content:"抽象圣经",
                     url:"/ndsl"
@@ -181,17 +181,17 @@ export default {
     computed:{
         // 发送Ajax请求
         getContent:function () {
-            let app = this;
+            let vm = this;
             axios({
                 url:this.api,
                 method:"get"
             })
             .then(function(response){
                 if(response.status == 200 && response.data.status==1){
-                    app.loading = false;
-                    app.results = (response.data).vlist;
+                    vm.loading = false;
+                    vm.results = (response.data).vlist;
                 }else{
-                    app.results = [];
+                    vm.results = [];
                 }
             })
             .catch(function (error) {
@@ -200,10 +200,13 @@ export default {
         }
     },
     methods: {
-        open() {
+        open:function() {
             this.$alert('你的 <strong>点赞➕关注➕转发➕投币</strong><hr> 就是对我最大的鼓励', 'BILIBILI🍻[]~(￣▽￣)~*', {
                dangerouslyUseHTMLString: true
             });
+        },
+        send:function() {
+            toast("因其特殊性，暂不对外开放，404哟！(ง •_•)ง \n  推荐: https://pixiviz.pwp.app/ \n https://www.acg-gov.com/");
         }
 
     }
@@ -211,6 +214,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+    @import "../assets/css/toast.css";
     .home{
         background-image: url("../assets/images/background.png");
         background-attachment: fixed;
@@ -223,8 +227,6 @@ export default {
         box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
         border-radius: 4px;
     }
-
-
 
     @media screen and (max-width:998px){
         .card{
@@ -512,6 +514,7 @@ export default {
     .box p{
         text-align: center;
         font-size: 18px;
+        margin-top: 18px;
         font-family: 'Courier New', Courier, monospace;
     }
 
@@ -525,7 +528,6 @@ export default {
     .bg{
         width: 100%;
         height: 2.5em;
-
         overflow: hidden;   /*父元素添加overflow*/
     }
 
@@ -558,6 +560,4 @@ export default {
         cursor: pointer;
         text-decoration: none;
     }
-
-
 </style>
