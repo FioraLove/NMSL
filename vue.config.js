@@ -28,6 +28,9 @@ module.exports = {
                 changeOrigin: true,  // needed for virtual hosted sites
                 pathRewrite: {
                     '^/migus': ''  // rewrite path
+                },
+                headers: {
+                    referer: 'https://m.music.migu.cn/',
                 }
             },
             '/tophub':{
