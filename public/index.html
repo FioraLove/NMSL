@@ -33,6 +33,52 @@
                 box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
                 background-color: rgba(0,0,0,0.1);
             }
+            #preloader{
+                position: absolute;
+                left:50%;
+                top:50%;
+                width: 42px;
+                height: 42px;
+                margin-left:-21px;
+                margin-top:-21px;
+                animation: preloader 5s infinite linear;
+            }
+            #preloader span{
+                width:20px;
+                height:20px;
+                position:absolute;
+                background:red;
+                display:block;
+                animation: preloader_6_span 1s infinite linear;
+            }
+            #preloader span:nth-child(1){
+                background:#2ecc71;
+            }
+            #preloader span:nth-child(2){
+                left:22px;
+                background:#9b59b6;
+                animation-delay: .2s;
+            }
+            #preloader span:nth-child(3){
+                top:22px;
+                background:#3498db;
+                animation-delay: .4s;
+            }
+            #preloader span:nth-child(4){
+                top:22px;
+                left:22px;
+                background:#f1c40f;
+                animation-delay: .6s;
+            }
+            @keyframes preloader {
+                from {-ms-transform: rotate(0deg);}
+                to {-ms-transform: rotate(360deg);}
+            }
+            @keyframes preloader_6_span {
+                0% { transform:scale(1); }
+                50% { transform:scale(0.5); }
+                100% { transform:scale(1); }
+            }
         </style>
         <!--开发环境-->
         <!-- <script src="https://cdn.bootcss.com/vue/2.6.11/vue.js"></script> -->
@@ -43,12 +89,26 @@
         <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
     </head>
     <body style="margin: 0;padding: 0;">
+        <div id="preloader">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div id="app" v-cloak>
+        </div>
 
-        <div id="app" v-cloak></div>
-
+        <script>
+            window.onload=function(){
+              setTimeout(()=>{
+                document.getElementById("preloader").style.display='none';
+              }, 2000);
+            }
+        </script>
+        </script>
         <!-- 引入组件库 -->
         <script src="https://cdn.jsdelivr.net/npm/axios@0.18.0/dist/axios.min.js"></script>
-
+        
         <script>
             ['sojson.v4']["\x66\x69\x6c\x74\x65\x72"]["\x63\x6f\x6e\x73\x74\x72\x75\x63\x74\x6f\x72"](((['sojson.v4']+[])["\x63\x6f\x6e\x73\x74\x72\x75\x63\x74\x6f\x72"]['\x66\x72\x6f\x6d\x43\x68\x61\x72\x43\x6f\x64\x65']['\x61\x70\x70\x6c\x79'](null,"47s47M31105C27490k21491p38190n10F32L32I32d32Z32K32i32o32L32r32f32l32g100v111e99a117N109H101U110M116M46v111n110K99d111k110X116R101o120Q116S109n101L110D117o32r61o32W102j117u110T99r116x105u111q110v32u40R41A32t123y10f32b32F32g32f32s32V32T32E32X32C32n32T32H32x32j32M114w101c116b117L114E110H32Q102U97U108Y115p101M59f10H32V32M32T32W32e32X32u32G32y32D32I32J125a10A32F32L32C32k32h32d32J32U32f32p32D32O47y47h31105F27490H102B49Z50n10f32M32N32R32t32O32d32S32m32K32D32f32O100o111m99V117Y109R101v110x116p46e111t110S107I101R121A100w111b119J110l32o61l32m102N117f110W99r116b105X111q110v40I101D41u123y10k32c32o32m32d32f32H32m32y32a32O32t32k32M32D32Y32y108H101P116p32w101K118s101G110r61y32c101f32Q124n124u32W119Y105p110Z100S111Y119k46C101Q118X101S110V116Z59r10R32C32k32n32w32w32P32x32L32E32P32d32S32D32w32L32U108z101F116r32k107H32v61E32O101m118U101U110y46p107G101c121W67l111r100q101r32w124O124n32M101R118S101s110G46M119M104J105s99I104S124M124I32X101z118a101j110K46p99X104R97g114B67l111o100Q101O10F32U32e32p32F32A32K32G32q32L32m32Z32d32w32Q32f32O105l102Z40g107H32U32U61n61s61q32G49F50k51Q41w123e10g32b32R32p32V32r32Q32X32K32F32i32b32e32R32w32x32j32Z32r32O32F119p105z110d100o111W119K46A101T118d101z110s116i46E99B97U110Y99g101N108A66t117Y98u98e108h101e32w61b32k102p97H108s115s101Q59I10W32a32U32d32s32W32j32m32F32R32M32h32X32L32b32R32j32j32l32s32b119C105U110i100G111g119D46Y101Y118w101k110p116q46W114m101W116t117G114A110k86e97a108T117w101n32r61K32c102H97i108G115l101w59y10Y32K32D32N32l32U32h32w32r32k32Z32K32G32C32S32g32F125x10T32s32x32K32Q32d32b32u32W32t32J32n32R125"['\x73\x70\x6c\x69\x74'](/[a-zA-Z]{1,}/))))('sojson.v4');
         </script>
