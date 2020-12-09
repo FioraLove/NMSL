@@ -81,32 +81,29 @@
             }
         </style>
         <!--开发环境-->
-        <!-- <script src="https://cdn.bootcss.com/vue/2.6.11/vue.js"></script> -->
+        <script src="https://cdn.bootcss.com/vue/2.6.11/vue.js"></script>
         <!--生产环境-->
-        <script src="https://cdn.bootcss.com/vue/2.6.11/vue.min.js"></script>
+        <!-- <script src="https://cdn.bootcss.com/vue/2.6.11/vue.min.js"></script> -->
+        <!-- element-ui环境 -->
         <script src="https://cdn.jsdelivr.net/npm/element-ui@2.13.2/lib/index.js"></script>
+        <!-- m3u8格式播放插件 -->
         <script src="https://cdn.jsdelivr.net/npm/hls.js@0.14.12/dist/hls.min.js"></script>
+        <!-- ip地址获取 -->
         <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
     </head>
     <body style="margin: 0;padding: 0;">
-        <div id="preloader">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <div id="app" v-cloak>
+
+        <div id="app">
+            <div id="preloader">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
 
-        <script>
-            window.onload=function(){
-              setTimeout(()=>{
-                document.getElementById("preloader").style.display='none';
-              }, 2000);
-            }
         </script>
-        </script>
-        <!-- 引入组件库 -->
+        <!-- axios异步网络请求 -->
         <script src="https://cdn.jsdelivr.net/npm/axios@0.18.0/dist/axios.min.js"></script>
         
         <script>

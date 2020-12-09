@@ -44,7 +44,7 @@
                 </el-main>
                 <el-footer>
                     <div class="block">
-                        <el-pagination @current-change="handleCurrentChange" :current-page.sync="currentPage" :page-size="page_size" layout="prev, pager, next" :total="count" pager-count=5>
+                        <el-pagination @current-change="handleCurrentChange" :current-page.sync="currentPage" :page-size="page_size" layout="prev, pager, next" :total="count" :pager-count="pager_count">
                         </el-pagination>
                     </div>
                 </el-footer>
@@ -76,7 +76,8 @@ export default {
             loading:true,                           // 页面加载中特效
             page_size:36,                           // 每页展示卡片数
             restaurants: [],
-            content:""
+            content:"",
+            pager_count: 5
         };
     },
 

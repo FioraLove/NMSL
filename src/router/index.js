@@ -16,7 +16,7 @@ Vue.use(VueRouter,axios)
     {
         //将 path 设置为*号，将会捕获任何没有得到匹配的路由； 
         path: '*',
-        name: 'error',
+        name: 'Error',
         component: () => import(/* webpackChunkName: "about" */ '../views/Error.vue')
     },
     {

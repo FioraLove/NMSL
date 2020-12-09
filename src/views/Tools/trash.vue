@@ -11,12 +11,13 @@
                             <el-input type="textarea" placeholder="请输入待查询垃圾(e.g., 电脑)"  v-model="parse" maxlength="66" show-word-limit :rows="3" >
                             </el-input>
                             <br>
-                            <div class="desc"><el-button type="primary" icon="el-icon-s-grid" @click="getTel">Run</el-button></div>
+                            <div class="btn"><el-button type="primary" icon="el-icon-s-grid" @click="getTel">Run</el-button></div>
                         </div>
-                        <div style="margin-top: 15px;margin:0 auto;width:80%;">
+                        <div style="margin-top: 15px;margin:0 auto;width:80%;" v-loading="loading">
                             <br>
-                            <el-input type="textarea" :rows="5"  placeholder="解析结果"  v-model="textarea" v-loading="loading"> 
-                            </el-input>
+                            <p class="info">{{message.msg}}</p>
+                            <p><img :src="message['data']['pic']" class="image"></p>
+                            <p class="desc">{{message.data.desc}}</p>
                             
                         </div>
                     </el-col>
@@ -34,7 +35,13 @@ export default {
         return {
             rows: [],
             parse:"",
-            textarea:"",
+            message: {
+                data:{
+                    pic:"",
+                    desc: ""
+                },
+                msg: ""
+            },
             loading: false
         }
     },
@@ -47,10 +54,13 @@ export default {
     methods: {
         getTel:function () {
             let vm = this;
-            // 清空数据
-            this.textarea = '';
             // 开始加载数据
             this.loading = true;
+            if (this.parse.trim() == '' || this.parse.trim() == null) {
+                this.$message.error('错了哦，请输入待分类物品 (+_+)?');
+                this.loading = false;
+                return;
+            }
             axios({
                 url: "https://api.oioweb.cn/api/aigarbage.php",
                 method:"get",
@@ -59,10 +69,16 @@ export default {
                 }
             })
             .then(function(response){
-                if(response.status == 200){
-                    vm.textarea = response.data.msg;
+                if(response.status == 200 && response.data.code == 1){
+                    vm.message = response.data;
                 }else{
-                    vm.textarea="暂无数据，请检查相关参数正确性👨‍✈️👨‍✈️👨‍✈️";
+                    vm.message={
+                        data:{
+                            pic:"",
+                            desc: ""
+                        },
+                        msg: response.data.msg
+                    };
                 }
                 // 关闭加载动画
                 vm.loading = false;
@@ -78,10 +94,21 @@ export default {
 
 <style scoped>
     p{
-        color: black;
-    }
-    .desc{
         text-align: center;
         margin-top: 1em;
+    }
+    .btn{
+        text-align: center;
+        margin-top: 1em;
+    }
+    img.image{
+        width: 8em;
+    }
+    .info{
+        font-family: 'Times New Roman', Times, serif;
+        font-weight: 700;
+        text-align: center;
+        font-size: 1.25em;
+        margin-top: 0px;
     }
 </style>

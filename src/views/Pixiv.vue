@@ -102,8 +102,8 @@ import 'viewerjs/dist/viewer.css';
 import {toast} from "../assets/js/toast.js";
 Vue.use(Viewer);
 export default {
+    name:"Pixiv",
     data() {
-        name:"Pixiv";
         return {
             keyword:"",                         // 搜索关键词
             photoList: [],                      // 结果数据集
