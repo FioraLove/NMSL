@@ -37,6 +37,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
    - 2020-10-20 隐私视频界面新增 `搜索` 功能，删除低质量视频
    - 2020-11-10 主模块新增 `Pixiv` 模块（P站搜索与排行榜）
    - 2020-11-23 修复 `资讯` 与 `音乐` 模块的开发与生产环境的CORS跨域问题
+   - 2020-12-10 新增 `Pixiv` 的子模块 `Artist` 和vue首次加载动画 ，根据作者id，查询所有的作品集
 
 ---
 <br>

@@ -1,6 +1,6 @@
 <template>
     <!-- <div id="app" v-cloak :key="Key"> -->
-    <div id="app" v-cloak>
+    <div id="app">
         <!-- <keep-alive>
             <router-view>
                 <div id="nav">

@@ -83,6 +83,10 @@
                                 <div class="title">
                                     <span :title="row.title">{{row.title}}</span>
                                 </div>
+                                <div class="artist">
+                                    <img :src="row.artist.cover" :alt="row.artist.id">
+                                    <span><router-link target="_blank" :to="{path : '/artist', query : {id : row.artist.id}}">#{{row.artist.name}}#</router-link></span>
+                                </div>
                             </div>
                         </div>
                     </el-col>
@@ -161,11 +165,16 @@ export default {
                     let rows = [];
                     for (let index = 0; index < result.length; index++) {
                         let obj = {};
+                        let authorInfo = {};
                         obj["title"] = result[index]["work"]["title"];
+                        authorInfo["name"] = result[index]["work"]["user"]["name"];
+                        authorInfo["id"] = result[index]["work"]["user"]["id"];
+                        authorInfo["cover"] = (result[index]["work"]["user"]["profile_image_urls"]["px_50x50"].replace("https://i.pximg.net","https://i.pixiv.cat"));
+                        obj["artist"] = authorInfo;
                         // 由于原图过大，导致加载缓慢，不得不使用带水印的中图
                         // let image_url = result[index]["work"]["image_urls"]["large"];
                         let image_url = result[index]["work"]["image_urls"]["px_480mw"];
-                        // 处理图片路径
+                        // 替换Pixiv图片国外域名
                         obj["url"] = image_url.replace("https://i.pximg.net","https://i.pixiv.cat");
                         rows.push(obj);
                     }
@@ -252,7 +261,12 @@ export default {
                             let rows = [];
                             for (let index = 0; index < result.length; index++) {
                                 let obj = {};
+                                let authorInfo = {};
                                 obj["title"] = result[index]["title"];
+                                authorInfo["name"] = result[index]["user"]["name"];
+                                authorInfo["id"] = result[index]["user"]["id"];
+                                authorInfo["cover"] = (result[index]["user"]["profile_image_urls"]["medium"].replace("https://i.pximg.net","https://i.pixiv.cat"));
+                                obj["artist"] = authorInfo;
                                 let image_url = result[index]["image_urls"]["medium"];
                                 // 处理图片路径
                                 obj["url"] = image_url.replace("https://i.pximg.net","https://i.pixiv.cat");
@@ -406,10 +420,7 @@ export default {
         margin-top: 8px;
         font-family: 'Raleway', Arial, sans-serif;
     }
-    a{
-        text-decoration: none;
-        color: black;
-    }
+
     @media screen and (max-width:480px){
         .el-menu-vertical-demo:not(.el-menu--collapse) {
             width: 100%;
@@ -417,7 +428,7 @@ export default {
         }
         .card{
             max-width: 100%;
-            height: 14em;
+            height: 16em;
             position: relative;
         }
         .card .header img{
@@ -444,7 +455,7 @@ export default {
         }
         .card{
             max-width: 100%;
-            height: 20em;
+            height: 22em;
             position: relative;
             cursor: pointer;
         }
@@ -498,6 +509,36 @@ export default {
         font-size: 1em;
         cursor:auto;
         font-family: 'Times New Roman', Times, serif;
+    }
+    .artist{
+        width:100%;
+        height:30px;
+        font-weight: 600;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: #009966;
+        font-size: 0.85em;
+        cursor:auto;
+        font-family: 'Times New Roman', Times, serif;
+    }
+    .artist img{
+        width:30px;
+        height:30px;
+        border-radius: 15px;
+        margin-right: 5px;
+        vertical-align: middle;
+    }
+    a{
+        text-decoration: none;
+    }
+    .artist a{
+        color: #009966;
+    }
+    .artist span{
+        cursor: pointer;
+        vertical-align: middle;
+        width:100%;
     }
     .author{
         margin-top: 1em;

@@ -123,6 +123,11 @@ Vue.use(VueRouter,axios)
         name: "Pixiv",
         component: () => import('../views/Pixiv.vue')
     },{
+        // Pixiv作者作品展示模块
+        path: '/artist',
+        name: "Artist",
+        component: () => import('../views/Artist.vue')
+    },{
         // 在线工具模块：json数组
         path:"/tools/json",
         name: "Json",
