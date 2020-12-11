@@ -45,7 +45,15 @@
                 </el-row>
             </el-main>
             <el-footer>
-                <div class="next-page" ref="nextpages" style="display:none;"><el-button type="danger" round @click="loadPic">下一页</el-button></div>
+                <div class="next-page">
+                    <span ref="prepages" style="display:none;" >
+                        <el-button type="danger" round @click="backPic">上一页</el-button>
+                    </span>
+                    <el-divider direction="horizontal" style="margin:8px 0px ! important;"></el-divider>
+                    <span ref="nextpages" style="display:none;margin-bottom:1em">
+                        <el-button type="danger" round @click="nextPic">下一页</el-button>
+                    </span>
+                </div>
             </el-footer>
         </el-container>
     </div>
@@ -61,13 +69,12 @@ export default {
             tableData: [],
             photoList: [],
             url: "",
+            offset: 30,
             loading: false,
         }
     },
 
     mounted() {
-        // url 预加载
-        this.url = "https://api.acg-gov.com/public/search/users/illusts?id="+this.$route.query.id+"&offset=30";
         this.loadPic();
         this.getArtist();
 
@@ -115,16 +122,27 @@ export default {
 
         // 查询目标id的作品集
         loadPic:function(){
-            let vm = this;
+
             this.loading = true;
-            // url预处理
-            if (this.url == "" || this.url == null) {
+            let offset = this.offset;
+            // offset预处理
+            if ( offset == 0 || offset == null) {
                 this.$refs.nextpages.style.display='none';
+                this.$refs.prepages.style.display='none';
                 return;
+            }else if(offset == 30) {
+                this.$refs.prepages.style.display='none';
+            }else if(offset >= 60){
+                this.$refs.prepages.style.display='block';
             }
+            let vm = this;
             axios({
                 method:"get",
-                url: this.url,
+                url: "https://api.acg-gov.com/public/search/users/illusts",
+                params:{
+                    id: this.id,
+                    offset: this.offset
+                },
                 headers:{
                     token: this.FACTURL.pixiv_token
                 }
@@ -146,10 +164,8 @@ export default {
                     // 判断是否加载完毕
                     let next_url = response.data.next_url;
                     if (next_url == '' || next_url == null) {
-                        vm.url = '';
                         vm.$refs.nextpages.style.display='none';
                     }else{
-                        vm.url = response.data.next_url;
                         vm.$refs.nextpages.style.display='block';
                     }
                     
@@ -159,7 +175,24 @@ export default {
             .catch(function (error) {
                 console.log(error);
             });
+        },
+
+        // 加载下一页
+        nextPic:function(){
+            this.offset += 30;
+        },
+        // 回到上一页
+        backPic:function(){
+            this.offset -=30;
         }
+    },
+    watch: {
+        offset:{
+            handler: function (newVal, oldVal) {
+                this.loadPic();
+            },
+            deep: true
+        },
     },
 }
 </script>
