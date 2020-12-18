@@ -28,16 +28,17 @@
         </el-container>
 
         <el-container>
-            <el-main v-loading="loading">
+            <el-main v-loading="loading" class="images" v-viewer>
                 <el-row :gutter="15">
                     <el-col :xs="8" :sm="6" :md="6" :lg="4" :xl="4" v-for='(row,index) in photoList' :key="index" style="margin-bottom:8px;">
                         <div class="card">
                             <div class="header">
-                                <img v-lazy="row.src">
+                                <img v-lazy="row.src" :data-origin="row.href">
                             </div>
                             <div class="card_footer">
                                 <div class="desc">
-                                    <span :title="row.title">{{row.info}}</span>
+                                    <span v-if="row.href == '' "><a href="javascript:;" target="_self">{{row.info}}</a></span>
+                                    <span v-else><a :href="row.originalSize" target="_blank">{{row.info}}</a></span>
                                 </div>
                             </div>
                         </div>
@@ -60,6 +61,10 @@
 </template>
 
 <script>
+import Vue from 'vue';
+import Viewer from 'v-viewer';
+import 'viewerjs/dist/viewer.css';
+Vue.use(Viewer);
 export default {
     name:"Artist",
     data() {
@@ -154,8 +159,16 @@ export default {
                     for (let index = 0; index < rows.length; index++) {
                         let obj = {};
                         let cover = rows[index]["image_urls"]["medium"];
-                        let href = rows[index]["image_urls"]["large"];
+                        let originalSize = rows[index]["meta_single_page"]["original_image_url"];
+                        let href = "";
+                        let original_image = "";
+                        if (originalSize != null && originalSize != undefined) {
+                            original_image = originalSize;
+                            href = originalSize;
+                        }
+
                         obj["src"] = cover.replace("https://i.pximg.net","https://i.pixiv.cat");
+                        obj["originalSize"] = original_image.replace("https://i.pximg.net","https://i.pixiv.cat");
                         obj["href"] = href.replace("https://i.pximg.net","https://i.pixiv.cat");
                         obj["info"] = rows[index]["title"];
                         items.push(obj);
@@ -308,7 +321,6 @@ export default {
         position:absolute;
         right: 3px;
         top: 3px;
-
         background-color: coral;
         border-radius: 20%;
     }
@@ -316,17 +328,19 @@ export default {
         margin-top: 8px;
         width:100%;
         height:1.5em;
-        font-weight: 600;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        color: #009966;
-        font-size: 1em;
-        cursor:auto;
-        font-family: 'Times New Roman', Times, serif;
     }
     .next-page {
         width: 100%;
         text-align: center;
+    }
+    .desc span a{
+        text-decoration: none;
+        font-weight: 600;
+        color: #009966;
+        font-size: 0.95em;
+        font-family: "Microsoft YaHei", "微软雅黑", "STHeiti", "WenQuanYi Micro Hei", SimSun, sans-serif;
     }
 </style>

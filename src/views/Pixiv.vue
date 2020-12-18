@@ -6,7 +6,7 @@
             </el-col>
             <el-col :xs="14" :sm="14" :md="14" :lg="14" :xl="14">
                 <div class="search">
-                    <input class="effect-1" type="text" placeholder="Placeholder Text" v-model="keyword"><i class="el-icon-s-promotion" @click="seek"></i>
+                    <input class="effect-1" type="text" placeholder="Placeholder Text" v-model="keyword" @keyup.enter="seek"><i class="el-icon-s-promotion" @click="seek"></i>
                 </div>
             </el-col>
             <el-col :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
@@ -72,7 +72,7 @@
                 <p>{{message}}</p>
             </div>
         <el-container>
-            <el-main class="images"  v-viewer>
+            <el-main class="images"  v-viewer v-loading="loading">
                 <el-row :gutter="15">
                     <el-col :xs="8" :sm="6" :md="6" :lg="4" :xl="4" v-for='(row,index) in photoList' :key="index" style="margin-bottom:8px;">
                         <div class="card">
@@ -111,11 +111,12 @@ export default {
         return {
             keyword:"",                         // 搜索关键词
             photoList: [],                      // 结果数据集
-            isCollapse: false,
-            message: "",
-            offset: 0,
-            max_pages: 10,
-            willShow:true,
+            isCollapse: false,                  // 菜单是否折叠
+            message: "",                        // 搜索关键词合法性校验结果提示
+            loading: false,                     // 加载动画
+            offset: 0,                          // 搜索起始页
+            max_pages: 10,                      // 排行榜最大页数
+            willShow:true,                      // 点击排行榜，展示/关闭 选择页面
             form: {
                 mode: '',
                 region: '',
@@ -137,6 +138,7 @@ export default {
 
     },
     methods: {
+        // 排行榜筛选条件显示/关闭函数
         showDetail:function(){
             if(this.willShow==true){
                 this.willShow=false;
@@ -144,6 +146,8 @@ export default {
                 this.willShow=true;
             }
         },
+
+        // 排行榜搜索函数
         search:function (params) {
             let vm = this;
             axios({
@@ -189,6 +193,7 @@ export default {
                 console.log(error);
             });
         },
+
         // 自定义条件排行榜
         onSubmit:function(){
             let form = this.form;
@@ -213,12 +218,13 @@ export default {
         seek:function(){
             let vm = this;
             let flag_blocked = false;
-            
+            this.loading = true;
             // 关键字是否为空
             if(this.keyword == '' || this.keyword == null){
                 this.message = "关键字不可为空哟... ┑(￣Д ￣)┍ ";
                 this.$refs.warning.style.display='block';
                 this.$refs.nextpages.style.display='none';
+                this.loading = false;
                 // 关键词为空时，查询
                 return false;
             }
@@ -277,14 +283,14 @@ export default {
                             vm.$refs.warning.style.display='none';
                             vm.$refs.nextpages.style.display='block';
                         }
-                    } else {
-                        
-                    }
+                    } 
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
             }
+            // 关闭加载动画
+            this.loading = false;
         },
 
         // 加载下一页
