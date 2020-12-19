@@ -16,7 +16,7 @@ Vue.use(VueRouter,axios)
     {
         //将 path 设置为*号，将会捕获任何没有得到匹配的路由； 
         path: '*',
-        name: 'error',
+        name: 'Error',
         component: () => import(/* webpackChunkName: "about" */ '../views/Error.vue')
     },
     {
@@ -122,6 +122,11 @@ Vue.use(VueRouter,axios)
         path: '/pixiv',
         name: "Pixiv",
         component: () => import('../views/Pixiv.vue')
+    },{
+        // Pixiv作者作品展示模块
+        path: '/artist',
+        name: "Artist",
+        component: () => import('../views/Artist.vue')
     },{
         // 在线工具模块：json数组
         path:"/tools/json",

@@ -6,7 +6,7 @@
             </el-col>
             <el-col :xs="14" :sm="14" :md="14" :lg="14" :xl="14">
                 <div class="search">
-                    <input class="effect-1" type="text" placeholder="Placeholder Text" v-model="keyword"><i class="el-icon-s-promotion" @click="seek"></i>
+                    <input class="effect-1" type="text" placeholder="Placeholder Text" v-model="keyword" @keyup.enter="seek"><i class="el-icon-s-promotion" @click="seek"></i>
                 </div>
             </el-col>
             <el-col :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
@@ -72,7 +72,7 @@
                 <p>{{message}}</p>
             </div>
         <el-container>
-            <el-main class="images"  v-viewer>
+            <el-main class="images"  v-viewer v-loading="loading">
                 <el-row :gutter="15">
                     <el-col :xs="8" :sm="6" :md="6" :lg="4" :xl="4" v-for='(row,index) in photoList' :key="index" style="margin-bottom:8px;">
                         <div class="card">
@@ -82,6 +82,10 @@
                             <div class="card_footer">
                                 <div class="title">
                                     <span :title="row.title">{{row.title}}</span>
+                                </div>
+                                <div class="artist">
+                                    <img :src="row.artist.cover" :alt="row.artist.id">
+                                    <span><router-link target="_blank" :to="{path : '/artist', query : {id : row.artist.id}}">#{{row.artist.name}}#</router-link></span>
                                 </div>
                             </div>
                         </div>
@@ -102,16 +106,17 @@ import 'viewerjs/dist/viewer.css';
 import {toast} from "../assets/js/toast.js";
 Vue.use(Viewer);
 export default {
+    name:"Pixiv",
     data() {
-        name:"Pixiv";
         return {
             keyword:"",                         // 搜索关键词
             photoList: [],                      // 结果数据集
-            isCollapse: false,
-            message: "",
-            offset: 0,
-            max_pages: 10,
-            willShow:true,
+            isCollapse: false,                  // 菜单是否折叠
+            message: "",                        // 搜索关键词合法性校验结果提示
+            loading: false,                     // 加载动画
+            offset: 0,                          // 搜索起始页
+            max_pages: 10,                      // 排行榜最大页数
+            willShow:true,                      // 点击排行榜，展示/关闭 选择页面
             form: {
                 mode: '',
                 region: '',
@@ -133,6 +138,7 @@ export default {
 
     },
     methods: {
+        // 排行榜筛选条件显示/关闭函数
         showDetail:function(){
             if(this.willShow==true){
                 this.willShow=false;
@@ -140,6 +146,8 @@ export default {
                 this.willShow=true;
             }
         },
+
+        // 排行榜搜索函数
         search:function (params) {
             let vm = this;
             axios({
@@ -161,11 +169,16 @@ export default {
                     let rows = [];
                     for (let index = 0; index < result.length; index++) {
                         let obj = {};
+                        let authorInfo = {};
                         obj["title"] = result[index]["work"]["title"];
+                        authorInfo["name"] = result[index]["work"]["user"]["name"];
+                        authorInfo["id"] = result[index]["work"]["user"]["id"];
+                        authorInfo["cover"] = (result[index]["work"]["user"]["profile_image_urls"]["px_50x50"].replace("https://i.pximg.net","https://i.pixiv.cat"));
+                        obj["artist"] = authorInfo;
                         // 由于原图过大，导致加载缓慢，不得不使用带水印的中图
                         // let image_url = result[index]["work"]["image_urls"]["large"];
                         let image_url = result[index]["work"]["image_urls"]["px_480mw"];
-                        // 处理图片路径
+                        // 替换Pixiv图片国外域名
                         obj["url"] = image_url.replace("https://i.pximg.net","https://i.pixiv.cat");
                         rows.push(obj);
                     }
@@ -180,6 +193,7 @@ export default {
                 console.log(error);
             });
         },
+
         // 自定义条件排行榜
         onSubmit:function(){
             let form = this.form;
@@ -204,12 +218,13 @@ export default {
         seek:function(){
             let vm = this;
             let flag_blocked = false;
-            
+            this.loading = true;
             // 关键字是否为空
             if(this.keyword == '' || this.keyword == null){
                 this.message = "关键字不可为空哟... ┑(￣Д ￣)┍ ";
                 this.$refs.warning.style.display='block';
                 this.$refs.nextpages.style.display='none';
+                this.loading = false;
                 // 关键词为空时，查询
                 return false;
             }
@@ -252,7 +267,12 @@ export default {
                             let rows = [];
                             for (let index = 0; index < result.length; index++) {
                                 let obj = {};
+                                let authorInfo = {};
                                 obj["title"] = result[index]["title"];
+                                authorInfo["name"] = result[index]["user"]["name"];
+                                authorInfo["id"] = result[index]["user"]["id"];
+                                authorInfo["cover"] = (result[index]["user"]["profile_image_urls"]["medium"].replace("https://i.pximg.net","https://i.pixiv.cat"));
+                                obj["artist"] = authorInfo;
                                 let image_url = result[index]["image_urls"]["medium"];
                                 // 处理图片路径
                                 obj["url"] = image_url.replace("https://i.pximg.net","https://i.pixiv.cat");
@@ -263,14 +283,14 @@ export default {
                             vm.$refs.warning.style.display='none';
                             vm.$refs.nextpages.style.display='block';
                         }
-                    } else {
-                        
-                    }
+                    } 
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
             }
+            // 关闭加载动画
+            this.loading = false;
         },
 
         // 加载下一页
@@ -406,10 +426,7 @@ export default {
         margin-top: 8px;
         font-family: 'Raleway', Arial, sans-serif;
     }
-    a{
-        text-decoration: none;
-        color: black;
-    }
+
     @media screen and (max-width:480px){
         .el-menu-vertical-demo:not(.el-menu--collapse) {
             width: 100%;
@@ -417,7 +434,7 @@ export default {
         }
         .card{
             max-width: 100%;
-            height: 14em;
+            height: 16em;
             position: relative;
         }
         .card .header img{
@@ -444,7 +461,7 @@ export default {
         }
         .card{
             max-width: 100%;
-            height: 20em;
+            height: 22em;
             position: relative;
             cursor: pointer;
         }
@@ -498,6 +515,36 @@ export default {
         font-size: 1em;
         cursor:auto;
         font-family: 'Times New Roman', Times, serif;
+    }
+    .artist{
+        width:100%;
+        height:30px;
+        font-weight: 600;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: #009966;
+        font-size: 0.85em;
+        cursor:auto;
+        font-family: 'Times New Roman', Times, serif;
+    }
+    .artist img{
+        width:30px;
+        height:30px;
+        border-radius: 15px;
+        margin-right: 5px;
+        vertical-align: middle;
+    }
+    a{
+        text-decoration: none;
+    }
+    .artist a{
+        color: #009966;
+    }
+    .artist span{
+        cursor: pointer;
+        vertical-align: middle;
+        width:100%;
     }
     .author{
         margin-top: 1em;

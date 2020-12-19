@@ -1,6 +1,6 @@
 <template>
   <div class="video" style="background-image: linear-gradient(to top, #5ee7df 0%, #b490ca 100%);">
-        <el-row :gutter="10" style="padding:1em 1em 0px 1em;">
+        <el-row :gutter="10" style="margin: 0px;">
             <el-col :xs="3" :sm="4" :md="4" :lg="8" :xl="8"><div style="height:40px;"></div></el-col>
             <el-col :xs="18" :sm="16" :md="16" :lg="8" :xl="8">
                 <div class="search-box">
@@ -12,7 +12,6 @@
                         </i>
                         <template slot-scope="{ item }">
                             <div class="name">{{ item.value }}</div>
-
                         </template>
                     </el-autocomplete>
                 </div>
@@ -45,7 +44,7 @@
                 </el-main>
                 <el-footer>
                     <div class="block">
-                        <el-pagination @current-change="handleCurrentChange" :current-page.sync="currentPage" :page-size="page_size" layout="prev, pager, next, jumper" :total="count">
+                        <el-pagination @current-change="handleCurrentChange" :current-page.sync="currentPage" :page-size="page_size" layout="prev, pager, next" :total="count" :pager-count="pager_count">
                         </el-pagination>
                     </div>
                 </el-footer>
@@ -77,7 +76,8 @@ export default {
             loading:true,                           // 页面加载中特效
             page_size:36,                           // 每页展示卡片数
             restaurants: [],
-            content:""
+            content:"",
+            pager_count: 5
         };
     },
 

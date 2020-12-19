@@ -5,9 +5,9 @@
                 <el-row :gutter="10">
                     <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
                         <div class="block">
-                            <el-carousel :interval="3000" type="card" height="30vh">
+                            <el-carousel :interval="3000" type="card" height="28vh">
                                 <el-carousel-item v-for="(row, index) in rows" :key="index">
-                                    <img :src="row" alt="">
+                                    <img :src="row">
                                 </el-carousel-item>
                             </el-carousel>
                         </div>
@@ -97,7 +97,23 @@ export default {
                     title: "待定",
                     description: "I9研发中",
                     url: "/tools/card"
-                }]
+                }],
+            carouselHeight: "30vh"
+        }
+    },
+    mounted() {
+
+    },
+    computed: {
+        isPC:function() {
+            // 走马灯预设高度
+            let userAgentInfo = navigator.userAgent;
+            let Agents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];  
+            let flag = true;  
+            for (let v = 0; v < Agents.length; v++) {  
+                if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; }  
+            }
+            flag ? this.carouselHeight="30vh" : this.carouselHeight = "18vh";
         }
     },
 
@@ -134,9 +150,9 @@ export default {
         border-radius: 6px;
     }
     .block img{
-        object-fit: contain;
+        object-fit:cover;
         width: 100%;
-        /* height: 100%; */
+        height: 100%;
     }
     .category img{
         width: 40px;
