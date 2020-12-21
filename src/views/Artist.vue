@@ -50,7 +50,7 @@
                     <span ref="prepages" style="display:none;" >
                         <el-button type="danger" round @click="backPic">上一页</el-button>
                     </span>
-                    <el-divider direction="horizontal" style="margin:8px 0px ! important;"></el-divider>
+                    <hr>
                     <span ref="nextpages" style="display:none;margin-bottom:1em">
                         <el-button type="danger" round @click="nextPic">下一页</el-button>
                     </span>
@@ -296,7 +296,6 @@ export default {
             max-width: 100%;
             height: 20em;
             position: relative;
-            cursor: pointer;
         }
         .card .header img{
             height: 100%;
@@ -342,5 +341,16 @@ export default {
         color: #009966;
         font-size: 0.95em;
         font-family: "Microsoft YaHei", "微软雅黑", "STHeiti", "WenQuanYi Micro Hei", SimSun, sans-serif;
+    }
+    .images{
+        min-height: 25vh;
+    }
+    hr{
+        /* color: #da7a85; */
+        width:100%;
+        margin:8px 0px;
+        border: 0;
+        height: 3px;
+        background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #da7a85, rgba(0, 0, 0, 0));
     }
 </style>

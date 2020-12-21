@@ -71,8 +71,8 @@
             <div class="search-content search-content-blocked" ref="warning" style="display:none;">
                 <p>{{message}}</p>
             </div>
-        <el-container>
-            <el-main class="images"  v-viewer v-loading="loading">
+        <el-container v-loading="loading" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.6)">
+            <el-main class="images"  v-viewer>
                 <el-row :gutter="15">
                     <el-col :xs="8" :sm="6" :md="6" :lg="4" :xl="4" v-for='(row,index) in photoList' :key="index" style="margin-bottom:8px;">
                         <div class="card">
@@ -283,14 +283,14 @@ export default {
                             vm.$refs.warning.style.display='none';
                             vm.$refs.nextpages.style.display='block';
                         }
-                    } 
+                    }
+                    // 关闭加载动画
+                    vm.loading = false;
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
             }
-            // 关闭加载动画
-            this.loading = false;
         },
 
         // 加载下一页
@@ -556,5 +556,8 @@ export default {
     }
     span{
          font-family: "Microsoft YaHei", "微软雅黑", "STHeiti", "WenQuanYi Micro Hei", SimSun, sans-serif;
+    }
+    .images{
+        min-height: 80vh;
     }
 </style>
