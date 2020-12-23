@@ -14,7 +14,7 @@ Vue.prototype.FACTURL = facturl;
 
 Vue.use(VueLazyLoad,{
 	error: require('./assets/images/failed.jpg'), // 加载错误的图片
-	loading: require('./assets/images/loading.gif') // 加载时的图片
+	loading: require('./assets/images/loading.svg') // 加载时的图片
 });
 Vue.config.productionTip = false
 // Vue.use(ElementUI);

@@ -10,7 +10,7 @@
                 </div>
             </el-col>
             <el-col :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
-                <p class="item-left" @click="showDetail" style="cursor:pointer;">排行榜</p>
+                <p class="item-left"><span @click="showDetail" style="cursor:pointer;">排行榜</span></p>
             </el-col>
         </el-row>
         <el-container class="ranking" v-if="!willShow">
@@ -71,13 +71,17 @@
             <div class="search-content search-content-blocked" ref="warning" style="display:none;">
                 <p>{{message}}</p>
             </div>
-        <el-container>
-            <el-main class="images"  v-viewer v-loading="loading">
+        <el-container v-loading="loading" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.6)">
+            <el-main class="images">
                 <el-row :gutter="15">
                     <el-col :xs="8" :sm="6" :md="6" :lg="4" :xl="4" v-for='(row,index) in photoList' :key="index" style="margin-bottom:8px;">
                         <div class="card">
-                            <div class="header">
-                                <img v-lazy="row.url">
+                            <div class="header" v-viewer>
+                                <img v-lazy="row.url" :alt="row.title" class="img-cover">
+                                <div class="count" v-if="row.page_count > 1">
+                                    <img src="../assets/images/file.svg" class="animation">
+                                    <span>{{row.page_count}}</span>
+                                </div>
                             </div>
                             <div class="card_footer">
                                 <div class="title">
@@ -159,6 +163,7 @@ export default {
                 }
             })
             .then(function(response){
+                console.log(response);
                 if (response.status == 200) {
                     if (response["data"]["status"] == "failure") {
                         toast(response["data"]["errors"]["system"]["message"]);
@@ -171,6 +176,7 @@ export default {
                         let obj = {};
                         let authorInfo = {};
                         obj["title"] = result[index]["work"]["title"];
+                        obj["page_count"] = result[index]["work"]["page_count"];
                         authorInfo["name"] = result[index]["work"]["user"]["name"];
                         authorInfo["id"] = result[index]["work"]["user"]["id"];
                         authorInfo["cover"] = (result[index]["work"]["user"]["profile_image_urls"]["px_50x50"].replace("https://i.pximg.net","https://i.pixiv.cat"));
@@ -185,12 +191,14 @@ export default {
                     // 绑定数据
                     vm.max_pages = pages;
                     vm.photoList = rows;
+                    // 加载成功时，右下角提示
+                    vm.remarkSuccess();
                 } else {
-                    
+                    vm.remarkError("错误状态："+response.status);
                 }
             })
             .catch(function (error) {
-                console.log(error);
+                this.remarkError(error.toString());
             });
         },
 
@@ -269,6 +277,7 @@ export default {
                                 let obj = {};
                                 let authorInfo = {};
                                 obj["title"] = result[index]["title"];
+                                obj["page_count"] = result[index]["page_count"];
                                 authorInfo["name"] = result[index]["user"]["name"];
                                 authorInfo["id"] = result[index]["user"]["id"];
                                 authorInfo["cover"] = (result[index]["user"]["profile_image_urls"]["medium"].replace("https://i.pximg.net","https://i.pixiv.cat"));
@@ -282,21 +291,51 @@ export default {
                             vm.photoList = rows;
                             vm.$refs.warning.style.display='none';
                             vm.$refs.nextpages.style.display='block';
+                            // 加载成功时，右下角提示
+                            vm.remarkSuccess();
                         }
-                    } 
+                    }
+                    // 关闭加载动画
+                    vm.loading = false;
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
             }
-            // 关闭加载动画
-            this.loading = false;
         },
 
         // 加载下一页
         loadNext:function(){
             this.offset = this.offset+30;
             this.seek();
+        },
+
+        // 加载成功提示函数
+        remarkSuccess(msg) {
+            let message = "请耐心等待图片加载";
+            if (msg != "" && msg != null) {
+                message = msg
+            }
+            this.$notify({
+                title: '数据获取成功',
+                type: 'success',
+                message: message,
+                position: 'bottom-right'
+            });
+        },
+
+        // 加载失败提示函数
+        remarkError(msg) {
+            let message = "≧ ﹏ ≦ 技术小哥正在处理中...";
+            if (msg != "" && msg != null) {
+                message = msg
+            }
+            this.$notify({
+                title: '发生未知错误',
+                type: 'error',
+                message: message,
+                position: 'bottom-right'
+            });
         },
 
         // 弹窗提示
@@ -426,7 +465,41 @@ export default {
         margin-top: 8px;
         font-family: 'Raleway', Arial, sans-serif;
     }
-
+    .header .count {
+        position: absolute;
+        display: inline-block;
+        top: 8px;
+        right: 8px;
+        color: #fff;
+        padding: 3px;
+        background-color: rgba(0,0,0,.62);
+        border-radius: 4px;
+    }
+    .count img {
+        float: left;
+        fill: #fff;
+        height: 20px;
+        width: 20px;
+    }
+    .count img:hover{
+        width: 23px;
+        height:23px;
+    }
+    .header img{
+        transition: opacity .3s,transform .3s ease;
+    }
+    img.animation {
+        -webkit-animation: lazy-animation .4s linear;
+        animation: lazy-animation .4s linear;
+        -webkit-animation-fill-mode: forwards;
+        animation-fill-mode: forwards;
+    }
+    .count span {
+        float: right;
+        color: #fff;
+        padding: 0 2px;
+        line-height: 20px;
+    }    
     @media screen and (max-width:480px){
         .el-menu-vertical-demo:not(.el-menu--collapse) {
             width: 100%;
@@ -437,7 +510,7 @@ export default {
             height: 16em;
             position: relative;
         }
-        .card .header img{
+        .card .header img.img-cover{
             height: 100%;
             width: 100%;
             object-fit: cover;
@@ -465,7 +538,7 @@ export default {
             position: relative;
             cursor: pointer;
         }
-        .card .header img{
+        .card .header img.img-cover{
             height: 100%;
             width: 100%;
             object-fit: cover;
@@ -556,5 +629,11 @@ export default {
     }
     span{
          font-family: "Microsoft YaHei", "微软雅黑", "STHeiti", "WenQuanYi Micro Hei", SimSun, sans-serif;
+    }
+    .images{
+        min-height: 84vh;
+    }
+    .item-left span:hover{
+        color: #da7a85;
     }
 </style>

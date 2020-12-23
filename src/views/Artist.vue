@@ -28,12 +28,12 @@
         </el-container>
 
         <el-container>
-            <el-main v-loading="loading" class="images" v-viewer>
+            <el-main v-loading="loading" class="images">
                 <el-row :gutter="15">
                     <el-col :xs="8" :sm="6" :md="6" :lg="4" :xl="4" v-for='(row,index) in photoList' :key="index" style="margin-bottom:8px;">
                         <div class="card">
-                            <div class="header">
-                                <img v-lazy="row.src" :data-origin="row.href">
+                            <div class="header" v-viewer>
+                                <img v-lazy="row.src" :data-origin="row.href" :alt="row.info">
                             </div>
                             <div class="card_footer">
                                 <div class="desc">
@@ -50,11 +50,12 @@
                     <span ref="prepages" style="display:none;" >
                         <el-button type="danger" round @click="backPic">上一页</el-button>
                     </span>
-                    <el-divider direction="horizontal" style="margin:8px 0px ! important;"></el-divider>
+                    <hr>
                     <span ref="nextpages" style="display:none;margin-bottom:1em">
                         <el-button type="danger" round @click="nextPic">下一页</el-button>
                     </span>
                 </div>
+                <br>
             </el-footer>
         </el-container>
     </div>
@@ -174,6 +175,7 @@ export default {
                         items.push(obj);
                     }
                     vm.photoList = items;
+                    vm.remarkSuccess();
                     // 判断是否加载完毕
                     let next_url = response.data.next_url;
                     if (next_url == '' || next_url == null) {
@@ -186,7 +188,7 @@ export default {
                 vm.loading = false;
             })
             .catch(function (error) {
-                console.log(error);
+                this.remarkError(error.toString());
             });
         },
 
@@ -197,6 +199,34 @@ export default {
         // 回到上一页
         backPic:function(){
             this.offset -=30;
+        },
+
+        // 加载成功提示函数
+        remarkSuccess(msg) {
+            let message = "请耐心等待图片加载";
+            if (msg != "" && msg != null) {
+                message = msg
+            }
+            this.$notify({
+                title: '数据获取成功',
+                type: 'success',
+                message: message,
+                position: 'bottom-right'
+            });
+        },
+
+        // 加载失败提示函数
+        remarkError(msg) {
+            let message = "≧ ﹏ ≦ 技术小哥正在处理中...";
+            if (msg != "" && msg != null) {
+                message = msg
+            }
+            this.$notify({
+                title: '发生未知错误',
+                type: 'error',
+                message: message,
+                position: 'bottom-right'
+            });
         }
     },
     watch: {
@@ -222,7 +252,7 @@ export default {
     }
     .artist-overview-avatar{
         width: 100%;
-        height: 5em;
+        height: 4.5em;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -233,7 +263,7 @@ export default {
         border-radius: 40px;
     }
     .artist-comment{
-        height: 14em;
+        height: 10em;
         width: 100%;
         font-size: 14px;
         font-weight: 400;
@@ -296,7 +326,6 @@ export default {
             max-width: 100%;
             height: 20em;
             position: relative;
-            cursor: pointer;
         }
         .card .header img{
             height: 100%;
@@ -342,5 +371,16 @@ export default {
         color: #009966;
         font-size: 0.95em;
         font-family: "Microsoft YaHei", "微软雅黑", "STHeiti", "WenQuanYi Micro Hei", SimSun, sans-serif;
+    }
+    .images{
+        min-height: 25vh;
+    }
+    hr{
+        /* color: #da7a85; */
+        width:100%;
+        margin:8px 0px;
+        border: 0;
+        height: 3px;
+        background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #da7a85, rgba(0, 0, 0, 0));
     }
 </style>
