@@ -38,6 +38,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
    - 2020-11-10 主模块新增 `Pixiv` 模块（P站搜索与排行榜）
    - 2020-11-23 修复 `资讯` 与 `音乐` 模块的开发与生产环境的CORS跨域问题
    - 2020-12-10 新增 `Pixiv` 的子模块 `Artist` 和vue首次加载动画 ，根据作者id，查询所有的作品集
+   - 2020-12-23 优化Pixiv，Artist页面，增加加载成功与否提示，优化图片放大镜v-viewer图片全加载导致消耗内存
 
 ---
 <br>
