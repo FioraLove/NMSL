@@ -133,6 +133,11 @@ export default {
     //mounted页面DOM加载完毕，可用于初始化页面，执行一些初始化函数 
     mounted:function(){
         this.open();
+        // 引入樱花特效
+        let script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = 'https://api.vvhan.com/api/snow';
+        document.getElementsByTagName('head')[0].appendChild(script);
     },
     destoryed: function(){
 
@@ -561,7 +566,6 @@ export default {
         position:absolute;
         right: 3px;
         top: 3px;
-
         background-color: coral;
         border-radius: 20%;
     }

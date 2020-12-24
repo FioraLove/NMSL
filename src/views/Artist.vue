@@ -80,9 +80,16 @@ export default {
         }
     },
 
+    // 初始化
     mounted() {
-        this.loadPic();
+        // 引入樱花特效
+        let script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = 'https://api.vvhan.com/api/snow';
+        document.getElementsByTagName('head')[0].appendChild(script);
+        // 初始化获取作者信息
         this.getArtist();
+        this.loadPic();
 
     },
     methods: {
@@ -263,7 +270,7 @@ export default {
         border-radius: 40px;
     }
     .artist-comment{
-        height: 10em;
+        height: 11em;
         width: 100%;
         font-size: 14px;
         font-weight: 400;
@@ -275,7 +282,7 @@ export default {
         margin: 0px;
     }
     .artist-comment pre {
-        max-height: 180px;
+        max-height: 10em;
         overflow-x: hidden;
         overflow-y: scroll;
         margin: 16px 0;

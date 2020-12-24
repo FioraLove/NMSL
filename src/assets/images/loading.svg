@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: rgba(255, 255, 255, 0); display: block; shape-rendering: auto; animation-play-state: running; animation-delay: 0s;" width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: rgba(255, 255, 255, 0); display: block; shape-rendering: auto; animation-play-state: running; animation-delay: 0s;" width="100px" height="100px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
 <g transform="translate(80,50)" style="animation-play-state: running; animation-delay: 0s;">
 <g transform="rotate(0)" style="animation-play-state: running; animation-delay: 0s;">
 <circle cx="0" cy="0" r="6" fill="#ff727d" fill-opacity="1" style="animation-play-state: running; animation-delay: 0s;" transform="scale(1.44633 1.44633)">
