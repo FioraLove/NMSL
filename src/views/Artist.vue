@@ -37,8 +37,7 @@
                             </div>
                             <div class="card_footer">
                                 <div class="desc">
-                                    <span v-if="row.href == '' "><a href="javascript:;" target="_self">{{row.info}}</a></span>
-                                    <span v-else><a :href="row.originalSize" target="_blank">{{row.info}}</a></span>
+                                    <span><a :href="row.originalSize" target="_blank">{{row.info}}</a></span>
                                 </div>
                             </div>
                         </div>
@@ -168,16 +167,15 @@ export default {
                         let obj = {};
                         let cover = rows[index]["image_urls"]["medium"];
                         let originalSize = rows[index]["meta_single_page"]["original_image_url"];
-                        let href = "";
                         let original_image = "";
                         if (originalSize != null && originalSize != undefined) {
                             original_image = originalSize;
-                            href = originalSize;
+                        }else{
+                            original_image = rows[index]["image_urls"]["large"];
                         }
 
                         obj["src"] = cover.replace("https://i.pximg.net","https://i.pixiv.cat");
                         obj["originalSize"] = original_image.replace("https://i.pximg.net","https://i.pixiv.cat");
-                        obj["href"] = href.replace("https://i.pximg.net","https://i.pixiv.cat");
                         obj["info"] = rows[index]["title"];
                         items.push(obj);
                     }

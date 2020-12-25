@@ -37,11 +37,16 @@
                                 <el-option label="原创" value="original"></el-option>
                                 <el-option label="男性向" value="male"></el-option>
                                 <el-option label="女性向" value="female"></el-option>
-                                <el-option label="每日工口" value="daily_r18" disabled></el-option>
+                                <el-option label="每日工口" value="daily_r18"></el-option>
+                                <el-option label="每周工口" value="weekly_r18"></el-option>
+                                <el-option label="男性工口" value="male_r18"></el-option>
+                                <el-option label="女性腐向" value="female_r18"></el-option>
+                                <el-option label="工口加强型（猎奇）" value="r18g"></el-option>
+                                <!-- <el-option label="每日工口" value="daily_r18" disabled></el-option>
                                 <el-option label="每周工口" value="weekly_r18" disabled></el-option>
                                 <el-option label="男性工口" value="male_r18" disabled></el-option>
                                 <el-option label="女性腐向" value="female_r18" disabled></el-option>
-                                <el-option label="工口加强型（猎奇）" value="r18g" disabled></el-option>
+                                <el-option label="工口加强型（猎奇）" value="r18g" disabled></el-option> -->
                                 </el-select>
                             </el-form-item>
                             <el-form-item label="排行榜类别">
@@ -85,7 +90,9 @@
                             </div>
                             <div class="card_footer">
                                 <div class="title">
-                                    <span :title="row.title">{{row.title}}</span>
+                                    <el-tooltip :content="row.rank" placement="top">
+                                        <span>{{row.title}}</span>
+                                    </el-tooltip>
                                 </div>
                                 <div class="artist">
                                     <img :src="row.artist.cover" :alt="row.artist.id">
@@ -158,6 +165,7 @@ export default {
 
         // 排行榜搜索函数
         search:function (params) {
+            this.loading = true;
             let vm = this;
             axios({
                 url:"https://api.acg-gov.com/public/ranking",
@@ -168,10 +176,9 @@ export default {
                 }
             })
             .then(function(response){
-                console.log(response);
                 if (response.status == 200) {
                     if (response["data"]["status"] == "failure") {
-                        toast(response["data"]["errors"]["system"]["message"]);
+                        vm.remarkError(response["data"]["errors"]["system"]["message"]);
                         return false;
                     }
                     let result = response["data"]["response"][0]["works"];
@@ -180,6 +187,17 @@ export default {
                     for (let index = 0; index < result.length; index++) {
                         let obj = {};
                         let authorInfo = {};
+                        let rankText = "";
+                        let previousRank = result[index]["previous_rank"], rank = result[index]["rank"];
+                        if (previousRank < rank) {
+                            rankText = "排名 ⬇ "+Math.abs(previousRank-rank)+"名";
+                        }else if(previousRank == rank){
+                            rankText = "排名 ↔ "+rank+"名";
+                        }
+                        else {
+                            rankText = "排名 ⬆ "+Math.abs(previousRank-rank)+"名";
+                        }
+                        obj["rank"] = rankText;
                         obj["title"] = result[index]["work"]["title"];
                         obj["page_count"] = result[index]["work"]["page_count"];
                         authorInfo["name"] = result[index]["work"]["user"]["name"];
@@ -201,6 +219,8 @@ export default {
                 } else {
                     vm.remarkError("错误状态："+response.status);
                 }
+                // 关闭加载动画
+                vm.loading = false;
             })
             .catch(function (error) {
                 this.remarkError(error.toString());
@@ -281,6 +301,7 @@ export default {
                             for (let index = 0; index < result.length; index++) {
                                 let obj = {};
                                 let authorInfo = {};
+                                obj["rank"] = "👁："+result[index]["total_view"] +"/ ♡："+result[index]["total_bookmarks"];
                                 obj["title"] = result[index]["title"];
                                 obj["page_count"] = result[index]["page_count"];
                                 authorInfo["name"] = result[index]["user"]["name"];
@@ -468,7 +489,7 @@ export default {
         text-align: center;
         margin-bottom: 0px;
         margin-top: 8px;
-        font-family: 'Raleway', Arial, sans-serif;
+        font-family: 'Times New Roman', Times, serif;
     }
     .header .count {
         position: absolute;
