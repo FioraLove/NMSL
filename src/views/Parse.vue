@@ -96,9 +96,7 @@
     </div>
 </template>
 
-
-
-<script scoped>  
+<script scoped>
     import DPlayer from "../assets/js/DPlayer.min.js";
     import {toast} from "../assets/js/toast.js";
     import { Base64 } from 'js-base64';
@@ -122,15 +120,27 @@
                     "抖音Ⅱ","绿洲视频","皮皮搞笑","Vue Vlog","Instagram","比心陪练","逗拍","Before避风","酷秀短视频"],
                 datas: ["好看视频","六间房","全民小视频","陌陌视频","梨视频","美拍","场库短视频","微博视频","最右","皮皮虾","AcFun",
                     "快手","全民K歌","西瓜视频","秒拍","小红书","小咖秀","轻视频","开眼视频","腾讯微视","火山短视频","虎牙视频","抖音Ⅱ","绿洲视频","皮皮搞笑","Vue Vlog",
-                    "Instagram","比心陪练","逗拍","Before避风","酷秀短视频"],       
-
+                    "Instagram","比心陪练","逗拍","Before避风","酷秀短视频"],
             }
         }, 
         mounted() {
-            this.initDPlayer;                       // 初始化计算属性
+            // 动态创建script标签，引入外部文件
+            // 引入hls.min.js文件
+            let script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = 'https://cdn.jsdelivr.net/npm/hls.js@0.14.12/dist/hls.min.js';
+            document.getElementsByTagName('head')[0].appendChild(script);
+            // 引入flv.min.js文件
+            let flv_script = document.createElement('script');
+            flv_script.type = 'text/javascript';
+            flv_script.src = 'https://cdn.jsdelivr.net/npm/flv.js@1.5.0/dist/flv.min.js';
+            document.getElementsByTagName('head')[0].appendChild(flv_script);
+
+            // 初始化计算属性
+            this.initDPlayer;
         },
 
-        computed: {
+        computed: { 
             // 视频播放器初始化函数
             initDPlayer:function(){
                 // 判斷url的格式
@@ -140,9 +150,17 @@
                         url: this.url,
                         type: 'hls',
                         defaultQuality: 0,
+                        pic: require("../assets/images/seraphine3.jpg"),
+                        thumbnails: "",
+                    };
+                }else if(/flv/.test((this.url).toLowerCase())){
+                    video = {
+                        url: this.url,
+                        type: 'flv',
+                        defaultQuality: 0,
                         pic: require("../assets/images/master.jpg"),
                         thumbnails: "",
-                    }
+                    };
                 }else{
                     video = {
                         url:this.url,
@@ -150,7 +168,7 @@
                         pic: this.thum_pic,
                         thumbnails: "",
                         type: 'auto',
-                    }
+                    };
                 }
 
                 const dp = new DPlayer({
@@ -174,21 +192,7 @@
                         fontSize: '20px',
                         bottom: '8%',
                         color: '#b7daff',
-                    },
-                    contextmenu: [
-                        {
-                            text: '二次作者',
-                            link: 'AhriLove·牛蛙点点'
-                        }
-                    ],
-                    highlight: [{
-                            time: 20,
-                            text: '这是第 20 秒',
-                        },{
-                            time: 120,
-                            text: '这是 2 分钟',
-                        }
-                    ]
+                    }
                 });
                 this.loading=false;
             } 
@@ -352,7 +356,7 @@
             height: 65vh;
         }
     }
-/**/
+
     .follow{
         width: 100%;
         height:5em;
