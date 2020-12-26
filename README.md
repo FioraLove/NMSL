@@ -20,6 +20,12 @@ npm run build
 #### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
+#### How to run
+
+- 安装vue命令： `npm install -g @vue/cli` ,然后执行 `vue ui` 开启vue项目管理界面，点击运行就行了
+
+- 后端API的项目地址为：https://github.com/FioraLove/Restful-API-Django  ,Django启动方式：`python manage.py runserver 127.0.0.1:8001` (映射端口修改的话，vue-cli项目目录下的 `src\store\facturl.js` 也要修改)
+
 ---
 
 ### 开发日志:
@@ -44,7 +50,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 <br>
 
 > 主页：
-
 
   - ![](https://cdn.jsdelivr.net/gh/FioraLove/Images/home.gif)
 
