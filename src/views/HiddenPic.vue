@@ -45,7 +45,7 @@
     <el-container>
 
         <el-container>
-            <el-main class="images"  v-viewer>
+            <el-main class="images">
                 <el-row :gutter="15">
                     
                     <!-- <img v-for="src in images" :src="src" :key="src"> -->
@@ -53,8 +53,8 @@
 
                         <el-col :xs="8" :sm="6" :md="6" :lg="4" :xl="4" v-for='(row,index) in rows' :key="index" style="margin-top:10px;">
                             <div class="card">
-                                <div class="header">
-                                        <img v-lazy="'http://kpd163.me:1024'+row.images_url">
+                                <div class="header" v-viewer>
+                                    <img v-lazy="'http://kpd163.me:1024'+row.images_url" :alt="row.title">
                                 </div>
                                 <div class="card_footer">
                                     <div class="title">
@@ -102,7 +102,7 @@ import Viewer from 'v-viewer'
 import Vue from 'vue'
 Vue.use(Viewer)
 export default {
-    name:"HiddenVideo",
+    name:"HiddenPic",
     data() {
         return {
             token: window.btoa(decodeURIComponent(window.location.search.split("=")[1])),
@@ -163,8 +163,6 @@ export default {
             switch (key) {
                 case "1":
                     this.category = "1";
-                    console.log(typeof(key));
-                    console.log(keyPath);
                     break;
                 case "2":
                     this.category = "2";
@@ -221,7 +219,7 @@ export default {
             let session_token = sessionStorage.getItem("token");
             if(session_token == null || session_token == undefined || session_token==""){
                 alert("登录失效，请重新登录");
-                window.location.href = "/nmsl/admin/secret";
+                window.location.href = "/admin";
             }
             axios({
                 // api1:自定义的api接口
@@ -240,6 +238,7 @@ export default {
                 if(response.status == 200){
                     vm.rows = response.data.results;
                     vm.count = response.data.count;
+                    vm.remarkSuccess();
                 }else{
                     vm.rows = {"content":"暂无数据。。。"};
                 }
@@ -249,7 +248,21 @@ export default {
             .catch(function (error) {
                 console.log(error);
             });
-        }
+        },
+
+        // 加载成功提示函数
+        remarkSuccess(msg) {
+            let message = "请耐心等待图片加载";
+            if (msg != "" && msg != null) {
+                message = msg
+            }
+            this.$notify({
+                title: '数据获取成功',
+                type: 'success',
+                message: message,
+                position: 'bottom-right'
+            });
+        },
 
     },
     watch: {

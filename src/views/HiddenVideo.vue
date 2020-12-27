@@ -41,7 +41,7 @@
                     <el-col :xs="8" :sm="6" :md="6" :lg="4" :xl="4" v-for='(row,index) in rows' :key="index" style="margin-top:10px;">
                         <div class="card">
                             <div class="header">
-                                <router-link target="_blank" :to="{path : '/nmsl/hidden/video/play', query : {vid : row.vid, token: bs_token}}" :title="row.title">
+                                <router-link target="_blank" :to="{path : '/hidden/play', query : {vid : row.vid, token: bs_token}}" :title="row.title">
                                     <img v-lazy="(row.pic).replace('cdn888.8008xs.com','cdn888.umaaa.xyz')">
                                 </router-link>
                             </div>
@@ -56,7 +56,7 @@
 
                             <div class="card_footer">
                                 <div class="title">
-                                    <span><router-link target="_blank" :to="{path : '/nmsl/hidden/video/play', query : {vid : row.vid, token: bs_token}}" :title="row.title">{{(row.title).replace("旧里番-","")}}</router-link></span>
+                                    <span><router-link target="_blank" :to="{path : '/hidden/play', query : {vid : row.vid, token: bs_token}}" :title="row.title">{{(row.title).replace("旧里番-","")}}</router-link></span>
                                 </div>
                                     <div class="author">
                                         <span>清晰度：{{row.quality == ''?'暂无':row.quality}}</span>
@@ -98,7 +98,7 @@
 
 <script>
 export default {
-    name:"hiddenVideo",
+    name:"HiddenVideo",
     data() {
         return {
             token: window.btoa(decodeURIComponent(window.location.search.split("=")[1])),
@@ -179,17 +179,16 @@ export default {
             ];
         },
         kewordSelect:function(item) {
-            console.log(item);
             this.keyword = item.value;
         },
 
         handleSelect(key, keyPath) {
             switch (key) {
                 case "1":
-                    window.location.href="/nmsl/hidden/picture?token="+this.bs_token
+                    window.location.href="/hidden/picture?token="+this.bs_token
                     break;
                 case "2":
-                    window.location.href="/nmsl/hidden/source?token="+this.bs_token
+                    window.location.href="/hidden/source?token="+this.bs_token
                     break;
                 default:
                     this.category = "1";
@@ -218,7 +217,7 @@ export default {
             let session_token = sessionStorage.getItem("token");
             if(session_token == null || session_token == undefined || session_token==""){
                 alert("登录失效，请重新登录");
-                window.location.href = "/nmsl/admin/secret";
+                window.location.href = "/admin";
             }
             axios({
                 // api1:自定义的api接口
@@ -237,6 +236,7 @@ export default {
                 if(response.status == 200){
                     vm.rows = response.data.results;
                     vm.count = response.data.count;
+                    vm.remarkSuccess();
                 }else{
                     vm.rows = {"content":"暂无数据。。。"};
                 }
@@ -246,7 +246,21 @@ export default {
             .catch(function (error) {
                 console.log(error);
             });
-        }
+        },
+
+        // 加载成功提示函数
+        remarkSuccess(msg) {
+            let message = "请耐心等待图片加载";
+            if (msg != "" && msg != null) {
+                message = msg
+            }
+            this.$notify({
+                title: '数据获取成功',
+                type: 'success',
+                message: message,
+                position: 'bottom-right'
+            });
+        },
 
     },
 

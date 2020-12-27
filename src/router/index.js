@@ -23,7 +23,6 @@ Vue.use(VueRouter,axios)
         // 资讯模块
         path: '/news',
         name: 'News',
-        // 路由懒加载模式
         component: () => import(/* webpackChunkName: "about" */ '../views/News.vue')
     },
     {
@@ -41,6 +40,7 @@ Vue.use(VueRouter,axios)
         path:'/user-*',
         component: ()=> import('../views/News.vue')
     },{
+        // 嘴臭圣经模块
         path: '/ndsl',
         name: 'Ndsl',
         component: () => import(/* webpackChunkName: "about" */ '../views/Ndsl.vue')
@@ -48,7 +48,6 @@ Vue.use(VueRouter,axios)
         // 漫画模块
         path: '/comic',
         name: 'Comic',
-        // 路由懒加载模式
         component: () => import(/* webpackChunkName: "about" */ '../views/Comic.vue'),
         meta: {
             keepAlive: true, //此组件需要被缓存
@@ -72,17 +71,17 @@ Vue.use(VueRouter,axios)
         }
     },{
         // 管理员主页，仅自己可见
-        path: '/nmsl/admin/secret',
-        name: 'Secret',
+        path: '/admin',
+        name: 'Admin',
         component: () => import(/* webpackChunkName: "about" */ '../views/Admin.vue')
     },{
         // 登陆后的视频网址
-        path: '/nmsl/hidden/video/secret',
+        path: '/hidden/video',
         name: "HiddenVideo",
         component: () => import('../views/HiddenVideo.vue')
     },{
         // 登陆后的视频播放网址
-        path: '/nmsl/hidden/video/play',
+        path: '/hidden/play',
         name: "HiddenPlay",
         component: () => import('../views/HiddenPlay.vue'),
         meta: {
@@ -90,7 +89,7 @@ Vue.use(VueRouter,axios)
         }
     },{
         // 登陆后的图片浏览网址
-        path: '/nmsl/hidden/picture',
+        path: '/hidden/picture',
         name: "HiddenPic",
         component: () => import('../views/HiddenPic.vue'),
         meta: {
@@ -98,7 +97,7 @@ Vue.use(VueRouter,axios)
         }
     },{
         // 登陆后的隐私第三方资源分享
-        path: '/nmsl/hidden/source',
+        path: '/hidden/source',
         name: "HiddenSource",
         component: () => import('../views/HiddenSource.vue')
     },{

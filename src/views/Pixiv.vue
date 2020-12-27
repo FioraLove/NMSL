@@ -179,6 +179,7 @@ export default {
                 if (response.status == 200) {
                     if (response["data"]["status"] == "failure") {
                         vm.remarkError(response["data"]["errors"]["system"]["message"]);
+                        vm.loading = false;
                         return false;
                     }
                     let result = response["data"]["response"][0]["works"];
