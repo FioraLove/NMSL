@@ -10,24 +10,12 @@
                 </div>
             </el-col>
             <el-col :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
-                <p class="item-left"><span @click="showDetail" style="cursor:pointer;">排行榜</span></p>
-            </el-col>
-        </el-row>
-        <el-container class="ranking" v-if="!willShow">
-            <el-main>
-                <el-menu class="el-menu-vertical-demo" :collapse="isCollapse">
-                    <el-submenu index="1">
-                        <template slot="title">
-                            <i class="el-icon-s-fold"></i>
-                            <span slot="title">排行榜</span>
-                        </template>
-
-                        <el-form ref="form" :model="form" label-width="100px" class="demo-ruleForm">
-                            <el-form-item label="日期">
-                                <el-col>
-                                <el-date-picker type="date" placeholder="选择日期" v-model="form.date"></el-date-picker>
-                                </el-col>
-                            </el-form-item>
+                <p class="item-left"><span @click="drawer = true" style="cursor:pointer;">排行榜</span></p>
+                <el-drawer  :with-header="false" :visible.sync="drawer" :size="sizeText" custom-class="demo-drawer">
+                    <br>
+                    <br>
+                    <div class="demo-drawer__content">
+                        <el-form ref="form" :model="form" label-width="50px" class="demo-ruleForm">
                             <el-form-item label="模式">
                                 <el-select v-model="form.mode" placeholder="请选择模式">
                                 <el-option label="每日" value="daily"></el-option>
@@ -42,14 +30,12 @@
                                 <el-option label="男性工口" value="male_r18"></el-option>
                                 <el-option label="女性腐向" value="female_r18"></el-option>
                                 <el-option label="工口加强型（猎奇）" value="r18g"></el-option>
-                                <!-- <el-option label="每日工口" value="daily_r18" disabled></el-option>
-                                <el-option label="每周工口" value="weekly_r18" disabled></el-option>
-                                <el-option label="男性工口" value="male_r18" disabled></el-option>
-                                <el-option label="女性腐向" value="female_r18" disabled></el-option>
-                                <el-option label="工口加强型（猎奇）" value="r18g" disabled></el-option> -->
                                 </el-select>
                             </el-form-item>
-                            <el-form-item label="排行榜类别">
+                            <el-form-item label="日期">
+                                <el-date-picker type="date" placeholder="选择日期" v-model="form.date"></el-date-picker>
+                            </el-form-item>
+                            <el-form-item label="类别">
                                 <el-select v-model="form.region" placeholder="请选择排行榜类别">
                                 <el-option label="所有" value="all"></el-option>
                                 <el-option label="插画" value="illust"></el-option>
@@ -57,25 +43,22 @@
                                 <el-option label="动图" value="ugoira"></el-option>
                                 </el-select>
                             </el-form-item>
-                            <el-form-item label="起始页">
-                                <el-slider v-model="form.page"  show-input :min="1" :max="max_pages" style="width: 90%;">
-                                </el-slider>
+                            <el-form-item label="页数">
+                                <el-input-number v-model="form.page" controls-position="right" :min="1" :max="max_pages"></el-input-number>
                             </el-form-item>
-                            <el-form-item>
-                                <el-button type="primary" @click="onSubmit">搜索</el-button>
+                            <br>
+                            <el-form-item label-width="10px">
+                                <el-button @click="cancelForm" style="width:45%;">取 消</el-button>
+                                <el-button type="primary" @click="onSubmit" style="width:45%;">搜索</el-button>
                             </el-form-item>
                         </el-form>
-                    </el-submenu>
-                    <el-menu-item index="2">
-                        <i class="el-icon-loading"></i>
-                        <span slot="title">Demo</span>
-                    </el-menu-item>
-                </el-menu>
-            </el-main>
-        </el-container>
-            <div class="search-content search-content-blocked" ref="warning" style="display:none;">
-                <p>{{message}}</p>
-            </div>
+                    </div>
+                </el-drawer>
+            </el-col>
+        </el-row>
+        <div class="search-content search-content-blocked" ref="warning" style="display:none;">
+            <p>{{message}}</p>
+        </div>
         <el-container v-loading="loading" element-loading-text="拼命加载中" element-loading-spinner="el-icon-loading" element-loading-background="rgba(0, 0, 0, 0.6)">
             <el-main class="images">
                 <el-row :gutter="15">
@@ -121,13 +104,13 @@ export default {
     data() {
         return {
             keyword:"",                         // 搜索关键词
+            sizeText:"",                        // 抽屉组件屏幕占比
+            drawer: false,                      // 是否开启抽屉
             photoList: [],                      // 结果数据集
-            isCollapse: false,                  // 菜单是否折叠
             message: "",                        // 搜索关键词合法性校验结果提示
             loading: false,                     // 加载动画
             offset: 0,                          // 搜索起始页
             max_pages: 10,                      // 排行榜最大页数
-            willShow:true,                      // 点击排行榜，展示/关闭 选择页面
             form: {
                 mode: '',
                 region: '',
@@ -137,7 +120,23 @@ export default {
         };
     },
 
-    //mounted页面DOM加载完毕，可用于初始化页面，执行一些初始化函数 
+    // vue已完成实例化data，但DOM树尚未加载完毕
+    created() {
+        let userAgentInfo = navigator.userAgent;
+        let Agents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];  
+        let flag = true;
+        let sizeText = "25%";
+        for (let v = 0; v < Agents.length; v++) {  
+            if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; }  
+        }
+        if (!flag) {
+            sizeText = '80%';
+        }
+        // 绑定数据
+        this.sizeText = sizeText;
+    },
+
+    // DOM树加载完毕，可用于初始化页面，执行一些初始化函数 
     mounted:function(){
         this.open();
         // 引入樱花特效
@@ -146,22 +145,8 @@ export default {
         script.src = 'https://api.vvhan.com/api/snow';
         document.getElementsByTagName('head')[0].appendChild(script);
     },
-    destoryed: function(){
 
-    },
-
-    computed:{
-
-    },
     methods: {
-        // 排行榜筛选条件显示/关闭函数
-        showDetail:function(){
-            if(this.willShow==true){
-                this.willShow=false;
-            }else{
-                this.willShow=true;
-            }
-        },
 
         // 排行榜搜索函数
         search:function (params) {
@@ -376,6 +361,11 @@ export default {
             this.$alert(letter, '致用户的一封信', {
                 dangerouslyUseHTMLString: true
             });
+        },
+
+        // 抽屉函数关闭
+        cancelForm:function() {
+            this.drawer = false;
         }
     },
     watch: {
