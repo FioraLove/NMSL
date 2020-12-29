@@ -48,8 +48,8 @@
                             </el-form-item>
                             <br>
                             <el-form-item label-width="10px">
-                                <el-button @click="cancelForm" style="width:45%;">取 消</el-button>
-                                <el-button type="primary" @click="onSubmit" style="width:45%;">搜索</el-button>
+                                <el-button @click="cancelForm" style="width:45%;">关  闭</el-button>
+                                <el-button type="primary" @click="onSubmit" style="width:45%;">搜  索</el-button>
                             </el-form-item>
                         </el-form>
                     </div>
