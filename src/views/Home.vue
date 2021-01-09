@@ -81,10 +81,16 @@
                                 <div class="per-video" :style="{ height:bodyHeight + 'px'}" v-loading="loading">
                                     <template v-for="(row,index) in results">
                                         <div class="bilibili" :key="index">
-                                            <div class="bilipic"><img v-lazy="'http:'+row.pic"></div>
+                                            <div class="bilipic"><img v-lazy="row.pic"></div>
                                             <div class="bilibox">
-                                                <p class="bilititle">{{row.title}}</p> 
-                                                <div><a :href="'https://www.bilibili.com/video/'+row.bvid" target="_blank"><el-button type="primary" size="mini">BILIBILI观看</el-button></a></div>
+                                                <p class="bilititle">{{row.title}}</p>
+                                                <div>
+                                                    <a :href="'https://www.bilibili.com/video/'+row.bvid" target="_blank">
+                                                        <el-tooltip :content="'播放量：'+row.play" placement="bottom">
+                                                            <el-button type="primary" size="mini">BILIBILI观看</el-button>
+                                                        </el-tooltip>
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </template>
@@ -116,8 +122,8 @@
                         <a :href="row.url" target="_self" v-else><p>{{row.content}}</p></a>
                     </div>
                 </template>
-                <div class="box" @click="send">
-                    <a href="javascript:;"><p style="color:#F90;font-weight:700;">Pornbar</p></a>
+                <div class="box">
+                    <a href="/admin" @click="skip"><p style="color:#F90;font-weight:700;">Pornbar</p></a>
                 </div>
             </div>
         </div>
@@ -187,9 +193,9 @@ export default {
                 method:"get"
             })
             .then(function(response){
-                if(response.status == 200 && response.data.status==1){
+                if(response.status == 200 && response.data.status == 1){
                     vm.loading = false;
-                    vm.results = (response.data).vlist;
+                    vm.results = response.data.results;
                 }else{
                     vm.results = [];
                 }
@@ -207,8 +213,13 @@ export default {
         },
         send:function() {
             toast("因其特殊性，暂不对外开放，404哟！(ง •_•)ง \n  推荐: https://pixiviz.pwp.app/ \n https://www.acg-gov.com/");
+        },
+        // 阻止a标签跳转
+        skip:function(e) {
+            e = e || window.event;
+            window.event ? window.event.returnValue = false : e.preventDefault();
+            toast("因其特殊性，暂不对外开放，404哟！(ง •_•)ง \n  推荐: https://pixiviz.pwp.app/ \n https://www.acg-gov.com/");
         }
-
     }
 }
 </script>

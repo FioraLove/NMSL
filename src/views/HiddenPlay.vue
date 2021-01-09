@@ -34,8 +34,7 @@
 
 <script>
 export default {
-    // 
-    name:"Play",
+    name:"HiddenPlay",
     data() {
         return {
             vid:this.$route.query.vid,
@@ -57,7 +56,7 @@ export default {
             let session_token = sessionStorage.getItem("token");
             if(session_token == null || session_token == undefined || session_token==""){
                 alert("登录失效，请重新登录");
-                window.location.href = "/nmsl/admin/secret";
+                window.location.href = "/admin";
             }
             axios({
                 // api1:自定义的api接口

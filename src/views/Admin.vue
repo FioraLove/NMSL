@@ -143,7 +143,7 @@ export default {
                         console.log(token);
                         // 如果登录成功，存储token
                         sessionStorage.setItem("token",window.atob(token.trim()));
-                        window.location.href = "/nmsl/hidden/video/secret?token="+window.atob(token.trim());
+                        window.location.href = "/hidden/video?token="+window.atob(token.trim());
                     } catch (error) {
                         vm.token = "";
                     }

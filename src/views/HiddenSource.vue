@@ -32,7 +32,7 @@
 
 <script>
 export default {
-    name:"Source",
+    name:"HiddenSource",
     data() {
         return {
             nowYear:new Date().getFullYear(),

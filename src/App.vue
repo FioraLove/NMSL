@@ -8,8 +8,8 @@
                     <router-link to="/comic">comic</router-link>|
                     <router-link to="/comic/category">comicCatalog</router-link>|
                     <router-link to="/comic/chapter">comicChapter</router-link>|
-                    <router-link to="/nmsl/hidden/video/play">play</router-link>|
-                    <router-link to="/nmsl/hidden/picture">picture</router-link>|
+                    <router-link to="/hidden/play">play</router-link>|
+                    <router-link to="/hidden/picture">picture</router-link>|
                     <router-link to="/comments">comments</router-link>|
                     <router-link to="/tools">tools</router-link>|
                     <router-link to="/tools/json">json</router-link>|
@@ -23,8 +23,8 @@
                     <router-link to="/comic">comic</router-link>|
                     <router-link to="/comic/category">comicCatalog</router-link>|
                     <router-link to="/comic/chapter">comicChapter</router-link>|
-                    <router-link to="/nmsl/hidden/video/play">play</router-link>|
-                    <router-link to="/nmsl/hidden/picture">picture</router-link>|
+                    <router-link to="/hidden/play">play</router-link>|
+                    <router-link to="/hidden/picture">picture</router-link>|
                     <router-link to="/comments">comments</router-link>|
                     <router-link to="/tools">tools</router-link>|
                     <router-link to="/tools/json">json</router-link>|

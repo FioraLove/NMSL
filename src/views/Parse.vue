@@ -2,51 +2,6 @@
     <div id="detail">
         <el-container>
             <el-main>
-                <!-- 视频解析模块 -->
-                <el-row :gutter="30">
-
-                    <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
-
-                        <div style="margin:0 auto;width:80%;">
-                            <el-alert title="视频测试播放" type="success" center show-icon
-                                description="将视频地址添加到输入框中，某些视频若存在字幕，可将其字幕url地址添加到字幕框中">
-                            </el-alert>                            
-                            <el-input placeholder="请输入测试播放的视频地址" v-model="input_url" class="input-with-select" clearable>
-                            </el-input>
-                            <br><br>
-                            <el-input placeholder="非必填项： e.g.,https://s-sh-17-dplayercdn.oss.dogecdn.com/hikarunara.vtt" v-model="input_subtitle" clearable>
-                                <template slot="prepend">字幕:</template><el-button slot="append" icon="el-icon-search" @click="play()"></el-button>
-                            </el-input>
-                        </div>
-                        <br><br>
-                        <div style="margin-top: 15px;margin:0 auto;width:80%;">
-                            <el-alert
-                                title="视频解析接口"
-                                type="warning"
-                                center
-                                show-icon
-                                description="打开短视频APP，点开某个视频，点击右下角分享按钮，在分享弹框中点击复制链接或通过分享到微信QQ等获取分享链接">
-                            </el-alert>
-
-                           <el-input placeholder="请输入分享链接的视频地址(bilibili直接输入视频bv号)" v-model="input_api" class="input-with-select" clearable>
-                                <el-select v-model="select" slot="prepend" placeholder="请选择">
-                                    <template v-for="(name, index) in rows">
-                                        <el-option v-if="name == 'YouTube' ||  name == '抖音' " :label="name" :value="index+1" :key="index" disabled></el-option>
-                                        <el-option v-else :label="name" :value="index+1" :key="index"></el-option>
-                                    </template>
-                                    <el-option label="其它" value="99"></el-option>
-                                </el-select>
-                                <el-button slot="append" icon="el-icon-search" @click="parse()"></el-button>
-                            </el-input>
-                            
-                            <br><br>
-                            <el-input type="textarea" :rows="2"  placeholder="解析结果"  v-model="textarea"> 
-                            </el-input>
-                        </div>
-                    </el-col>
-                </el-row>
-                <br>
-                <br>    
                 <!-- url视频播放测试页面 -->
                 <el-row :gutter="30">
                     <!-- 视频播放 -->
@@ -80,6 +35,45 @@
                             </div>
                     </el-col>
                 </el-row>
+                <br><br>
+                <!-- 视频解析模块 -->
+                <el-row :gutter="30">
+                    <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+                        <div style="margin:0 auto;width:100%;">
+                            <el-alert title="视频测试播放" type="success" center show-icon
+                                description="将视频地址添加到输入框中，某些视频地址若存在跨域问题，则无法播放">
+                            </el-alert>                            
+                            <el-input placeholder="请输入测试播放的视频地址" v-model="input_url" class="input-with-select" clearable>
+                                <template slot="prepend">视频:</template><el-button slot="append" type="success" icon="el-icon-video-play" @click="play()"></el-button>
+                            </el-input>
+                        </div>
+                        <br><br>
+                        <div style="margin-top: 15px;margin:0 auto;width:100%;">
+                            <el-alert
+                                title="视频解析接口"
+                                type="warning"
+                                center
+                                show-icon
+                                description="打开短视频APP，点开某个视频，点击右下角分享按钮，在分享弹框中点击复制链接或通过分享到微信QQ等获取分享链接">
+                            </el-alert>
+
+                           <el-input placeholder="请输入分享链接的视频地址(bilibili直接输入视频bv号)" v-model="input_api" class="input-with-select" clearable>
+                                <el-select v-model="select" slot="prepend" placeholder="请选择">
+                                    <template v-for="(name, index) in rows">
+                                        <el-option v-if="name == 'YouTube' ||  name == '抖音' " :label="name" :value="index+1" :key="index" disabled></el-option>
+                                        <el-option v-else :label="name" :value="index+1" :key="index"></el-option>
+                                    </template>
+                                    <el-option label="其它" value="99"></el-option>
+                                </el-select>
+                                <el-button slot="append" icon="el-icon-search" @click="parse()"></el-button>
+                            </el-input>
+                            
+                            <br><br>
+                            <el-input type="textarea" :rows="2"  placeholder="解析结果"  v-model="textarea"> 
+                            </el-input>
+                        </div>
+                    </el-col>
+                </el-row>
             </el-main>
         </el-container>
         
@@ -107,13 +101,11 @@
                 nowYear:new Date().getFullYear(),
                 loading: false,                       // 加载动画
                 input_url: '',                      // 输入的视频播放地址
-                input_subtitle: '',                 // 输入的字幕加载地址
                 url: "https://api.dogecloud.com/player/get.mp4?vcode=5ac682e6f8231991&userId=17&ext=.mp4",
                 thum_pic: require("../assets/images/beautiful.jpg"),                   // 视频封面
-                subtitle:"https://s-sh-17-dplayercdn.oss.dogecdn.com/hikarunara.vtt",           // 字幕url
                 textarea:"",
                 input_api:"",
-                api:"",                             
+                api:"",
                 select:"",
                 rows: [ "抖音", "YouTube", "哔哩哔哩", "好看视频","六间房","全民小视频","陌陌视频","梨视频","美拍","场库短视频",
                     "微博视频","最右","皮皮虾","AcFun","快手","全民K歌","西瓜视频","秒拍","小红书","小咖秀","轻视频","开眼视频","腾讯微视","火山短视频","虎牙视频",
@@ -184,15 +176,7 @@
                     logo:  require("../assets/images/video_logo.png"),
                     volume: 0.5,
                     mutex: true,
-                    video: video,
-                    // 字幕
-                    subtitle: {
-                        url: this.subtitle,
-                        type: 'webvtt',
-                        fontSize: '20px',
-                        bottom: '8%',
-                        color: '#b7daff',
-                    }
+                    video: video
                 });
                 this.loading=false;
             } 
@@ -251,13 +235,13 @@
                 }
             },
             play:function () {
-                if (this.input_url.length <= 20) {
-                    // 使用默认的视频地址
-                    this.url = "https://api.dogecloud.com/player/get.mp4?vcode=5ac682e6f8231991&userId=17&ext=.mp4";
-                } else {
+                if (this.input_url == "" || this.input_url == null) {
+                    toast("视频地址不可为空");
+                } else if(/http[s]:\/\//.test(this.input_url) == false){
+                    toast("请检查视频地址正确性");
+                }else {
                     this.url = this.input_url;
                 }
-                this.subtitle = this.input_subtitle;
             },
             open_douyin:function(){
                 const h = this.$createElement;
