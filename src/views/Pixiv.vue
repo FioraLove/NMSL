@@ -33,7 +33,7 @@
                                 </el-select>
                             </el-form-item>
                             <el-form-item label="日期">
-                                <el-date-picker type="date" placeholder="选择日期" v-model="form.date"></el-date-picker>
+                                <el-date-picker type="date" placeholder="选择日期" v-model="form.date" :picker-options="pickerOptions"></el-date-picker>
                             </el-form-item>
                             <el-form-item label="类别">
                                 <el-select v-model="form.region" placeholder="请选择排行榜类别">
@@ -116,6 +116,11 @@ export default {
                 region: '',
                 date: '',
                 page: 1,                        // 分页
+            },
+            pickerOptions: {                    // 时间禁用
+                disabledDate(time) {
+                    return time.getTime() > Date.now();
+                }
             }
         };
     },
