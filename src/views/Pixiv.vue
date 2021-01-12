@@ -387,7 +387,7 @@ export default {
 </style>
 <style scoped>
     @import "../assets/css/toast.css";
-    /deep/ .el-drawer:focus {
+    div /deep/ .el-drawer:focus {
         outline: none; 
     }
     input::-webkit-input-placeholder { /* WebKit browsers */ 
