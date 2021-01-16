@@ -37,7 +37,20 @@
                             </div>
                             <div class="card_footer">
                                 <div class="desc">
-                                    <span><a :href="row.originalSize" target="_blank">{{row.info}}</a></span>
+                                    <el-popconfirm  @onConfirm = "downloadIamge(row.originalSize, row.info)"
+                                        placement="top-start"
+                                        confirm-button-text='好的'
+                                        cancel-button-text='不用了'
+                                        icon="el-icon-info"
+                                        icon-color="red"
+                                        title="下载原图到本地？"
+                                        style="vertical-align: middle;"
+                                        >
+                                        <i class="el-icon-download" slot="reference" style="font-size:24px;margin-right:6px;font-weight:600;cursor:pointer;color:#da7a85;"></i>
+                                    </el-popconfirm>
+                                    <span style="vertical-align: middle;">
+                                        <a :href="row.originalSize" target="_blank">{{row.info}}</a>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -207,7 +220,7 @@ export default {
         },
 
         // 加载成功提示函数
-        remarkSuccess(msg) {
+        remarkSuccess:function(msg) {
             let message = "请耐心等待图片加载";
             if (msg != "" && msg != null) {
                 message = msg
@@ -221,7 +234,7 @@ export default {
         },
 
         // 加载失败提示函数
-        remarkError(msg) {
+        remarkError:function(msg) {
             let message = "≧ ﹏ ≦ 技术小哥正在处理中...";
             if (msg != "" && msg != null) {
                 message = msg
@@ -232,6 +245,34 @@ export default {
                 message: message,
                 position: 'bottom-right'
             });
+        },
+
+        // 原图下载函数
+        downloadIamge:function(imgSrc, name) {
+            // 处理图片保存格式问题
+            let imageTypes = "png";
+            if (/jpeg|gif|jpg/.test(imgSrc.toLowerCase())) {
+                imageTypes = imgSrc.match(/jpeg|gif|jpg/ig)[0];
+            }
+            this.remarkError("因图片CORS问题，暂不支持下载到本地，点击图片标题，亦可浏览原图，十分抱歉！");
+            return;
+            let image = new Image();
+            // 解决跨域 Canvas 污染问题
+            image.setAttribute("crossOrigin", "anonymous");
+            image.onload = function() {
+                let canvas = document.createElement("canvas");
+                canvas.width = image.width;
+                canvas.height = image.height;
+                let context = canvas.getContext("2d");
+                context.drawImage(image, 0, 0, image.width, image.height);
+                let url = canvas.toDataURL("image/"+imageTypes); //得到图片的base64编码数据
+                let a = document.createElement("a"); // 生成一个a元素
+                let event = new MouseEvent("click"); // 创建一个单击事件
+                a.download = name || "photo"; // 设置图片名称
+                a.href = url; // 将生成的URL设置为a.href属性
+                a.dispatchEvent(event); // 触发a的单击事件
+            };
+            image.src = imgSrc;
         }
     },
     watch: {
@@ -361,7 +402,7 @@ export default {
     .desc{
         margin-top: 8px;
         width:100%;
-        height:1.5em;
+        height:1.8em;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -374,7 +415,7 @@ export default {
         text-decoration: none;
         font-weight: 600;
         color: #009966;
-        font-size: 0.95em;
+        font-size: 0.99em;
         font-family: "Microsoft YaHei", "微软雅黑", "STHeiti", "WenQuanYi Micro Hei", SimSun, sans-serif;
     }
     .images{
