@@ -115,7 +115,7 @@ export default {
             let vm = this;
             axios({
                 method:"get",
-                url: "https://api.acg-gov.com/public/search/users/details",
+                url: "https://api.acgmx.com/public/search/users/details",
                 params:{
                     id: this.id
                 },
@@ -163,7 +163,7 @@ export default {
             let vm = this;
             axios({
                 method:"get",
-                url: "https://api.acg-gov.com/public/search/users/illusts",
+                url: "https://api.acgmx.com/public/search/users/illusts",
                 params:{
                     id: this.id,
                     offset: this.offset

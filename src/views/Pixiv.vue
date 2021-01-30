@@ -153,7 +153,7 @@ export default {
             this.loading = true;
             let vm = this;
             axios({
-                url:"https://api.acg-gov.com/public/ranking",
+                url:"https://api.acgmx.com/public/ranking",
                 method:"get",
                 params:params,
                 headers:{
@@ -262,7 +262,7 @@ export default {
                 this.$refs.nextpages.style.display='none';
             } else {
                 axios({
-                    url:"https://api.acg-gov.com/public/search",
+                    url:"https://api.acgmx.com/public/search",
                     method:"get",
                     params: {
                         q: this.keyword,

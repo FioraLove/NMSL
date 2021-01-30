@@ -237,7 +237,7 @@
             play:function () {
                 if (this.input_url == "" || this.input_url == null) {
                     toast("视频地址不可为空");
-                } else if(/http[s]:\/\//.test(this.input_url) == false){
+                } else if(/^(https?:\/\/)/.test(this.input_url) == false){
                     toast("请检查视频地址正确性");
                 }else {
                     this.url = this.input_url;

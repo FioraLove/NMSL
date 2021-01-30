@@ -227,7 +227,7 @@ export default {
 <style lang="less" scoped>
     @import "../assets/css/toast.css";
     .home{
-        background-image: url("../assets/images/background.png");
+        background-image: url("../assets/images/background.webp");
         background-attachment: fixed;
         background-size: cover;
         background-repeat: no-repeat;
