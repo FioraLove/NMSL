@@ -1,7 +1,6 @@
 <template>
     <!--组件有且只有一个根标签-->
     <div class="home">
-        <div class="bg"></div>
         <el-container>
             <el-main>
                 <el-row :gutter="10">
@@ -110,12 +109,11 @@
         </el-container>
         
         <!-- 导航栏模块 -->
-        <div class="main">
+        <!-- <div class="main">
             <div class="tabBar">
                 <template v-for='(row,index) in rows'>
                     <div class="box" :key="index" v-if="row.url == '/pixivs' " @click="send">
                         <a href="javascript:;" target="_self"><p>{{row.content}}</p></a>
-                        <!-- <a :href="row.url" target="_self"><p>{{row.content}}</p></a> -->
                     </div>
                     <div class="box" :key="index" v-else>
                         <a :href="row.url" target="_blank" v-if="row.content == '联系我'"><p>{{row.content}}</p></a>
@@ -126,7 +124,7 @@
                     <a href="/admin" @click="skip"><p style="color:#F90;font-weight:700;">Pornbar</p></a>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -227,7 +225,7 @@ export default {
 <style lang="less" scoped>
     @import "../assets/css/toast.css";
     .home{
-        background-image: url("../assets/images/background.webp");
+        background-image: url("../assets/images/background.jpg");
         background-attachment: fixed;
         background-size: cover;
         background-repeat: no-repeat;
