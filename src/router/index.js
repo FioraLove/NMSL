@@ -8,6 +8,7 @@ Vue.use(VueRouter,axios)
     {
         path: '/',
         name: 'APP',
+        redirect: '/home',
         component: () => import(/* webpackChunkName: "about" */ '../App.vue'),
         meta: {
             keepAlive: true, //此组件需要被缓存   

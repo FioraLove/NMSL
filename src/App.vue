@@ -1,60 +1,89 @@
 <template>
-    <!-- <div id="app" v-cloak :key="Key"> -->
     <div id="app">
-        <!-- <keep-alive>
-            <router-view>
-                <div id="nav">
-                    <router-link to="/">Home</router-link>|
-                    <router-link to="/comic">comic</router-link>|
-                    <router-link to="/comic/category">comicCatalog</router-link>|
-                    <router-link to="/comic/chapter">comicChapter</router-link>|
-                    <router-link to="/hidden/play">play</router-link>|
-                    <router-link to="/hidden/picture">picture</router-link>|
-                    <router-link to="/comments">comments</router-link>|
-                    <router-link to="/tools">tools</router-link>|
-                    <router-link to="/tools/json">json</router-link>|
-                </div>
-            <router-view/>，用于渲染views目录下的页面
-            </router-view>
-        </keep-alive> -->
-        <!-- <keep-alive>
-            <router-view v-if="$route.meta.keepAlive">
-                   <router-link to="/">Home</router-link>|
-                    <router-link to="/comic">comic</router-link>|
-                    <router-link to="/comic/category">comicCatalog</router-link>|
-                    <router-link to="/comic/chapter">comicChapter</router-link>|
-                    <router-link to="/hidden/play">play</router-link>|
-                    <router-link to="/hidden/picture">picture</router-link>|
-                    <router-link to="/comments">comments</router-link>|
-                    <router-link to="/tools">tools</router-link>|
-                    <router-link to="/tools/json">json</router-link>|
-            </router-view>
-        </keep-alive>
-        <router-view v-if="!$route.meta.keepAlive">
-            
-        </router-view> -->
         <el-container style="height:100%">
             <!-- web端 -->
             <template v-if="deviceType == 'Desktop' ">
-                <el-aside width="100px" style="background-color: rgb(238, 241, 246)">
-                    <el-menu class="el-menu-vertical-demo">
+                <el-aside width="120px" style="background-color: rgb(238, 241, 246)">
+                    <el-menu class="el-menu-vertical-demo" default-active="1">
                         <el-menu-item index="1">
                             <i class="el-icon-s-home"></i>
-                            <el-tooltip class="item" effect="dark" content="个人主页" placement="right">
-                                <router-link to="/home">Home</router-link>
-                            </el-tooltip>
+                            <span slot="title">
+                                <el-tooltip class="item" effect="dark" content="个人主页" placement="right">
+                                    <router-link to="/home">Home</router-link>
+                                </el-tooltip>
+                            </span>
                         </el-menu-item>
                         <el-menu-item index="2">
                             <i class="el-icon-s-marketing"></i>
-                            <el-tooltip class="item" effect="dark" content="资讯热榜" placement="right">
-                                <router-link to="/news">News</router-link>
-                            </el-tooltip>
+                            <span slot="title">
+                                <el-tooltip class="item" effect="dark" content="资讯热榜" placement="right">
+                                    <router-link to="/news">News</router-link>
+                                </el-tooltip>
+                            </span>
                         </el-menu-item>
                         <el-menu-item index="3">
-                            <i class="el-icon-setting"></i>
-                            <el-tooltip class="item" effect="dark" content="在线工具" placement="right">
-                                <router-link to="/tools">Tools</router-link>
-                            </el-tooltip>
+                            <i class="el-icon-reading"></i>
+                            <span slot="title">
+                                <el-tooltip class="item" effect="dark" content="热门漫画" placement="right">
+                                    <router-link to="/comic">Comic</router-link>
+                                </el-tooltip>
+                            </span>
+                        </el-menu-item>
+                        <el-menu-item index="4">
+                            <i class="el-icon-service"></i>
+                            <span slot="title">
+                                <el-tooltip class="item" effect="dark" content="天天动听" placement="right">
+                                    <router-link to="/audio">Music</router-link>
+                                </el-tooltip>
+                            </span>
+                        </el-menu-item>
+                        <el-menu-item index="5">
+                            <i class="el-icon-picture"></i>
+                            <span slot="title">
+                                <el-tooltip class="item" effect="dark" content="严选插画" placement="right">
+                                    <router-link to="/pixiv">Pixiv</router-link>
+                                </el-tooltip>
+                            </span>
+                        </el-menu-item>
+                        <el-menu-item index="6">
+                            <i class="el-icon-video-camera-solid"></i>
+                            <span slot="title">
+                                <el-tooltip class="item" effect="dark" content="短视频无水印解析" placement="right">
+                                    <router-link to="/parse">Parse</router-link>
+                                </el-tooltip>
+                            </span>
+                        </el-menu-item>
+                        <el-menu-item index="7">
+                            <i class="el-icon-warning"></i>
+                            <span slot="title">
+                                <el-tooltip class="item" effect="dark" content="抽象圣经" placement="right">
+                                    <router-link to="/ndsl">NMSL</router-link>
+                                </el-tooltip>
+                            </span>
+                        </el-menu-item>
+                        <el-menu-item index="8">
+                            <i class="el-icon-s-tools"></i>
+                            <span slot="title">
+                                <el-tooltip class="item" effect="dark" content="在线工具" placement="right">
+                                    <router-link to="/tools">Tools</router-link>
+                                </el-tooltip>
+                            </span>
+                        </el-menu-item>
+                        <el-menu-item index="9">
+                            <i class="el-icon-s-comment"></i>
+                            <span slot="title">
+                                <el-tooltip class="item" effect="dark" content="留言建议/问题咨询" placement="right">
+                                    <router-link to="/comments">Tips</router-link>
+                                </el-tooltip>
+                            </span>
+                        </el-menu-item>
+                        <el-menu-item index="10">
+                            <i class="el-icon-user-solid"></i>
+                            <span slot="title">
+                                <el-tooltip class="item" effect="dark" content="Hi~ o(*￣▽￣*)ブ guys~" placement="right">
+                                    <router-link to="/admin">Pornhub</router-link>
+                                </el-tooltip>
+                            </span>
                         </el-menu-item>
                     </el-menu>
                 </el-aside>
@@ -99,20 +128,18 @@
                     </router-view>
                 </el-main>
 
-
-                    <div class="main">
-                        <div class="tabBar">
-                            <template v-for='(row,index) in rows'>
-                                <div class="box" :key="index">
-                                    <router-link :to="row.url"><p>{{row.content}}</p></router-link>
-                                </div>
-                            </template>
-                            <div class="box">
-                                <a href="/admin" @click="skip"><p style="color:#F90;font-weight:700;">Pornbar</p></a>
+                <div class="main">
+                    <div class="tabBar">
+                        <template v-for='(row,index) in rows'>
+                            <div class="box" :key="index">
+                                <router-link :to="row.url"><p>{{row.content}}</p></router-link>
                             </div>
+                        </template>
+                        <div class="box">
+                            <a href="/admin" @click="skip"><p style="color:#F90;font-weight:700;">Pornbar</p></a>
                         </div>
                     </div>
-
+                </div>
             </template>
         </el-container>
     </div>
