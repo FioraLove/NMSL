@@ -7,6 +7,15 @@ Vue.use(VueRouter,axios)
   const routes = [
     {
         path: '/',
+        name: 'APP',
+        redirect: '/home',
+        component: () => import(/* webpackChunkName: "about" */ '../App.vue'),
+        meta: {
+            keepAlive: true, //此组件需要被缓存   
+        }
+    },
+    {
+        path: '/home',
         name: 'Home',
         component: () => import(/* webpackChunkName: "about" */ '../views/Home.vue'),
         meta: {

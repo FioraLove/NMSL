@@ -47,12 +47,15 @@ export default {
             // 开始加载数据
             this.loading = true;
             axios({
-                url: "https://api.oioweb.cn/api/binduyan.php",
+                url: "https://v1.alapi.cn/api/soul",
+                params:{
+                    format: "json"
+                },
                 method:"get"
             })
             .then(function(response){
-                if(response.status == 200){
-                    vm.textarea = response.data.txt;
+                if(response.data.code == 200){
+                    vm.textarea = response.data.data.title;
                 }else{
                     vm.textarea="干了这碗得物鸡汤！ ☠☠☠";
                 }

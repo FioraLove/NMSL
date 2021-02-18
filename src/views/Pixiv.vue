@@ -18,22 +18,22 @@
                         <el-form ref="form" :model="form" label-width="50px" class="demo-ruleForm">
                             <el-form-item label="模式">
                                 <el-select v-model="form.mode" placeholder="请选择模式">
-                                <el-option label="每日" value="daily"></el-option>
-                                <el-option label="每周" value="weekly"></el-option>
-                                <el-option label="每月" value="monthly"></el-option>
-                                <el-option label="新画师" value="rookie"></el-option>
-                                <el-option label="原创" value="original"></el-option>
-                                <el-option label="男性向" value="male"></el-option>
-                                <el-option label="女性向" value="female"></el-option>
-                                <el-option label="每日工口" value="daily_r18"></el-option>
-                                <el-option label="每周工口" value="weekly_r18"></el-option>
-                                <el-option label="男性工口" value="male_r18"></el-option>
-                                <el-option label="女性腐向" value="female_r18"></el-option>
-                                <el-option label="工口加强型（猎奇）" value="r18g"></el-option>
+                                    <el-option label="每日" value="daily"></el-option>
+                                    <el-option label="每周" value="weekly"></el-option>
+                                    <el-option label="每月" value="monthly"></el-option>
+                                    <el-option label="新画师" value="rookie"></el-option>
+                                    <el-option label="原创" value="original"></el-option>
+                                    <el-option label="男性向" value="male"></el-option>
+                                    <el-option label="女性向" value="female"></el-option>
+                                    <el-option label="每日工口" value="daily_r18"></el-option>
+                                    <el-option label="每周工口" value="weekly_r18"></el-option>
+                                    <el-option label="男性工口" value="male_r18"></el-option>
+                                    <el-option label="女性腐向" value="female_r18"></el-option>
+                                    <el-option label="工口加强型（猎奇）" value="r18g"></el-option>
                                 </el-select>
                             </el-form-item>
                             <el-form-item label="日期">
-                                <el-date-picker type="date" placeholder="选择日期" v-model="form.date"></el-date-picker>
+                                <el-date-picker type="date" placeholder="选择日期" v-model="form.date" :picker-options="pickerOptions"></el-date-picker>
                             </el-form-item>
                             <el-form-item label="类别">
                                 <el-select v-model="form.region" placeholder="请选择排行榜类别">
@@ -116,20 +116,20 @@ export default {
                 region: '',
                 date: '',
                 page: 1,                        // 分页
+            },
+            pickerOptions: {                    // 时间禁用
+                disabledDate(time) {
+                    return time.getTime() > Date.now();
+                }
             }
         };
     },
 
     // vue已完成实例化data，但DOM树尚未加载完毕
     created() {
-        let userAgentInfo = navigator.userAgent;
-        let Agents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];  
-        let flag = true;
         let sizeText = "25%";
-        for (let v = 0; v < Agents.length; v++) {  
-            if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; }  
-        }
-        if (!flag) {
+        let deviceType = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Windows Phone|SymbianOS/i.test(navigator.userAgent) ? "Mobile" : "Desktop"; 
+        if (deviceType == "Mobile") {
             sizeText = '80%';
         }
         // 绑定数据
@@ -153,7 +153,7 @@ export default {
             this.loading = true;
             let vm = this;
             axios({
-                url:"https://api.acg-gov.com/public/ranking",
+                url:"https://api.acgmx.com/public/ranking",
                 method:"get",
                 params:params,
                 headers:{
@@ -262,7 +262,7 @@ export default {
                 this.$refs.nextpages.style.display='none';
             } else {
                 axios({
-                    url:"https://api.acg-gov.com/public/search",
+                    url:"https://api.acgmx.com/public/search",
                     method:"get",
                     params: {
                         q: this.keyword,
@@ -387,6 +387,9 @@ export default {
 </style>
 <style scoped>
     @import "../assets/css/toast.css";
+    div /deep/ .el-drawer:focus {
+        outline: none; 
+    }
     input::-webkit-input-placeholder { /* WebKit browsers */ 
         color: #da7a85;
         text-align: center;

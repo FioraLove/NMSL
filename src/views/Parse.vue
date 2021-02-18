@@ -192,6 +192,13 @@
                 if(this.select == "" || this.input_api == ""){
                     toast("请选择解析的视频类型和地址");
                 }else{
+                    // 开启加载提示
+                    this.$notify({
+                        title: 'Loading',
+                        message: '短视频解析中，请耐心等待',
+                        position: 'bottom-right',
+                        type: 'success'
+                    });
                     // 定义axios的config参数配置
                     let config = {};
 
@@ -214,6 +221,9 @@
                                 url:this.input_api,
                                 time: timer,
                                 signature: Base64.encode(this.FACTURL.signature+"&"+timer)
+                            },
+                            headers: {
+                                "content-type": "multipart/form-data"
                             }
                         }
                     }
@@ -237,7 +247,7 @@
             play:function () {
                 if (this.input_url == "" || this.input_url == null) {
                     toast("视频地址不可为空");
-                } else if(/http[s]:\/\//.test(this.input_url) == false){
+                } else if(/^(https?:\/\/)/.test(this.input_url) == false){
                     toast("请检查视频地址正确性");
                 }else {
                     this.url = this.input_url;
