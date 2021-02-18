@@ -80,7 +80,7 @@
                         <el-menu-item index="10">
                             <i class="el-icon-user-solid"></i>
                             <span slot="title">
-                                <el-tooltip class="item" effect="dark" content="Hi~ o(*￣▽￣*)ブ guys~" placement="right">
+                                <el-tooltip class="item" effect="dark" content="her name plz~" placement="right">
                                     <router-link to="/admin">Pornhub</router-link>
                                 </el-tooltip>
                             </span>
