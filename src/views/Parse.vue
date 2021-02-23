@@ -69,7 +69,7 @@
                             </el-input>
                             
                             <br><br>
-                            <el-input type="textarea" :rows="2"  placeholder="解析结果"  v-model="textarea"> 
+                            <el-input type="textarea" :rows="5"  placeholder="解析结果"  v-model="textarea"> 
                             </el-input>
                         </div>
                     </el-col>
