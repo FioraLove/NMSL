@@ -2,7 +2,30 @@
   <div class="pixiv">
         <el-row :gutter="10" style="padding-top:1em;margin:0px;">
             <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-                <p class="item-left">Pixiv</p>
+                <!-- PC端 -->
+                <template v-if="sizeText == '25%'">
+                    <el-popover
+                        placement="bottom-start"
+                        width="500"
+                        trigger="hover">
+                        <el-row :gutter="10">
+                            <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" v-for='(row,index) in tagArray' :key="index">
+                                <div class="tag">
+                                    <img :src="row.image_urls" :alt="row.tag">
+                                    <div class="tag-title">
+                                        <span>{{row.translated_name}}</span><br>
+                                        <span>{{row.tag}}</span>
+                                    </div>
+                                    
+                                </div>
+                            </el-col>
+                        </el-row>
+                        <p class="item-left" slot="reference" style="cursor:pointer;">Pixiv</p>
+                    </el-popover>
+                </template>
+                <template v-else>
+                    <p class="item-left">Pixiv</p>
+                </template>
             </el-col>
             <el-col :xs="14" :sm="14" :md="14" :lg="14" :xl="14">
                 <div class="search">
@@ -111,17 +134,18 @@ export default {
             loading: false,                     // 加载动画
             offset: 0,                          // 搜索起始页
             max_pages: 10,                      // 排行榜最大页数
-            form: {
-                mode: '',
-                region: '',
-                date: '',
+            form: {                             // 排行榜Ajax请求参数
+                mode: '',                       // 模式
+                region: '',                     // 类别
+                date: '',                       // 日期
                 page: 1,                        // 分页
             },
             pickerOptions: {                    // 时间禁用
                 disabledDate(time) {
                     return time.getTime() > Date.now();
                 }
-            }
+            },
+            tagArray: [],                       // tag标签数组集
         };
     },
 
@@ -130,7 +154,9 @@ export default {
         let sizeText = "25%";
         let deviceType = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Windows Phone|SymbianOS/i.test(navigator.userAgent) ? "Mobile" : "Desktop"; 
         if (deviceType == "Mobile") {
-            sizeText = '80%';
+            sizeText = '80%';  
+        }else{
+            this.tagSerach();
         }
         // 绑定数据
         this.sizeText = sizeText;
@@ -163,7 +189,7 @@ export default {
             .then(function(response){
                 if (response.status == 200) {
                     if (response["data"]["status"] == "failure") {
-                        vm.remarkError(response["data"]["errors"]["system"]["message"]);
+                        vm.remarkError(response["data"]["errors"]);
                         vm.loading = false;
                         return false;
                     }
@@ -209,7 +235,38 @@ export default {
                 vm.loading = false;
             })
             .catch(function (error) {
-                this.remarkError(error.toString());
+                vm.remarkError(error.toString());
+            });
+        },
+
+        // tag标签函数
+        tagSerach:function (params) {
+            this.loading = true;
+            let vm = this;
+            axios({
+                url: "https://api.acgmx.com/public/tags",
+                method: "get"
+            })
+            .then(function(response){
+                if (response.status == 200) {
+                    let tagList = [];
+                    let rsp = response.data.trend_tags;
+                    for (let index = 0; index < 9; index++) {
+                        let obj = {};
+                        obj["tag"] = rsp[index]["tag"];
+                        obj["translated_name"] = rsp[index]["translated_name"];
+                        obj["image_urls"] = rsp[index]["illust"]["image_urls"]["square_medium"].replace("https://i.pximg.net","https://i.pixiv.cat");
+                        tagList.push(obj);
+                    }
+                    vm.tagArray = tagList;
+                } else {
+                    vm.remarkError("错误状态："+response.status);
+                }
+                // 关闭加载动画
+                vm.loading = false;
+            })
+            .catch(function (error) {
+                vm.remarkError(error.toString());
             });
         },
 
@@ -431,6 +488,24 @@ export default {
         font-size: 16px;
         font-weight: 600;
         letter-spacing: .05em;
+    }
+    .tag{
+        position: relative;
+        width: 100%;
+        width:100%;
+    }
+    .tag img{
+        height:100%;
+        width:100%;
+    }
+    .tag .tag-title{
+        position: absolute;
+        bottom:8px;
+        right:2px;
+        font-size: 1em;
+        font-weight: 500;
+        color: #da7a85;
+        text-shadow: #fff 1px 0 0, #fff 0 1px 0, #fff -1px 0 0, #fff 0 -1px 0;
     }
     .search-content-blocked {
         width: 100%;
