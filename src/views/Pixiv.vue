@@ -146,6 +146,10 @@ export default {
                 }
             },
             tagArray: [],                       // tag标签数组集
+            ipMsg: {
+                country: "CN",
+                ip: ""
+            },                                  // IP地址定位用户所处的国家
         };
     },
 
@@ -160,6 +164,8 @@ export default {
         }
         // 绑定数据
         this.sizeText = sizeText;
+        // 预判断其IP是否是境内IP
+        this.queryIP();
     },
 
     // DOM树加载完毕，可用于初始化页面，执行一些初始化函数 
@@ -173,7 +179,6 @@ export default {
     },
 
     methods: {
-
         // 排行榜搜索函数
         search:function (params) {
             this.loading = true;
@@ -270,6 +275,36 @@ export default {
             });
         },
 
+        /**
+         * 根据IP地址定位用户所处的国家及IP相关详细信息
+         * 定位API：
+         *      + https://www.cloudflare.com/cdn-cgi/trace
+         *      + https://json.geoiplookup.io/api
+         */
+        queryIP:function(){
+            let vm = this;
+            axios({
+                url: "https://www.cloudflare.com/cdn-cgi/trace",
+                method: "get"
+            })
+            .then(function(response){
+                if (response.status == 200) {
+                    let info = response.data;
+                    let ip = (info.split("ip=")[1]).split("ts=")[0].trim();
+                    let country = (info.split("loc=")[1]).split("tls=")[0].trim();
+                    vm.ipMsg = {
+                        country: country,
+                        ip: ip
+                    };
+                } else {
+                    vm.remarkError("错误状态："+response.status);
+                }
+            })
+            .catch(function (error) {
+                vm.remarkError(error.toString());
+            });   
+        },
+
         // 自定义条件排行榜
         onSubmit:function(){
             let form = this.form;
@@ -292,6 +327,17 @@ export default {
 
         // 搜索函数
         seek:function(){
+            if (this.ipMsg.country == "CN") {
+                this.$message({
+                    showClose: true,
+                    message: "此功能已屏蔽中国大陆 IP 访问，请启用代理，或联系博主获取权限",
+                    type: 'warning',
+                    duration: 0,
+                    offset: 180
+                });
+                return false;
+            }
+
             let vm = this;
             let flag_blocked = false;
             this.loading = true;
