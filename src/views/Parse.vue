@@ -114,19 +114,31 @@
                     "快手","全民K歌","西瓜视频","秒拍","小红书","小咖秀","轻视频","开眼视频","腾讯微视","火山短视频","虎牙视频","抖音Ⅱ","绿洲视频","皮皮搞笑","Vue Vlog",
                     "Instagram","比心陪练","逗拍","Before避风","酷秀短视频"],
             }
-        }, 
+        },
         mounted() {
             // 动态创建script标签，引入外部文件
-            // 引入hls.min.js文件
-            let script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.src = 'https://cdn.jsdelivr.net/npm/hls.js@0.14.12/dist/hls.min.js';
-            document.getElementsByTagName('head')[0].appendChild(script);
-            // 引入flv.min.js文件
-            let flv_script = document.createElement('script');
-            flv_script.type = 'text/javascript';
-            flv_script.src = 'https://cdn.jsdelivr.net/npm/flv.js@1.5.0/dist/flv.min.js';
-            document.getElementsByTagName('head')[0].appendChild(flv_script);
+            let scriptList = document.getElementsByTagName("script");
+            let status = true;
+            for(let i = 0; i<scriptList.length; i++)
+            {
+                if((scriptList[i].getAttribute("src") || "" ).includes("hls.js")){
+                    status = false;
+                    break;
+                }
+            }
+
+            if (status) {
+                // 引入hls.min.js文件
+                let script = document.createElement('script');
+                script.type = 'text/javascript';
+                script.src = 'https://cdn.jsdelivr.net/npm/hls.js@0.14.12/dist/hls.min.js';
+                document.body.appendChild(script);
+                // 引入flv.min.js文件
+                let flv_script = document.createElement('script');
+                flv_script.type = 'text/javascript';
+                flv_script.src = 'https://cdn.jsdelivr.net/npm/flv.js@1.5.0/dist/flv.min.js';
+                document.body.appendChild(flv_script);
+            }
 
             // 初始化计算属性
             this.initDPlayer;

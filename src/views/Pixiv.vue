@@ -171,11 +171,23 @@ export default {
     // DOM树加载完毕，可用于初始化页面，执行一些初始化函数 
     mounted:function(){
         this.open();
+
         // 引入樱花特效
-        let script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.src = 'https://api.vvhan.com/api/snow';
-        document.getElementsByTagName('head')[0].appendChild(script);
+        let scriptList = document.getElementsByTagName("script");
+        let status = true;
+        for(let i = 0; i<scriptList.length; i++)
+        {
+            if((scriptList[i].getAttribute("src") || "" ).includes("vvhan")){
+                status = false;
+                break;
+            }
+        }
+        if (status) {
+            let script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = 'https://api.vvhan.com/api/snow';
+            document.body.appendChild(script);
+        }
     },
 
     methods: {
