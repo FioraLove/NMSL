@@ -258,7 +258,6 @@ export default {
 
         // tag标签函数
         tagSerach:function (params) {
-            this.loading = true;
             let vm = this;
             axios({
                 url: "https://api.acgmx.com/public/tags",
@@ -279,8 +278,6 @@ export default {
                 } else {
                     vm.remarkError("错误状态："+response.status);
                 }
-                // 关闭加载动画
-                vm.loading = false;
             })
             .catch(function (error) {
                 vm.remarkError(error.toString());

@@ -90,16 +90,7 @@
 
                 <el-main style="padding:0px;">
                     <keep-alive>
-                        <router-view v-if="$route.meta.keepAlive">
-                            <router-link to="/home">Home</router-link>|
-                            <router-link to="/comic">comic</router-link>|
-                            <router-link to="/comic/category">comicCatalog</router-link>|
-                            <router-link to="/comic/chapter">comicChapter</router-link>|
-                            <router-link to="/hidden/play">play</router-link>|
-                            <router-link to="/hidden/picture">picture</router-link>|
-                            <router-link to="/comments">comments</router-link>|
-                            <router-link to="/tools">tools</router-link>
-                        </router-view>
+                        <router-view v-if="$route.meta.keepAlive"></router-view>
                     </keep-alive>
                     <router-view v-if="!$route.meta.keepAlive">
                     </router-view>
@@ -113,16 +104,7 @@
                 </el-header>
                 <el-main style="padding:0px;">
                     <keep-alive>
-                        <router-view v-if="$route.meta.keepAlive">
-                            <router-link to="/home">Home</router-link>|
-                            <router-link to="/comic">comic</router-link>|
-                            <router-link to="/comic/category">comicCatalog</router-link>|
-                            <router-link to="/comic/chapter">comicChapter</router-link>|
-                            <router-link to="/hidden/play">play</router-link>|
-                            <router-link to="/hidden/picture">picture</router-link>|
-                            <router-link to="/comments">comments</router-link>|
-                            <router-link to="/tools">tools</router-link>
-                        </router-view>
+                        <router-view v-if="$route.meta.keepAlive"/>
                     </keep-alive>
                     <router-view v-if="!$route.meta.keepAlive">
                     </router-view>
