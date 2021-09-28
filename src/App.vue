@@ -4,84 +4,84 @@
             <!-- web端 -->
             <template v-if="deviceType == 'Desktop' ">
                 <el-aside width="120px" style="background-color: rgb(238, 241, 246)">
-                    <el-menu class="el-menu-vertical-demo" default-active="1">
-                        <el-menu-item index="1">
+                    <el-menu class="el-menu-vertical-demo" default-active="home" router>
+                        <el-menu-item index="home">
                             <i class="el-icon-s-home"></i>
                             <span slot="title">
                                 <el-tooltip class="item" effect="dark" content="个人主页" placement="right">
-                                    <router-link to="/home">Home</router-link>
+                                    <span>Home</span>
                                 </el-tooltip>
                             </span>
                         </el-menu-item>
-                        <el-menu-item index="2">
+                        <el-menu-item index="news">
                             <i class="el-icon-s-marketing"></i>
                             <span slot="title">
                                 <el-tooltip class="item" effect="dark" content="资讯热榜" placement="right">
-                                    <router-link to="/news">News</router-link>
+                                    <span>News</span>
                                 </el-tooltip>
                             </span>
                         </el-menu-item>
-                        <el-menu-item index="3">
+                        <el-menu-item index="comic">
                             <i class="el-icon-reading"></i>
                             <span slot="title">
                                 <el-tooltip class="item" effect="dark" content="热门漫画" placement="right">
-                                    <router-link to="/comic">Comic</router-link>
+                                    <span>Comic</span>
                                 </el-tooltip>
                             </span>
                         </el-menu-item>
-                        <el-menu-item index="4">
+                        <el-menu-item index="audio">
                             <i class="el-icon-service"></i>
                             <span slot="title">
                                 <el-tooltip class="item" effect="dark" content="天天动听" placement="right">
-                                    <router-link to="/audio">Music</router-link>
+                                    <span>Music</span>
                                 </el-tooltip>
                             </span>
                         </el-menu-item>
-                        <el-menu-item index="5">
+                        <el-menu-item index="pixiv">
                             <i class="el-icon-picture"></i>
                             <span slot="title">
                                 <el-tooltip class="item" effect="dark" content="严选插画" placement="right">
-                                    <router-link to="/pixiv">Pixiv</router-link>
+                                    <span>Pixiv</span>
                                 </el-tooltip>
                             </span>
                         </el-menu-item>
-                        <el-menu-item index="6">
+                        <el-menu-item index="parse">
                             <i class="el-icon-video-camera-solid"></i>
                             <span slot="title">
                                 <el-tooltip class="item" effect="dark" content="短视频无水印解析" placement="right">
-                                    <router-link to="/parse">Parse</router-link>
+                                    <span>Parse</span>
                                 </el-tooltip>
                             </span>
                         </el-menu-item>
-                        <el-menu-item index="7">
+                        <el-menu-item index="ndsl">
                             <i class="el-icon-warning"></i>
                             <span slot="title">
                                 <el-tooltip class="item" effect="dark" content="抽象圣经" placement="right">
-                                    <router-link to="/ndsl">NMSL</router-link>
+                                    <span>Nmsl</span>
                                 </el-tooltip>
                             </span>
                         </el-menu-item>
-                        <el-menu-item index="8">
+                        <el-menu-item index="tools">
                             <i class="el-icon-s-tools"></i>
                             <span slot="title">
                                 <el-tooltip class="item" effect="dark" content="在线工具" placement="right">
-                                    <router-link to="/tools">Tools</router-link>
+                                    <span>Tools</span>
                                 </el-tooltip>
                             </span>
                         </el-menu-item>
-                        <el-menu-item index="9">
+                        <el-menu-item index="comments">
                             <i class="el-icon-s-comment"></i>
                             <span slot="title">
                                 <el-tooltip class="item" effect="dark" content="留言建议/问题咨询" placement="right">
-                                    <router-link to="/comments">Tips</router-link>
+                                    <span>Tips</span>
                                 </el-tooltip>
                             </span>
                         </el-menu-item>
-                        <el-menu-item index="10">
+                        <el-menu-item index="admin">
                             <i class="el-icon-user-solid"></i>
                             <span slot="title">
                                 <el-tooltip class="item" effect="dark" content="her name plz~" placement="right">
-                                    <router-link to="/admin">Pornhub</router-link>
+                                    <span>Pornhub</span>
                                 </el-tooltip>
                             </span>
                         </el-menu-item>
@@ -90,16 +90,7 @@
 
                 <el-main style="padding:0px;">
                     <keep-alive>
-                        <router-view v-if="$route.meta.keepAlive">
-                            <router-link to="/home">Home</router-link>|
-                            <router-link to="/comic">comic</router-link>|
-                            <router-link to="/comic/category">comicCatalog</router-link>|
-                            <router-link to="/comic/chapter">comicChapter</router-link>|
-                            <router-link to="/hidden/play">play</router-link>|
-                            <router-link to="/hidden/picture">picture</router-link>|
-                            <router-link to="/comments">comments</router-link>|
-                            <router-link to="/tools">tools</router-link>
-                        </router-view>
+                        <router-view v-if="$route.meta.keepAlive"></router-view>
                     </keep-alive>
                     <router-view v-if="!$route.meta.keepAlive">
                     </router-view>
@@ -113,16 +104,7 @@
                 </el-header>
                 <el-main style="padding:0px;">
                     <keep-alive>
-                        <router-view v-if="$route.meta.keepAlive">
-                            <router-link to="/home">Home</router-link>|
-                            <router-link to="/comic">comic</router-link>|
-                            <router-link to="/comic/category">comicCatalog</router-link>|
-                            <router-link to="/comic/chapter">comicChapter</router-link>|
-                            <router-link to="/hidden/play">play</router-link>|
-                            <router-link to="/hidden/picture">picture</router-link>|
-                            <router-link to="/comments">comments</router-link>|
-                            <router-link to="/tools">tools</router-link>
-                        </router-view>
+                        <router-view v-if="$route.meta.keepAlive"/>
                     </keep-alive>
                     <router-view v-if="!$route.meta.keepAlive">
                     </router-view>
