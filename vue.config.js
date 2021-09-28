@@ -19,8 +19,9 @@ module.exports = {
      */
     publicPath: '/',
 
-    devServer: {   
+    devServer: {
         // the proxy setting: to solve CORS
+        "disableHostCheck":true,
         proxy: {
             '/migus':{
                 target: 'https://m.music.migu.cn/',  // target host
@@ -73,12 +74,12 @@ module.exports = {
         }])
 
         // ============压缩图片 start============
-        config.module
-            .rule('images')
-            .use('image-webpack-loader')
-            .loader('image-webpack-loader')
-            .options({ bypassOnDebug: true })
-            .end()
+        // config.module
+        //     .rule('images')
+        //     .use('image-webpack-loader')
+        //     .loader('image-webpack-loader')
+        //     .options({ bypassOnDebug: true })
+        //     .end()
         // ============压缩图片 end============
     },
     configureWebpack:{

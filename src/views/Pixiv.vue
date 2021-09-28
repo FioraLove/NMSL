@@ -96,7 +96,7 @@
                             </div>
                             <div class="card_footer">
                                 <div class="title">
-                                    <el-tooltip :content="row.rank" placement="top">
+                                    <el-tooltip content="借口调整，暂无排名数据" placement="top">
                                         <span>{{row.title}}</span>
                                     </el-tooltip>
                                 </div>
@@ -210,32 +210,32 @@ export default {
                         vm.loading = false;
                         return false;
                     }
-                    let result = response["data"]["response"][0]["works"];
-                    let pages = response["data"]["pagination"]["pages"];
+                    let result = response["data"]["illusts"];
+                    let pages = 6;
                     let rows = [];
                     for (let index = 0; index < result.length; index++) {
                         let obj = {};
                         let authorInfo = {};
-                        let rankText = "";
-                        let previousRank = result[index]["previous_rank"], rank = result[index]["rank"];
-                        if (previousRank < rank) {
-                            rankText = "排名 ⬇ "+Math.abs(previousRank-rank)+"名";
-                        }else if(previousRank == rank){
-                            rankText = "排名 ↔ "+rank+"名";
-                        }
-                        else {
-                            rankText = "排名 ⬆ "+Math.abs(previousRank-rank)+"名";
-                        }
-                        obj["rank"] = rankText;
-                        obj["title"] = result[index]["work"]["title"];
-                        obj["page_count"] = result[index]["work"]["page_count"];
-                        authorInfo["name"] = result[index]["work"]["user"]["name"];
-                        authorInfo["id"] = result[index]["work"]["user"]["id"];
-                        authorInfo["cover"] = (result[index]["work"]["user"]["profile_image_urls"]["px_50x50"].replace("https://i.pximg.net","https://i.pixiv.cat"));
+                        // 因为借口调整，已经获取不到历史排名信息了
+                        // let rankText = "";
+                        // let previousRank = result[index]["previous_rank"], rank = result[index]["rank"];
+                        // if (previousRank < rank) {
+                        //     rankText = "排名 ⬇ "+Math.abs(previousRank-rank)+"名";
+                        // }else if(previousRank == rank){
+                        //     rankText = "排名 ↔ "+rank+"名";
+                        // }
+                        // else {
+                        //     rankText = "排名 ⬆ "+Math.abs(previousRank-rank)+"名";
+                        // }
+                        // obj["rank"] = rankText;
+                        obj["title"] = result[index]["title"];
+                        obj["page_count"] = result[index]["page_count"];
+                        authorInfo["name"] = result[index]["user"]["name"];
+                        authorInfo["id"] = result[index]["user"]["id"];
+                        authorInfo["cover"] = (result[index]["user"]["profile_image_urls"]["medium"].replace("https://i.pximg.net","https://i.pixiv.cat"));
                         obj["artist"] = authorInfo;
                         // 由于原图过大，导致加载缓慢，不得不使用带水印的中图
-                        // let image_url = result[index]["work"]["image_urls"]["large"];
-                        let image_url = result[index]["work"]["image_urls"]["px_480mw"];
+                        let image_url = result[index]["image_urls"]["square_medium"];
                         // 替换Pixiv图片国外域名
                         obj["url"] = image_url.replace("https://i.pximg.net","https://i.pixiv.cat");
                         rows.push(obj);

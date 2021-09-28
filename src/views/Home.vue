@@ -4,13 +4,12 @@
         <el-container>
             <el-main>
                 <el-row :gutter="10">
-                    <!-- 头像模块 -->
                     <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="8">
+                        <!-- 左侧头像模块 -->
                         <div class="card">
                             <div class="header">
                                 <a href="javascript:;" title="AhriLove"><img src="https://cdn.jsdelivr.net/gh/FioraLove/Images/seraphines.jpg" alt=""></a>
                             </div>
-
                             <div class="card_footer">
                                 <div class="title">
                                     <span>AhriLove</span>
@@ -21,52 +20,51 @@
                             <span><b>我一路向北，离开有你的季节</b></span><br><br>
                             <span>一个野生自学者 经常分享学习心得</span>
                         </div>
-                        <hr style="width:18em;margin-left:0px;">
+
+                        <hr style="width:100%; margin-left:0px;">
+
+                        <!-- 左侧技能树模块 -->
                         <div class="skill">
                             <div class="process">
-                                <div style="float:left;width:20%;margin-top:12px;"><img src="../assets/images/html.png"></div>
-                                <div style="float:left;width:70%;margin-left:1em;">
-                                    <p style="width:12em;color:hsla(0,0%,100%,.85);">HTML5</p> 
+                                <div class="left-box"><img src="../assets/images/html.png"></div>
+                                <div class="right-box">
+                                    <p class="title-category">HTML5</p> 
                                     <div style="width:60%;background-color:yellow;height:4px;"></div>
                                 </div>
                             </div>
-                            
                             <div class="process">
-                                <div style="float:left;width:20%;margin-top:12px;"><img src="../assets/images/python.png"></div>
-                                <div style="float:left;width:70%;margin-left:1em;">
-                                    <p style="width:12em;color:hsla(0,0%,100%,.85);">Python</p> 
+                                <div class="left-box"><img src="../assets/images/python.png"></div>
+                                <div class="right-box">
+                                    <p class="title-category">Python</p> 
                                     <div style="width:90%;background-color:yellow;height:4px;"></div>
                                 </div>
                             </div>
-                            
                             <div class="process">
-                                <div style="float:left;width:20%;margin-top:12px;"><img src="../assets/images/spider.png"></div>
-                                <div style="float:left;width:70%;margin-left:1em;">
-                                    <p style="width:12em;color:hsla(0,0%,100%,.85);">Python爬虫</p> 
+                                <div class="left-box"><img src="../assets/images/spider.png"></div>
+                                <div class="right-box">
+                                    <p class="title-category">Python爬虫</p> 
                                     <div style="width:75%;background-color:yellow;height:4px;"></div>
                                 </div>
                             </div>
                             <div class="process">
-                                <div style="float:left;width:20%;margin-top:12px;"><img src="../assets/images/vuejs.png"></div>
-                                <div style="float:left;width:70%;margin-left:1em;">
-                                    <p style="width:12em;color:hsla(0,0%,100%,.85);">Vue.js</p> 
-                                    <!-- 下面的width的属性决定进度条多宽 -->
+                                <div class="left-box"><img src="../assets/images/vuejs.png"></div>
+                                <div class="right-box">
+                                    <p class="title-category">Vue.js</p> 
+                                    <!-- 注：下面的width的属性决定进度条多宽 -->
                                     <div style="width:40%;background-color:yellow;height:4px;"></div>
                                 </div>
                             </div>
                             <div class="process">
-                                <div style="float:left;width:20%;margin-top:12px;"><img src="../assets/images/java.png"></div>
-                                <div style="float:left;width:70%;margin-left:1em;">
-                                    <p style="width:12em;color:hsla(0,0%,100%,.85);">Java</p> 
-                                    <!-- 下面的width的属性决定进度条多宽 -->
+                                <div class="left-box"><img src="../assets/images/java.png"></div>
+                                <div class="right-box">
+                                    <p class="title-category">Java</p> 
                                     <div style="width:35%;background-color:yellow;height:4px;"></div>
                                 </div>
                             </div>
                             <div class="process">
-                                <div style="float:left;width:20%;margin-top:12px;"><img src="../assets/images/docker.png"></div>
-                                <div style="float:left;width:70%;margin-left:1em;">
-                                    <p style="width:12em;color:hsla(0,0%,100%,.85);">Docker</p> 
-                                    <!-- 下面的width的属性决定进度条多宽 -->
+                                <div class="left-box"><img src="../assets/images/docker.png"></div>
+                                <div class="right-box">
+                                    <p class="title-category">Docker</p> 
                                     <div style="width:40%;background-color:yellow;height:4px;"></div>
                                 </div>
                             </div>
@@ -231,7 +229,18 @@ export default {
         background-repeat: no-repeat;
         max-width:100vw;
     }
-
+    .title-category{
+        margin-top: 0px;
+        margin-bottom: 12px;
+        color:hsla(0,0%,100%,.85);
+    }
+    .right-box{
+        width:70%;
+        margin-left:1em;
+    }
+    .left-box{
+        height: 38px;
+    }
     .bilipic img{
         box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
         border-radius: 4px;
@@ -461,11 +470,14 @@ export default {
         width:100%;
     }
     .skill .process{
-        height: 3.8em;
-        width:20em;
+        display: -webkit-flex;
+        display: flex;
+        height: 56px;
+        align-items: center;
     }
     .process img{
-        width: 70%;
+        width: 38px;
+        height: 38px;
     }
 
 
