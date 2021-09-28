@@ -153,21 +153,10 @@ export default {
     },
     mounted() {
         // 引入ip地址获取文件
-        let scriptList = document.getElementsByTagName("script");
-        let status = true;
-        for(let i = 0; i<scriptList.length; i++)
-        {
-            if((scriptList[i].getAttribute("src") || "" ).includes("cityjson")){
-                status = false;
-                break;
-            }
-        }
-        if (status) {
-            let script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.src = 'http://pv.sohu.com/cityjson?ie=utf-8';
-            document.body.appendChild(script);
-        }
+        let script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = 'http://pv.sohu.com/cityjson?ie=utf-8';
+        document.getElementsByTagName('head')[0].appendChild(script);
         this.isPC();
         this.getContent();
     },
