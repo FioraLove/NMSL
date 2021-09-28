@@ -3,56 +3,47 @@ import VueRouter from 'vue-router'
 import axios from '../plugins/axios'
 
 Vue.use(VueRouter,axios)
-//获取原型对象上的push函数
-const originalPush = VueRouter.prototype.push;
-//修改原型对象中的push方法
-VueRouter.prototype.push = function push(location) {
-  return originalPush.call(this, location).catch(err => err);
-};
 
-const routes = [{
+  const routes = [
+    {
         path: '/',
         name: 'APP',
         redirect: '/home',
-        component: () => import('../App.vue'),
+        component: () => import(/* webpackChunkName: "about" */ '../App.vue'),
         meta: {
-            keepAlive: true
+            keepAlive: true, //此组件需要被缓存   
         }
-    },{
+    },
+    {
         path: '/home',
         name: 'Home',
-        component: () => import('../views/Home.vue'),
+        component: () => import(/* webpackChunkName: "about" */ '../views/Home.vue'),
         meta: {
-            keepAlive: true
+            keepAlive: true, //此组件需要被缓存   
         }
-    },{
+    },
+    {
         //将 path 设置为*号，将会捕获任何没有得到匹配的路由； 
         path: '*',
         name: 'Error',
-        component: () => import('../views/Error.vue')
-    },{
+        component: () => import(/* webpackChunkName: "about" */ '../views/Error.vue')
+    },
+    {
         // 资讯模块
         path: '/news',
         name: 'News',
-        component: () => import('../views/News.vue'),
-        meta: {
-            keepAlive: true
-        }
-    },{
+        component: () => import(/* webpackChunkName: "about" */ '../views/News.vue')
+    },
+    {
         path: '/parse',
         name: 'Parse',
-        component: () => import('../views/Parse.vue'),
-        meta: {
-            keepAlive: true
-        }
-    },{   
-        // 音频MP3模块
+        component: () => import(/* webpackChunkName: "about" */ '../views/Parse.vue')
+    },
+    {   // 音频MP3模块
         path: '/audio',     // query模式
+        // path: '/list/:id/post/:name', // params模式
         name: 'Audio',
-        component: () => import('../views/Audio.vue'),
-        meta: {
-            keepAlive: true
-        }
+        component: () => import(/* webpackChunkName: "about" */ '../views/Audio.vue')
     },{
         //将 path 的前缀或后缀带*号，将会捕获特定的路由，类似于正则表达式； 
         path:'/user-*',
@@ -61,43 +52,37 @@ const routes = [{
         // 嘴臭圣经模块
         path: '/ndsl',
         name: 'Ndsl',
-        component: () => import('../views/Ndsl.vue'),
-        meta: {
-            keepAlive: true
-        }
+        component: () => import(/* webpackChunkName: "about" */ '../views/Ndsl.vue')
     },{
         // 漫画模块
         path: '/comic',
         name: 'Comic',
-        component: () => import('../views/Comic.vue'),
+        component: () => import(/* webpackChunkName: "about" */ '../views/Comic.vue'),
         meta: {
-            keepAlive: true
+            keepAlive: true, //此组件需要被缓存
         }
     },{
         // 漫画章节目录模块
         path: '/comic/category',
         name: 'Category',
         // 路由懒加载模式
-        component: () => import('../views/Tools/catalog.vue'),
+        component: () => import(/* webpackChunkName: "about" */ '../views/Tools/catalog.vue'),
         meta: {
-            keepAlive: true
+            keepAlive: true, //此组件需要被缓存
         }
-    },{
+    },,{
         // 漫画模块：具体章节
         path:"/comic/chapter",
         name: "Chapters",
         component:()=> import('../views/Tools/chapter.vue'),
         meta: {
-            keepAlive: true  
+            keepAlive: true, //此组件需要被缓存  
         }
     },{
         // 管理员主页，仅自己可见
         path: '/admin',
         name: 'Admin',
-        component: () => import('../views/Admin.vue'),
-        meta: {
-            keepAlive: true
-        }
+        component: () => import(/* webpackChunkName: "about" */ '../views/Admin.vue')
     },{
         // 登陆后的视频网址
         path: '/hidden/video',
@@ -109,7 +94,7 @@ const routes = [{
         name: "HiddenPlay",
         component: () => import('../views/HiddenPlay.vue'),
         meta: {
-            keepAlive: true
+            keepAlive: true, //此组件需要被缓存   
         }
     },{
         // 登陆后的图片浏览网址
@@ -117,7 +102,7 @@ const routes = [{
         name: "HiddenPic",
         component: () => import('../views/HiddenPic.vue'),
         meta: {
-            keepAlive: true
+            keepAlive: true, //此组件需要被缓存   
         }
     },{
         // 登陆后的隐私第三方资源分享
@@ -130,7 +115,7 @@ const routes = [{
         name: "Comments",
         component: () => import('../views/Comments.vue'),
         meta: {
-            keepAlive: true
+            keepAlive: true, //此组件需要被缓存   
         }
     },{
         // 工具箱模块
@@ -138,24 +123,18 @@ const routes = [{
         name: "Tools",
         component: () => import('../views/Tool.vue'),
         meta: {
-            keepAlive: true
+            keepAlive: true, //此组件需要被缓存
         }
     },{
         // Pixiv插画模块
         path: '/pixiv',
         name: "Pixiv",
-        component: () => import('../views/Pixiv.vue'),
-        meta: {
-            keepAlive: true
-        }
+        component: () => import('../views/Pixiv.vue')
     },{
         // Pixiv作者作品展示模块
         path: '/artist',
         name: "Artist",
-        component: () => import('../views/Artist.vue'),
-        meta: {
-            keepAlive: true
-        }
+        component: () => import('../views/Artist.vue')
     },{
         // 在线工具模块：json数组
         path:"/tools/json",
@@ -207,7 +186,8 @@ const routes = [{
         name: "Card",
         component:()=> import('../views/Tools/card.vue')
     }
-];
+
+]
 
 const router = new VueRouter({
     routes,
@@ -223,6 +203,6 @@ const router = new VueRouter({
             }
         }
     }
-});
+})
 
-export default router;
+export default router
