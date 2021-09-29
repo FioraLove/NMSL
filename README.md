@@ -49,6 +49,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
    - 2021-03-06 ~~增加【IP境外境内检测】函数功能~~ **API失效了，wtf**
    - 2021-03-24 增加router的【keep-alive】页面缓存功能
    - 2021-09-28 采用element-ui的路由模式、调整Pixiv的借口、调整首页技术树栏的布局
+   - 2021-09-29 初次尝试使用Vuex状态管理
 
 ---
 <br>
