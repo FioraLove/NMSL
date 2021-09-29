@@ -19,7 +19,9 @@ module.exports = {
      */
     publicPath: '/',
 
-    devServer: {   
+    devServer: {
+        // 用于内网穿透使用
+        "disableHostCheck":true,
         // the proxy setting: to solve CORS
         proxy: {
             '/migus':{
@@ -73,12 +75,12 @@ module.exports = {
         }])
 
         // ============压缩图片 start============
-        config.module
-            .rule('images')
-            .use('image-webpack-loader')
-            .loader('image-webpack-loader')
-            .options({ bypassOnDebug: true })
-            .end()
+        // config.module
+        //     .rule('images')
+        //     .use('image-webpack-loader')
+        //     .loader('image-webpack-loader')
+        //     .options({ bypassOnDebug: true })
+        //     .end()
         // ============压缩图片 end============
     },
     configureWebpack:{
