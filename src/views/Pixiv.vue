@@ -2,30 +2,7 @@
   <div class="pixiv">
         <el-row :gutter="10" style="padding-top:1em;margin:0px;">
             <el-col :xs="4" :sm="4" :md="4" :lg="4" :xl="4">
-                <!-- PC端 -->
-                <template v-if="sizeText == '25%'">
-                    <el-popover
-                        placement="bottom-start"
-                        width="500"
-                        trigger="hover">
-                        <el-row :gutter="10">
-                            <el-col :xs="8" :sm="8" :md="8" :lg="8" :xl="8" v-for='(row,index) in tagArray' :key="index">
-                                <div class="tag">
-                                    <img :src="row.image_urls" :alt="row.tag">
-                                    <div class="tag-title">
-                                        <span>{{row.translated_name}}</span><br>
-                                        <span>{{row.tag}}</span>
-                                    </div>
-                                    
-                                </div>
-                            </el-col>
-                        </el-row>
-                        <p class="item-left" slot="reference" style="cursor:pointer;">Pixiv</p>
-                    </el-popover>
-                </template>
-                <template v-else>
-                    <p class="item-left">Pixiv</p>
-                </template>
+                <p class="item-left">Pixiv</p>
             </el-col>
             <el-col :xs="14" :sm="14" :md="14" :lg="14" :xl="14">
                 <div class="search">
@@ -96,7 +73,7 @@
                             </div>
                             <div class="card_footer">
                                 <div class="title">
-                                    <el-tooltip content="借口调整，暂无排名数据" placement="top">
+                                    <el-tooltip :content="row.rank" placement="top">
                                         <span>{{row.title}}</span>
                                     </el-tooltip>
                                 </div>
@@ -134,22 +111,17 @@ export default {
             loading: false,                     // 加载动画
             offset: 0,                          // 搜索起始页
             max_pages: 10,                      // 排行榜最大页数
-            form: {                             // 排行榜Ajax请求参数
-                mode: '',                       // 模式
-                region: '',                     // 类别
-                date: '',                       // 日期
+            form: {
+                mode: '',
+                region: '',
+                date: '',
                 page: 1,                        // 分页
             },
             pickerOptions: {                    // 时间禁用
                 disabledDate(time) {
                     return time.getTime() > Date.now();
                 }
-            },
-            tagArray: [],                       // tag标签数组集
-            ipMsg: {
-                country: "CN",
-                ip: ""
-            },                                  // IP地址定位用户所处的国家
+            }
         };
     },
 
@@ -158,39 +130,24 @@ export default {
         let sizeText = "25%";
         let deviceType = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Windows Phone|SymbianOS/i.test(navigator.userAgent) ? "Mobile" : "Desktop"; 
         if (deviceType == "Mobile") {
-            sizeText = '80%';  
-        }else{
-            this.tagSerach();
+            sizeText = '80%';
         }
         // 绑定数据
         this.sizeText = sizeText;
-        // 预判断其IP是否是境内IP
-        this.queryIP();
     },
 
     // DOM树加载完毕，可用于初始化页面，执行一些初始化函数 
     mounted:function(){
         this.open();
-
         // 引入樱花特效
-        let scriptList = document.getElementsByTagName("script");
-        let status = true;
-        for(let i = 0; i<scriptList.length; i++)
-        {
-            if((scriptList[i].getAttribute("src") || "" ).includes("vvhan")){
-                status = false;
-                break;
-            }
-        }
-        if (status) {
-            let script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.src = 'https://api.vvhan.com/api/snow';
-            document.body.appendChild(script);
-        }
+        let script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = 'https://api.vvhan.com/api/snow';
+        document.getElementsByTagName('head')[0].appendChild(script);
     },
 
     methods: {
+
         // 排行榜搜索函数
         search:function (params) {
             this.loading = true;
@@ -206,36 +163,36 @@ export default {
             .then(function(response){
                 if (response.status == 200) {
                     if (response["data"]["status"] == "failure") {
-                        vm.remarkError(response["data"]["errors"]);
+                        vm.remarkError(response["data"]["errors"]["system"]["message"]);
                         vm.loading = false;
                         return false;
                     }
-                    let result = response["data"]["illusts"];
-                    let pages = 6;
+                    let result = response["data"]["response"][0]["works"];
+                    let pages = response["data"]["pagination"]["pages"];
                     let rows = [];
                     for (let index = 0; index < result.length; index++) {
                         let obj = {};
                         let authorInfo = {};
-                        // 因为借口调整，已经获取不到历史排名信息了
-                        // let rankText = "";
-                        // let previousRank = result[index]["previous_rank"], rank = result[index]["rank"];
-                        // if (previousRank < rank) {
-                        //     rankText = "排名 ⬇ "+Math.abs(previousRank-rank)+"名";
-                        // }else if(previousRank == rank){
-                        //     rankText = "排名 ↔ "+rank+"名";
-                        // }
-                        // else {
-                        //     rankText = "排名 ⬆ "+Math.abs(previousRank-rank)+"名";
-                        // }
-                        // obj["rank"] = rankText;
-                        obj["title"] = result[index]["title"];
-                        obj["page_count"] = result[index]["page_count"];
-                        authorInfo["name"] = result[index]["user"]["name"];
-                        authorInfo["id"] = result[index]["user"]["id"];
-                        authorInfo["cover"] = (result[index]["user"]["profile_image_urls"]["medium"].replace("https://i.pximg.net","https://i.pixiv.cat"));
+                        let rankText = "";
+                        let previousRank = result[index]["previous_rank"], rank = result[index]["rank"];
+                        if (previousRank < rank) {
+                            rankText = "排名 ⬇ "+Math.abs(previousRank-rank)+"名";
+                        }else if(previousRank == rank){
+                            rankText = "排名 ↔ "+rank+"名";
+                        }
+                        else {
+                            rankText = "排名 ⬆ "+Math.abs(previousRank-rank)+"名";
+                        }
+                        obj["rank"] = rankText;
+                        obj["title"] = result[index]["work"]["title"];
+                        obj["page_count"] = result[index]["work"]["page_count"];
+                        authorInfo["name"] = result[index]["work"]["user"]["name"];
+                        authorInfo["id"] = result[index]["work"]["user"]["id"];
+                        authorInfo["cover"] = (result[index]["work"]["user"]["profile_image_urls"]["px_50x50"].replace("https://i.pximg.net","https://i.pixiv.cat"));
                         obj["artist"] = authorInfo;
                         // 由于原图过大，导致加载缓慢，不得不使用带水印的中图
-                        let image_url = result[index]["image_urls"]["square_medium"];
+                        // let image_url = result[index]["work"]["image_urls"]["large"];
+                        let image_url = result[index]["work"]["image_urls"]["px_480mw"];
                         // 替换Pixiv图片国外域名
                         obj["url"] = image_url.replace("https://i.pximg.net","https://i.pixiv.cat");
                         rows.push(obj);
@@ -252,66 +209,8 @@ export default {
                 vm.loading = false;
             })
             .catch(function (error) {
-                vm.remarkError(error.toString());
+                this.remarkError(error.toString());
             });
-        },
-
-        // tag标签函数
-        tagSerach:function (params) {
-            let vm = this;
-            axios({
-                url: "https://api.acgmx.com/public/tags",
-                method: "get"
-            })
-            .then(function(response){
-                if (response.status == 200) {
-                    let tagList = [];
-                    let rsp = response.data.trend_tags;
-                    for (let index = 0; index < 9; index++) {
-                        let obj = {};
-                        obj["tag"] = rsp[index]["tag"];
-                        obj["translated_name"] = rsp[index]["translated_name"];
-                        obj["image_urls"] = rsp[index]["illust"]["image_urls"]["square_medium"].replace("https://i.pximg.net","https://i.pixiv.cat");
-                        tagList.push(obj);
-                    }
-                    vm.tagArray = tagList;
-                } else {
-                    vm.remarkError("错误状态："+response.status);
-                }
-            })
-            .catch(function (error) {
-                vm.remarkError(error.toString());
-            });
-        },
-
-        /**
-         * 根据IP地址定位用户所处的国家及IP相关详细信息
-         * 定位API：
-         *      + https://www.cloudflare.com/cdn-cgi/trace
-         *      + https://json.geoiplookup.io/api
-         */
-        queryIP:function(){
-            let vm = this;
-            axios({
-                url: "https://www.cloudflare.com/cdn-cgi/trace",
-                method: "get"
-            })
-            .then(function(response){
-                if (response.status == 200) {
-                    let info = response.data;
-                    let ip = (info.split("ip=")[1]).split("ts=")[0].trim();
-                    let country = (info.split("loc=")[1]).split("tls=")[0].trim();
-                    vm.ipMsg = {
-                        country: country,
-                        ip: ip
-                    };
-                } else {
-                    vm.remarkError("错误状态："+response.status);
-                }
-            })
-            .catch(function (error) {
-                vm.remarkError(error.toString());
-            });   
         },
 
         // 自定义条件排行榜
@@ -336,17 +235,6 @@ export default {
 
         // 搜索函数
         seek:function(){
-            if (this.ipMsg.country == "CN") {
-                this.$message({
-                    showClose: true,
-                    message: "此功能已屏蔽中国大陆 IP 访问，请启用代理，或联系博主获取权限",
-                    type: 'warning',
-                    duration: 0,
-                    offset: 180
-                });
-                return false;
-            }
-
             let vm = this;
             let flag_blocked = false;
             this.loading = true;
@@ -543,24 +431,6 @@ export default {
         font-size: 16px;
         font-weight: 600;
         letter-spacing: .05em;
-    }
-    .tag{
-        position: relative;
-        width: 100%;
-        width:100%;
-    }
-    .tag img{
-        height:100%;
-        width:100%;
-    }
-    .tag .tag-title{
-        position: absolute;
-        bottom:8px;
-        right:2px;
-        font-size: 1em;
-        font-weight: 500;
-        color: #da7a85;
-        text-shadow: #fff 1px 0 0, #fff 0 1px 0, #fff -1px 0 0, #fff 0 -1px 0;
     }
     .search-content-blocked {
         width: 100%;
